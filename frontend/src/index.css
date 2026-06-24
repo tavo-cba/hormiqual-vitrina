@@ -1,0 +1,81 @@
+/* ─── Global box-sizing & flex overflow fix ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ─── Densidad de tablas (Configuración → Preferencias) ──────────────────
+   Se aplica via clase en <html>: `density-compact` o `density-comfortable`.
+   `density-normal` es el default, sin overrides. Pisa los paddings de
+   PrimeReact DataTable sin tener que tocar cada componente.
+   ──────────────────────────────────────────────────────────────────────── */
+html.density-compact .p-datatable .p-datatable-thead > tr > th,
+html.density-compact .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+}
+html.density-compact .p-datatable .p-datatable-thead > tr > th {
+  font-size: 0.78rem;
+}
+
+html.density-comfortable .p-datatable .p-datatable-thead > tr > th,
+html.density-comfortable .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1.1rem 1rem;
+  font-size: 1rem;
+}
+
+/* Flex children default to min-width:auto, which prevents them from shrinking
+   below their content width. This causes DataTables and other wide content to
+   overflow the viewport. min-width:0 resets this so flex items shrink properly. */
+.flex > *,
+.p-d-flex > *,
+[style*="display: flex"] > *,
+[style*="display:flex"] > * {
+  min-width: 0;
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* ─── Fix: primer tab/botón cortado por falta de margen ─── */
+.p-selectbutton,
+.p-tabmenu,
+.p-tabview-nav-container {
+  margin-left: 2px;
+}
+
+/* ─── Highlight de campo con warning/error (Libro IVA Digital) ─── */
+.highlight-field-warning {
+  border: 2px solid #f59e0b;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background-color: rgba(245, 158, 11, 0.08);
+  animation: highlight-pulse 2s ease-in-out 3;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { border-color: #f59e0b; background-color: rgba(245, 158, 11, 0.08); }
+  50% { border-color: #ef4444; background-color: rgba(239, 68, 68, 0.12); }
+}

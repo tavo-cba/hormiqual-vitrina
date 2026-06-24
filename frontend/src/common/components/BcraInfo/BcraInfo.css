@@ -1,0 +1,433 @@
+/* ── BcraInfo Panel ── */
+.bcra-info-panel {
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    background: var(--chart-background);
+    margin-top: 4px;
+}
+
+.bcra-info-panel--alerta {
+    border-color: rgba(198, 40, 40, 0.4);
+    background: rgba(198, 40, 40, 0.03);
+}
+
+[data-theme="dark"] .bcra-info-panel--alerta {
+    border-color: rgba(239, 154, 154, 0.35);
+    background: rgba(198, 40, 40, 0.06);
+}
+
+.bcra-info-header {
+    display: flex;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+}
+
+.bcra-info-title {
+    color: var(--text-color-secondary);
+}
+
+.bcra-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.bcra-toggle-btn:hover {
+    background: var(--cover-input-bg);
+    color: var(--text-color);
+}
+
+.bcra-info-body {
+    font-size: 0.875rem;
+}
+
+/* ── Errores ── */
+.bcra-error {
+    color: #c62828;
+    font-size: 0.85rem;
+    padding: 6px 0;
+}
+
+[data-theme="dark"] .bcra-error {
+    color: #ef9a9a;
+}
+
+.bcra-error-partial {
+    color: #e65100;
+    font-size: 0.82rem;
+    padding: 4px 0 6px;
+}
+
+[data-theme="dark"] .bcra-error-partial {
+    color: #ffb74d;
+}
+
+/* ── Sin antecedentes ── */
+.bcra-sin-antecedentes {
+    color: #2e7d32;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 4px 0;
+}
+
+[data-theme="dark"] .bcra-sin-antecedentes {
+    color: #81c784;
+}
+
+/* ── Análisis de riesgo ── */
+.bcra-riesgo-container {
+    margin-bottom: 12px;
+}
+
+.bcra-riesgo-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+/* Sin antecedentes */
+.riesgo-ninguno  { background: #e8f5e9; color: #2e7d32; }
+[data-theme="dark"] .riesgo-ninguno { background: rgba(46,125,50,0.2); color: #81c784; }
+
+/* Bajo */
+.riesgo-bajo     { background: #e8f5e9; color: #2e7d32; }
+[data-theme="dark"] .riesgo-bajo { background: rgba(46,125,50,0.2); color: #81c784; }
+
+/* Moderado */
+.riesgo-moderado { background: #fff8e1; color: #f57f17; }
+[data-theme="dark"] .riesgo-moderado { background: rgba(245,127,23,0.2); color: #ffd54f; }
+
+/* Alto */
+.riesgo-alto     { background: #ffebee; color: #c62828; }
+[data-theme="dark"] .riesgo-alto { background: rgba(198,40,40,0.2); color: #ef9a9a; }
+
+/* Muy alto */
+.riesgo-muy-alto { background: #fce4ec; color: #880e4f; }
+[data-theme="dark"] .riesgo-muy-alto { background: rgba(136,14,79,0.25); color: #f48fb1; }
+
+.bcra-alertas {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0 0 4px;
+}
+
+.bcra-alertas li {
+    font-size: 0.82rem;
+    color: #c62828;
+    margin-bottom: 2px;
+}
+
+[data-theme="dark"] .bcra-alertas li {
+    color: #ef9a9a;
+}
+
+.bcra-factores {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0 0 4px;
+}
+
+.bcra-factores li {
+    font-size: 0.82rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 2px;
+}
+
+/* ── Resumen compacto ── */
+.bcra-sit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.bcra-nota {
+    font-size: 0.72rem;
+    color: var(--text-color-secondary);
+    font-style: italic;
+}
+
+.bcra-resumen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.bcra-bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bcra-bloque-label {
+    font-size: 0.72rem;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.bcra-sub {
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+}
+
+/* ── Situación badges ── */
+.bcra-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.bcra-badge-sm {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Sit 1 — Normal */
+.bcra-sit-1 { background: #e8f5e9; color: #2e7d32; }
+[data-theme="dark"] .bcra-sit-1 { background: rgba(46, 125, 50, 0.2); color: #81c784; }
+
+/* Sit 2 — Seguimiento especial */
+.bcra-sit-2 { background: #fff8e1; color: #f57f17; }
+[data-theme="dark"] .bcra-sit-2 { background: rgba(245, 127, 23, 0.2); color: #ffd54f; }
+
+/* Sit 3 — Con problemas */
+.bcra-sit-3 { background: #fff3e0; color: #e65100; }
+[data-theme="dark"] .bcra-sit-3 { background: rgba(230, 81, 0, 0.2); color: #ffb74d; }
+
+/* Sit 4 — Alto riesgo */
+.bcra-sit-4 { background: #ffebee; color: #c62828; }
+[data-theme="dark"] .bcra-sit-4 { background: rgba(198, 40, 40, 0.2); color: #ef9a9a; }
+
+/* Sit 5 — Irrecuperable */
+.bcra-sit-5 { background: #fce4ec; color: #880e4f; }
+[data-theme="dark"] .bcra-sit-5 { background: rgba(136, 14, 79, 0.25); color: #f48fb1; }
+
+/* Sit 6 — Irrecuperable disp. técnica */
+.bcra-sit-6 { background: #f3e5f5; color: #6a1b9a; }
+[data-theme="dark"] .bcra-sit-6 { background: rgba(106, 27, 154, 0.2); color: #ce93d8; }
+
+/* ── Detalle expandible ── */
+.bcra-detail {
+    margin-top: 14px;
+    border-top: 1px solid var(--surface-border);
+    padding-top: 14px;
+}
+
+.bcra-detail-section {
+    margin-bottom: 8px;
+}
+
+.bcra-detail-subtitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.bcra-periodo {
+    margin-bottom: 16px;
+}
+
+.bcra-periodo-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+}
+
+/* ── Historial por entidad ── */
+.bcra-hist-entidad {
+    margin-bottom: 16px;
+}
+
+.bcra-hist-nombre {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    background: var(--cover-input-bg);
+    border-radius: 4px;
+}
+
+/* ── Tabla ── */
+.bcra-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.bcra-table th {
+    text-align: left;
+    padding: 6px 8px;
+    background: var(--cover-input-bg);
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.bcra-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--surface-border);
+    color: var(--text-color);
+    vertical-align: middle;
+}
+
+.bcra-table tr:last-child td {
+    border-bottom: none;
+}
+
+.bcra-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.bcra-flag {
+    background: var(--cover-input-bg);
+    color: var(--text-color-secondary);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.bcra-flag-danger {
+    background: #ffebee;
+    color: #c62828;
+}
+
+[data-theme="dark"] .bcra-flag-danger {
+    background: rgba(198, 40, 40, 0.2);
+    color: #ef9a9a;
+}
+
+/* ── Titular ── */
+.bcra-titular {
+    font-weight: 400;
+    font-size: 0.82rem;
+    color: var(--text-color-secondary);
+}
+
+/* ── Bancos ── */
+.bcra-bancos {
+    background: var(--cover-input-bg);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+.bcra-bancos-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.bcra-banco-row {
+    font-size: 0.8rem;
+    margin-bottom: 3px;
+    color: var(--text-color);
+}
+.bcra-banco-nombre {
+    font-weight: 500;
+}
+
+/* ── Links externos ── */
+.bcra-enlaces {
+    padding-top: 10px;
+    border-top: 1px solid var(--surface-border);
+}
+.bcra-enlaces-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.bcra-enlaces-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.bcra-enlace {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: var(--cover-input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--surface-border);
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.bcra-enlace:hover {
+    background: var(--surface-border);
+}
+
+/* ── Aviso cheques ── */
+.bcra-cheques-aviso {
+    font-size: 0.82rem;
+    color: var(--text-color-secondary);
+    padding: 8px 12px;
+    background: var(--cover-input-bg);
+    border-radius: 6px;
+    border-left: 3px solid var(--surface-border);
+}
+
+.bcra-cheques-aviso a {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.bcra-enlace-cheques {
+    font-size: 0.78rem;
+}
+
+/* ── Footer del detalle ── */
+.bcra-detail-footer {
+    font-size: 0.72rem;
+    color: var(--text-color-secondary);
+    border-top: 1px solid var(--surface-border);
+    padding-top: 10px;
+    margin-top: 12px;
+    font-style: italic;
+    line-height: 1.5;
+}

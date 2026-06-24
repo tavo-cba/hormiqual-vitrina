@@ -1,0 +1,687 @@
+/**
+ * Estilos base para todos los reportes HTML→PDF de HormiQual.
+ *
+ * Filosofía:
+ *   - Tipografía sobria (Inter) con jerarquía clara.
+ *   - Paleta neutra con un acento azul corporativo + acentos funcionales
+ *     (verde para APTO, rojo para NO APTO, ámbar para WARNING).
+ *   - Spacing system de 4px (multiplos: 4, 8, 12, 16, 20, 24, 32).
+ *   - Páginas con margen interno coherente (controlado por jsPDF/Puppeteer
+ *     en el llamado a `page.pdf()`); el HTML usa width: 100% sin restar
+ *     padding adicional para evitar el desborde lateral.
+ */
+
+@page {
+  size: A4;
+  /* No definir margin acá — se controla en `pdfRenderer.renderHtmlToPdf({margin})`.
+     Si lo definimos acá Y allá, se duplican y el contenido se corta. */
+}
+
+/* ─────────── Inter embebida (las TTF se inyectan en build-time) ─────── */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('__INTER_REGULAR__') format('truetype');
+  font-display: block;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('__INTER_SEMIBOLD__') format('truetype');
+  font-display: block;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('__INTER_BOLD__') format('truetype');
+  font-display: block;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.45;
+  color: #1f2937;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* CSS variables como design tokens — un solo lugar para tunear paleta. */
+:root {
+  --c-primary:        #1e3a5f;
+  --c-primary-soft:   #2563eb;
+  --c-text:           #1f2937;
+  --c-text-soft:      #4b5563;
+  --c-muted:          #6b7280;
+  --c-border:         #e5e7eb;
+  --c-border-strong:  #cbd5e1;
+  --c-bg-soft:        #f8fafc;
+
+  --c-ok:             #047857;
+  --c-ok-bg:          #ecfdf5;
+  --c-ok-border:      #6ee7b7;
+
+  --c-fail:           #b91c1c;
+  --c-fail-bg:        #fef2f2;
+  --c-fail-border:    #fca5a5;
+
+  --c-warn:           #b45309;
+  --c-warn-bg:        #fffbeb;
+  --c-warn-border:    #fcd34d;
+
+  --c-na:             #6b7280;
+  --c-na-bg:          #f3f4f6;
+  --c-na-border:      #e5e7eb;
+
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+}
+
+/* ─────────── Layout ─────────── */
+
+.page {
+  /* No padding lateral acá — el margin ya viene de la API de Puppeteer.
+     Cualquier padding adicional desbordaría. */
+  width: 100%;
+}
+
+/* Wrapper del bloque final del informe (glosario + firmas).
+ *
+ * Truco para anclar las firmas al pie de la ÚLTIMA página, sea ésta la 1
+ * o la N: encerramos glosario+firmas en este block con altura mínima
+ * igual a la altura útil de A4 (297 − 18 − 18 = 261 mm) y
+ * page-break-inside: avoid. Comportamiento resultante:
+ *   - Si el bloque entra al final de la página actual → se renderiza
+ *     ahí y ocupa los 261 mm completos, con margin-top: auto en .firmas
+ *     empujándolas al fondo.
+ *   - Si NO entra → page-break-inside: avoid lo salta entero a la
+ *     página siguiente, donde nuevamente ocupa una altura completa.
+ *
+ * Sin este wrapper, el `margin-top: auto` aplicado a .firmas dentro de
+ * .page solo funcionaba en informes de 1 página (la altura natural del
+ * .page en multi-page coincide con el contenido y no deja "espacio
+ * sobrante" para que el auto-margin lo absorba). */
+.last-page-block {
+  display: flex;
+  flex-direction: column;
+  /* Min-height conservador: 180mm permite que el bloque entre cuando
+     queda al menos eso de espacio libre en la página actual, pero sin
+     ser tan grande como para forzar siempre una página nueva. Con el
+     fixture típico (sección detalle + descartadas + avisos), la página
+     siguiente tiene ~180mm libres → el bloque encaja y margin-top:auto
+     empuja firmas al pie de esos 180mm. Si el bloque NO entra, el
+     `page-break-inside: avoid` lo salta a una página nueva donde
+     ocupará los 180mm con firmas al pie. */
+  min-height: 180mm;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 2px solid var(--c-primary);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.report-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.report-header__logo {
+  /* Dimensiones en mm para print-safe (px en CSS print puede escalarse
+     impredecible en algunos motores). 16mm ≈ 60px @ 96dpi. */
+  width: 16mm;
+  height: 16mm;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: white;
+}
+
+/* Fallback con iniciales cuando el tenant no tiene logo cargado. Garantiza
+   que el header no quede desbalanceado (el espacio del logo siempre se ve). */
+.report-header__logo-fallback {
+  width: 16mm;
+  height: 16mm;
+  border-radius: 50%;
+  background: var(--c-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 11pt;
+  letter-spacing: -0.3px;
+  flex-shrink: 0;
+}
+
+.report-header__company-name {
+  font-size: 13pt;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.report-header__company-meta {
+  font-size: 8pt;
+  color: var(--c-muted);
+  margin: 2px 0 0 0;
+}
+
+.report-header__meta {
+  text-align: right;
+  font-size: 8pt;
+  color: var(--c-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.report-header__meta strong {
+  color: var(--c-text);
+  font-weight: 600;
+}
+
+/* ─────────── Tipografía ─────────── */
+
+.report-title {
+  font-size: 17pt;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin: 0 0 2px 0;
+  letter-spacing: -0.3px;
+}
+
+.report-subtitle {
+  font-size: 9pt;
+  color: var(--c-muted);
+  font-style: italic;
+  margin: 0 0 14px 0;
+}
+
+h2.section {
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--c-primary);
+  margin: 12px 0 4px 0;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+h3.subsection {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--c-text-soft);
+  margin: 10px 0 4px 0;
+}
+
+p { margin: 0 0 6px 0; }
+
+.muted   { color: var(--c-muted); }
+.small   { font-size: 8.5pt; }
+.tiny    { font-size: 7.5pt; }
+.right   { text-align: right; }
+.center  { text-align: center; }
+.bold    { font-weight: 600; }
+
+/* ─────────── Tablas ─────────── */
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0 10px 0;
+  font-size: 9pt;
+  table-layout: auto;
+}
+
+table.data th {
+  background: var(--c-primary);
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 6px 8px;
+  font-size: 8.5pt;
+  letter-spacing: 0.2px;
+}
+
+table.data td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--c-border);
+  vertical-align: top;
+}
+
+table.data tr:nth-child(even) td { background: var(--c-bg-soft); }
+
+table.data td.num,
+table.data th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Resaltado de celdas que violan criterios normativos (trazabilidad).
+   El override de :nth-child(even) garantiza que el color del veredicto
+   gane sobre el zebra striping de la fila. */
+table.data td.cell-fail,
+table.data tr:nth-child(even) td.cell-fail {
+  background: var(--c-fail-bg);
+  color: var(--c-fail);
+  font-weight: 600;
+}
+table.data td.cell-warn,
+table.data tr:nth-child(even) td.cell-warn {
+  background: var(--c-warn-bg);
+  color: var(--c-warn);
+  font-weight: 600;
+}
+
+/* Leyenda explicativa que precede a la tabla de detalle. */
+.leyenda-tabla__intro {
+  margin: 4px 0 4px 0;
+  font-size: 8pt;
+  color: var(--c-text-soft);
+  font-style: italic;
+}
+
+.leyenda-tabla {
+  list-style: none;
+  margin: 0 0 8px 0;
+  padding: 0;
+  font-size: 8pt;
+  color: var(--c-text-soft);
+}
+
+.leyenda-tabla li {
+  /* display: flex con baseline + gap permite hanging indent: cuando el
+     texto del bullet wrapea a una segunda línea, queda alineado contra
+     el chip (no contra el margen izquierdo de la página). */
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.leyenda-chip {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 3px;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  min-width: 36px;
+  text-align: center;
+  /* margin-right ya no necesario: el padre .leyenda-tabla li usa gap. */
+  flex-shrink: 0;
+}
+
+.leyenda-chip--fail { background: var(--c-fail-bg); color: var(--c-fail); border: 1px solid var(--c-fail-border); }
+.leyenda-chip--warn { background: var(--c-warn-bg); color: var(--c-warn); border: 1px solid var(--c-warn-border); }
+
+/* Tabla key/value compacta para identificación / estadísticas. */
+table.kv {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin: 0;
+}
+
+table.kv td {
+  padding: 3px 0;
+  vertical-align: top;
+}
+
+table.kv td.k {
+  font-weight: 600;
+  color: var(--c-text-soft);
+  width: 42%;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+
+table.kv td.v {
+  color: var(--c-text);
+}
+
+/* ─────────── Grids ─────────── */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+/* ─────────── Veredicto principal del lote ─────────── */
+
+.veredicto-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid;
+  margin: 4px 0 10px 0;
+}
+
+.veredicto-banner__icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11pt;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.veredicto-banner__body { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+
+.veredicto-banner__label {
+  font-size: 7pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--c-muted);
+  margin: 0;
+}
+
+.veredicto-banner__title {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.veredicto-banner__criterio {
+  font-size: 8pt;
+  color: var(--c-muted);
+  margin: 0 0 0 auto;
+}
+
+.veredicto-banner--apto      { background: var(--c-ok-bg);   border-color: var(--c-ok-border);   color: var(--c-ok); }
+.veredicto-banner--apto      .veredicto-banner__icon { background: var(--c-ok); }
+.veredicto-banner--apto      .veredicto-banner__title { color: var(--c-ok); }
+
+.veredicto-banner--no-apto   { background: var(--c-fail-bg); border-color: var(--c-fail-border); color: var(--c-fail); }
+.veredicto-banner--no-apto   .veredicto-banner__icon { background: var(--c-fail); }
+.veredicto-banner--no-apto   .veredicto-banner__title { color: var(--c-fail); }
+
+.veredicto-banner--reservas  { background: var(--c-warn-bg); border-color: var(--c-warn-border); color: var(--c-warn); }
+.veredicto-banner--reservas  .veredicto-banner__icon { background: var(--c-warn); }
+.veredicto-banner--reservas  .veredicto-banner__title { color: var(--c-warn); }
+
+.veredicto-banner--informativo { background: var(--c-na-bg); border-color: var(--c-na-border); color: var(--c-na); }
+.veredicto-banner--informativo .veredicto-banner__icon { background: var(--c-na); }
+.veredicto-banner--informativo .veredicto-banner__title { color: var(--c-na); }
+
+/* ─────────── Cards de cumplimiento (3 paralelos M1/M2/IRAM) ─────────── */
+
+.cumplimiento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 6px 0 10px 0;
+}
+
+.cumpli-card {
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  background: white;
+  border-top: 3px solid var(--c-primary);
+}
+
+.cumpli-card--ok    { border-top-color: var(--c-ok); }
+.cumpli-card--fail  { border-top-color: var(--c-fail); }
+.cumpli-card--na    { border-top-color: var(--c-na); }
+
+.cumpli-card__norma {
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--c-muted);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin: 0 0 2px 0;
+}
+
+.cumpli-card__title {
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: var(--c-text);
+  margin: 0 0 6px 0;
+}
+
+.cumpli-card__verdict {
+  font-size: 11pt;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cumpli-card__verdict::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cumpli-card__verdict--ok    { color: var(--c-ok); }
+.cumpli-card__verdict--fail  { color: var(--c-fail); }
+.cumpli-card__verdict--na    { color: var(--c-na); }
+
+.cumpli-card__subtitle {
+  font-size: 8pt;
+  color: var(--c-text-soft);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Sección de muestras descartadas — separada visualmente de la tabla
+   principal con margen extra arriba y un bloque levemente diferenciado. */
+.seccion-descartadas {
+  margin-top: 18px;
+  padding: 10px 12px;
+  background: #fff7ed;
+  border-left: 3px solid var(--c-warn);
+  border-radius: var(--r-sm);
+  page-break-inside: avoid;
+}
+
+.seccion-descartadas h3.subsection {
+  margin: 0 0 4px 0;
+  color: var(--c-warn);
+}
+
+.seccion-descartadas__intro {
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.seccion-descartadas table.data {
+  margin: 0;
+  background: white;
+}
+
+/* ─────────── Avisos / banners secundarios ─────────── */
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--c-warn-bg);
+  border-left: 3px solid var(--c-warn);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-size: 8.5pt;
+  color: var(--c-warn);
+}
+
+.aviso--info { background: #eff6ff; border-left-color: var(--c-primary-soft); color: #1e3a8a; }
+.aviso--ok   { background: var(--c-ok-bg); border-left-color: var(--c-ok); color: var(--c-ok); }
+
+.aviso strong { font-weight: 600; }
+
+.nota-pie {
+  font-size: 7.5pt;
+  color: var(--c-muted);
+  font-style: italic;
+  margin: 14px 0 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--c-border);
+}
+
+.nota-pie ul {
+  margin: 4px 0;
+  padding-left: 16px;
+}
+
+/* Glosario al pie del informe — definición de los términos técnicos
+   usados en el documento. Layout de 2 columnas con dt/dd. */
+.glosario {
+  margin: 12px 0 0 0;
+  padding: 8px 12px;
+  background: var(--c-bg-soft);
+  border-radius: var(--r-sm);
+  border-left: 3px solid var(--c-primary);
+  font-size: 7.5pt;
+  color: var(--c-text-soft);
+  /* box-sizing: el padding entra dentro del width — sin esto, el container
+     se sale del área imprimible cuando el contenido llena el grid. */
+  box-sizing: border-box;
+  width: 100%;
+  /* Mantener el glosario indivisible: si no entra entero al final de la
+     página actual, salta a la siguiente. Es preferible aceptar una página
+     2 con glosario + firmas a partir el glosario en dos pedazos. */
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.glosario__titulo {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--c-primary);
+  margin: 0 0 4px 0;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.glosario__lista {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 10px;
+  row-gap: 2px;
+  margin: 0;
+}
+
+.glosario__lista dt {
+  font-weight: 700;
+  color: var(--c-text);
+  font-style: normal;
+  white-space: nowrap;
+  /* min-width: 0 evita que dt empuje 1fr fuera de la celda — bug clásico
+     de grid + max-content cuando los términos largos tipo "f'ck (estimado)"
+     intentan reservar más espacio del disponible. */
+  min-width: 0;
+}
+
+.glosario__lista dd {
+  margin: 0;
+  font-style: normal;
+  line-height: 1.45;
+  /* Idem dt: sin min-width:0 el contenido de la dd no sabe wrappear
+     dentro de la celda 1fr y se desborda hacia la derecha (cortándose
+     contra el margen del @page). overflow-wrap garantiza wrap incluso
+     en palabras largas con guiones o referencias normativas. */
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* ─────────── Veredicto badge inline (chip) ─────────── */
+
+.veredicto-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  font-size: 8pt;
+  letter-spacing: 0.3px;
+}
+
+.veredicto-chip--ok       { background: var(--c-ok-bg);   color: var(--c-ok); }
+.veredicto-chip--fail     { background: var(--c-fail-bg); color: var(--c-fail); }
+.veredicto-chip--reservas { background: var(--c-warn-bg); color: var(--c-warn); }
+.veredicto-chip--na       { background: var(--c-na-bg);   color: var(--c-na); }
+
+/* ─────────── Sección de firmas ─────────── */
+
+.firmas {
+  display: flex;
+  gap: 20px;
+  /* margin-top: auto empuja las firmas al pie cuando viven dentro del
+     wrapper .last-page-block (flex-column con min-height 261mm). El
+     padding-top mínimo evita que queden pegadas al glosario cuando
+     éste es alto y el espacio sobrante es chico. */
+  margin-top: auto;
+  padding-top: 18mm;
+}
+
+.firmas .firma {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.firma {
+  text-align: center;
+  font-size: 8.5pt;
+}
+
+.firma__line {
+  border-top: 1px solid var(--c-text-soft);
+  margin: 22px 0 4px 0;
+}
+
+.firma__role {
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.firma__detail {
+  color: var(--c-muted);
+  font-size: 7.5pt;
+  margin-top: 2px;
+}
+
+/* ─────────── Page break helpers ─────────── */
+
+.no-break { page-break-inside: avoid; }
+.break-before { page-break-before: always; }

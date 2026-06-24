@@ -1,0 +1,539 @@
+/* ============================================================
+   WizardDosificacion — overrides de tema "emerald / motor"
+   Reutiliza .wizard-mant-* y .wizard-cl-mockup-*
+   ============================================================ */
+
+/* ─── Alineación general de párrafos ──────────────────────── */
+.wizard-mant-dos .wizard-mant-step-content > p,
+.wizard-mant-dos .wizard-mant-callout > div > p,
+.wizard-mant-dos .wizard-dos-feature > div > p,
+.wizard-mant-dos .wizard-dos-veri > div > p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+/* R12 (auditoría 01-calidad): brand identity preservada (tema emerald wizard). */
+/* ─── Tema emerald ────────────────────────────────────────── */
+.wizard-dos-sidebar-icon {
+    background: linear-gradient(135deg, #10b981, #047857) !important;
+}
+
+.wizard-dos-hero-icon {
+    background: linear-gradient(135deg, #10b981, #047857) !important;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3) !important;
+}
+
+.wizard-dos-progress-fill {
+    background: linear-gradient(90deg, #10b981, #16a34a) !important;
+}
+
+/* ─── Cards de bienvenida ─────────────────────────────────── */
+.wizard-dos-cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* ─── Lista de prerrequisitos ─────────────────────────────── */
+.wizard-dos-prereq-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.wizard-dos-prereq-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-dos-prereq-list li.ok      { border-left: 4px solid var(--green-600); }
+.wizard-dos-prereq-list li.pending { border-left: 4px solid var(--orange-500); }
+
+.wizard-dos-prereq-list li > i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-dos-prereq-list li.ok > i      { color: var(--green-600); }
+.wizard-dos-prereq-list li.pending > i { color: var(--orange-500); }
+
+.wizard-dos-prereq-list li > span {
+    flex: 1 1 auto;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* ─── Cards de parámetros del motor (4 cards) ─────────────── */
+.wizard-dos-param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-dos-param-grid { grid-template-columns: 1fr; }
+}
+
+.wizard-dos-param-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-dos-param-card i {
+    font-size: 1.5rem;
+    color: #10b981; /* R12: brand identity preserved (emerald wizard) */
+}
+
+.wizard-dos-param-card strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.wizard-dos-param-card small {
+    color: var(--text-color-secondary);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+/* ─── Comparativa Cálculo directo / Sugerencia ────────────── */
+.wizard-dos-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-dos-compare { grid-template-columns: 1fr; }
+}
+
+.wizard-dos-compare-col {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    background: var(--cover-input-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* R12 (auditoría 01-calidad): brand identity preservada (emerald=directo, púrpura=sugerencia). */
+.wizard-dos-compare-col.directo    { border-top: 3px solid #10b981; }
+.wizard-dos-compare-col.sugerencia { border-top: 3px solid #8b5cf6; }
+
+.wizard-dos-compare-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.wizard-dos-compare-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-dos-compare-head h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.wizard-dos-compare-head small {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+}
+
+.wizard-dos-compare-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wizard-dos-compare-col ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.wizard-dos-compare-col ul li > i {
+    color: var(--green-600);
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+    width: 12px;
+    text-align: center;
+}
+
+.wizard-dos-compare-col ul li > span {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.wizard-dos-compare-when {
+    border-top: 1px solid var(--surface-border);
+    padding-top: 0.75rem;
+    margin-top: auto;
+}
+
+.wizard-dos-compare-when strong {
+    color: var(--text-color);
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-dos-compare-when p {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* ─── Verificaciones (6 cards) ────────────────────────────── */
+.wizard-dos-veri-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-dos-veri-grid { grid-template-columns: 1fr; }
+}
+
+.wizard-dos-veri {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.95rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-dos-veri-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #10b981, #047857); /* R12: brand identity preserved */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.wizard-dos-veri > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wizard-dos-veri strong {
+    color: var(--text-color);
+    font-size: 0.92rem;
+}
+
+.wizard-dos-veri p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+/* ─── Flow horizontal (aprobación) ────────────────────────── */
+.wizard-dos-flow {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    flex-wrap: wrap;
+}
+
+.wizard-dos-flow-step {
+    flex: 1 1 220px;
+    min-width: 200px;
+    padding: 0.95rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wizard-dos-flow-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981, #047857); /* R12: brand identity preserved */
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.wizard-dos-flow-step strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.wizard-dos-flow-step p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+.wizard-dos-flow-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-secondary);
+}
+
+@media (max-width: 768px) {
+    .wizard-dos-flow-arrow { display: none; }
+}
+
+/* ─── Feature cards (aprobación) ──────────────────────────── */
+.wizard-dos-feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-dos-feature-grid { grid-template-columns: 1fr; }
+}
+
+.wizard-dos-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-dos-feature > i {
+    font-size: 1.4rem;
+    color: #10b981; /* R12: brand identity preserved (emerald wizard) */
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.wizard-dos-feature > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.wizard-dos-feature strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.wizard-dos-feature p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+/* ─── Lista numerada de pasos ─────────────────────────────── */
+.wizard-dos-steps-list {
+    list-style: none;
+    counter-reset: dos-steps;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.wizard-dos-steps-list li {
+    counter-increment: dos-steps;
+    position: relative;
+    padding: 0.85rem 0.85rem 0.85rem 3.2rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.wizard-dos-steps-list li::before {
+    content: counter(dos-steps);
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #10b981, #047857); /* R12: brand identity preserved */
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ============================================================
+   Banner "Configuración del módulo en pausa" + botón Configurar
+   (compartidos con el resto de wizards)
+   ============================================================ */
+
+/* R12 (auditoría 01-calidad): brand identity preservada (banner emerald wizard). */
+.mant-wizard-resume-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(22, 163, 74, 0.08));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+[data-theme="dark"] .mant-wizard-resume-banner {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(22, 163, 74, 0.15));
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.mant-wizard-resume-banner-text {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1 1 280px;
+}
+
+.mant-wizard-resume-banner-text > i {
+    font-size: 1.4rem;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .mant-wizard-resume-banner-text > i {
+    color: #6ee7b7;
+}
+
+.mant-wizard-resume-banner-text strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    display: block;
+}
+
+.mant-wizard-resume-banner-text small {
+    color: var(--text-color-secondary);
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.mant-wizard-resume-banner-actions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mant-wizard-btn {
+    padding: 0.45rem 1.1rem !important;
+    width: auto !important;
+    min-width: 130px !important;
+    border-radius: 8px !important;
+    height: auto !important;
+}
+
+.mant-wizard-btn .p-button-label {
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+}
+
+.mant-wizard-btn .p-button-icon {
+    flex: 0 0 auto !important;
+}
+
+/* ============================================================
+   Sugerencias de mezcla — card "ajustada" (Issue 1, sesión 2026-05-27)
+   Cuando una sugerencia tiene proporciones modificadas, gana foco
+   visual prominente: borde azul grueso a la izquierda, fondo claro
+   y badge "MODIFICADA". Sin esto el sufijo "(ajustada)" era muy
+   sutil y el usuario podía seleccionar la sugerencia equivocada.
+   ============================================================ */
+.dosif-sug-card-ajustada {
+    border-left: 4px solid var(--blue-500) !important;
+    background: rgba(59, 130, 246, 0.05) !important;
+}
+
+[data-theme="dark"] .dosif-sug-card-ajustada {
+    background: rgba(59, 130, 246, 0.12) !important;
+}
+
+.dosif-sug-card-pulse {
+    animation: dosif-sug-pulse 1.2s ease-out;
+}
+
+@keyframes dosif-sug-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.55); }
+    70%  { box-shadow: 0 0 0 14px rgba(59, 130, 246, 0);  }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);     }
+}
+
+.dosif-sug-badge-modificada {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    background: var(--blue-500);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}

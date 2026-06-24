@@ -1,0 +1,4 @@
+.signature-canvas {
+  border: 1px solid var(--surface-border);
+  border-radius: 4px;
+}

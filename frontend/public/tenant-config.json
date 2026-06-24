@@ -1,0 +1,6 @@
+{
+    "arideros":   { "backendUrl": "https://api.hormiqual.com", "portalUrl": "https://portal.arideros.com.ar",   "backendTenant": "arideros" },
+    "hormiqual":  { "backendUrl": "https://api.hormiqual.com", "portalUrl": "https://portal.hormiqual.com",     "backendTenant": "hormiqual" },
+    "hdi":        { "backendUrl": "https://api.hormiqual.com", "portalUrl": "https://portal.hdi.com.ar",        "backendTenant": "hdi" },
+    "hormiwhite": { "backendUrl": "https://api.hormiqual.com", "portalUrl": "https://portal.hormiwhite.com.ar", "backendTenant": "hormiwhite" }
+}

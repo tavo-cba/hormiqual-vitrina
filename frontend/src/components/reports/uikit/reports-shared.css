@@ -1,0 +1,1093 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   REPORTS MODULE - Shared Professional Styles
+   Para: report-fresh, report-probetas y sus filtros
+   Reutiliza la estética de resistance-reports
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CSS Variables del módulo
+   ───────────────────────────────────────────────────────────────────────────── */
+.reports-module {
+    --rpt-primary: #3b5998;
+    --rpt-primary-light: #5a7dc0;
+    --rpt-primary-dark: #2c4373;
+    --rpt-accent: #f5a623;
+    --rpt-success: #2ecc71;
+    --rpt-danger: #e74c3c;
+    --rpt-warning: #f39c12;
+    --rpt-info: #3498db;
+
+    --rpt-surface: var(--form-card-bg, #ffffff);
+    --rpt-surface-elevated: var(--chart-background, #ffffff);
+    --rpt-surface-muted: var(--background-dark, #f5f7fa);
+    --rpt-border: rgba(0, 0, 0, 0.08);
+    --rpt-border-strong: rgba(0, 0, 0, 0.12);
+
+    --rpt-text-primary: var(--text-color, #2c3e50);
+    --rpt-text-secondary: rgba(128, 128, 128, 0.85);
+    --rpt-text-muted: rgba(128, 128, 128, 0.6);
+
+    --rpt-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --rpt-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --rpt-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+
+    --rpt-radius-sm: 6px;
+    --rpt-radius-md: 10px;
+    --rpt-radius-lg: 14px;
+
+    --rpt-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Ancho del filter panel para cálculos */
+    --rpt-filter-width: 280px;
+}
+
+:root[data-theme='dark'] .reports-module {
+    --rpt-primary: #6b8cce;
+    --rpt-primary-light: #8aa8e0;
+    --rpt-primary-dark: #4a6ba8;
+    --rpt-surface: var(--form-card-bg, #2a2d3e);
+    --rpt-surface-elevated: var(--chart-background, #363a4f);
+    --rpt-surface-muted: var(--background-dark, #1e2030);
+    --rpt-border: rgba(255, 255, 255, 0.08);
+    --rpt-border-strong: rgba(255, 255, 255, 0.12);
+    --rpt-text-secondary: rgba(200, 200, 200, 0.85);
+    --rpt-text-muted: rgba(180, 180, 180, 0.6);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Layout Principal - FIX OVERFLOW
+   ───────────────────────────────────────────────────────────────────────────── */
+.reports-module {
+    display: flex;
+    gap: 1.5rem;
+    min-height: calc(100vh - 80px);
+    padding: 1rem;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Panel de Filtros (Sidebar)
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-filter-panel {
+    width: var(--rpt-filter-width);
+    min-width: var(--rpt-filter-width);
+    max-width: var(--rpt-filter-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 1rem;
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: var(--rpt-surface);
+    border-radius: var(--rpt-radius-lg);
+    box-shadow: var(--rpt-shadow-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.rpt-filter-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.rpt-filter-panel::-webkit-scrollbar-thumb {
+    background: var(--rpt-border-strong);
+    border-radius: 4px;
+}
+
+/* Header del panel de filtros */
+.rpt-filter-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rpt-border);
+}
+
+.rpt-filter-header-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rpt-primary), var(--rpt-primary-dark));
+    border-radius: var(--rpt-radius-sm);
+    color: white;
+    font-size: 0.9rem;
+}
+
+.rpt-filter-header-icon--fresh {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.rpt-filter-header-icon--probetas {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.rpt-filter-header-text {
+    flex: 1;
+}
+
+.rpt-filter-header-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--rpt-text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.rpt-filter-header-subtitle {
+    font-size: 0.75rem;
+    color: var(--rpt-text-muted);
+    margin: 0;
+}
+
+/* Secciones de filtros */
+.rpt-filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.rpt-filter-section-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--rpt-text-muted);
+    margin: 0;
+    padding-left: 2px;
+}
+
+/* Toggle de tipo de muestras/probetas */
+.rpt-type-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--rpt-surface-muted);
+    border-radius: var(--rpt-radius-sm);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rpt-border);
+}
+
+.rpt-type-toggle-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.rpt-type-toggle-label {
+    font-size: 0.8rem;
+    color: var(--rpt-text-primary);
+    font-weight: 500;
+}
+
+.rpt-type-toggle-hint {
+    font-size: 0.7rem;
+    color: var(--rpt-text-muted);
+    margin-top: 2px;
+}
+
+/* Selector destacado (estado, etc) */
+.rpt-highlighted-selector {
+    background: linear-gradient(135deg,
+            rgba(59, 89, 152, 0.08) 0%,
+            rgba(59, 89, 152, 0.04) 100%);
+    border: 1px solid var(--rpt-border);
+    border-radius: var(--rpt-radius-md);
+    padding: 1rem;
+}
+
+.rpt-highlighted-selector .rpt-filter-section-title {
+    color: var(--rpt-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Contenedor de filtros dropdown */
+.rpt-filters-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Estilos específicos para dropdowns dentro del módulo */
+.reports-module .rpt-dropdown {
+    width: 100%;
+}
+
+.reports-module .rpt-dropdown .p-dropdown {
+    width: 100%;
+    border: 1px solid var(--rpt-border);
+    border-radius: var(--rpt-radius-sm);
+    background: var(--rpt-surface);
+    transition: var(--rpt-transition);
+    min-height: 2.5rem;
+}
+
+.reports-module .rpt-dropdown .p-dropdown:hover {
+    border-color: var(--rpt-primary-light);
+}
+
+.reports-module .rpt-dropdown .p-dropdown:focus,
+.reports-module .rpt-dropdown .p-dropdown.p-focus {
+    border-color: var(--rpt-primary);
+    box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.15);
+}
+
+.reports-module .rpt-dropdown .p-dropdown .p-dropdown-label {
+    font-size: 0.825rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.reports-module .rpt-dropdown .p-dropdown .p-dropdown-trigger {
+    width: 2.5rem;
+}
+
+/* Tipo de fecha */
+.rpt-date-type {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.rpt-date-type-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--rpt-text-secondary);
+}
+
+.reports-module .rpt-date-type .p-selectbutton {
+    display: flex;
+    width: 100%;
+}
+
+.reports-module .rpt-date-type .p-selectbutton .p-button {
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.5rem;
+    justify-content: center;
+    border: 1px solid var(--rpt-border);
+    background: var(--rpt-surface);
+    color: var(--rpt-text-secondary);
+    transition: var(--rpt-transition);
+}
+
+.reports-module .rpt-date-type .p-selectbutton .p-button.p-highlight {
+    background: var(--rpt-primary);
+    border-color: var(--rpt-primary);
+    color: white;
+}
+
+/* Calendarios */
+.rpt-date-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.reports-module .rpt-calendar .p-calendar {
+    width: 100%;
+}
+
+.reports-module .rpt-calendar .p-inputtext {
+    border: 1px solid var(--rpt-border);
+    border-radius: var(--rpt-radius-sm);
+    font-size: 0.8rem;
+    padding: 0.5rem 0.625rem;
+    text-align: center;
+    transition: var(--rpt-transition);
+}
+
+.reports-module .rpt-calendar .p-inputtext:hover {
+    border-color: var(--rpt-primary-light);
+}
+
+.reports-module .rpt-calendar .p-inputtext:focus {
+    border-color: var(--rpt-primary);
+    box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.15);
+}
+
+/* Botón limpiar filtros */
+.rpt-clear-filters-btn {
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: var(--rpt-radius-sm);
+    background: var(--rpt-surface-muted) !important;
+    border: 1px solid var(--rpt-border) !important;
+    color: var(--rpt-text-secondary) !important;
+    transition: var(--rpt-transition);
+    margin-top: 0.5rem;
+}
+
+.rpt-clear-filters-btn:hover {
+    background: var(--rpt-surface) !important;
+    border-color: var(--rpt-border-strong) !important;
+}
+
+/* Sección de exportación */
+.rpt-export-section {
+    background: linear-gradient(135deg,
+            rgba(59, 89, 152, 0.06) 0%,
+            rgba(59, 89, 152, 0.02) 100%);
+    border: 1px solid var(--rpt-border);
+    border-radius: var(--rpt-radius-md);
+    padding: 1rem;
+}
+
+.rpt-export-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.rpt-export-buttons--single {
+    grid-template-columns: 1fr;
+}
+
+.rpt-export-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--rpt-radius-sm);
+    cursor: pointer;
+    transition: var(--rpt-transition);
+    border: none;
+}
+
+.rpt-export-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.rpt-export-btn--excel {
+    background: #27ae60 !important;
+    color: white !important;
+}
+
+.rpt-export-btn--excel:hover:not(:disabled) {
+    background: #219a52 !important;
+    transform: translateY(-1px);
+}
+
+.rpt-export-btn--pdf {
+    background: var(--rpt-primary) !important;
+    color: white !important;
+}
+
+.rpt-export-btn--pdf:hover:not(:disabled) {
+    background: var(--rpt-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Panel Principal (Contenido) - FIX OVERFLOW
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-main-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 0;
+    /* CRÍTICO: permite que flex shrink funcione */
+    max-width: 100%;
+    width: 0;
+    /* CRÍTICO: evita que se expanda más allá del contenedor flex */
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+/* Header del reporte */
+.rpt-report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rpt-report-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--rpt-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rpt-report-title-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rpt-primary), var(--rpt-primary-dark));
+    border-radius: var(--rpt-radius-md);
+    color: white;
+    font-size: 1.1rem;
+}
+
+.rpt-report-title-icon--fresh {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.rpt-report-title-icon--probetas {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.rpt-report-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: var(--rpt-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: 100px;
+}
+
+.rpt-report-badge--fresh {
+    background: #3498db;
+}
+
+.rpt-report-badge--probetas {
+    background: #9b59b6;
+}
+
+/* Stats cards */
+.rpt-stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.rpt-stat-card {
+    background: var(--rpt-surface);
+    border-radius: var(--rpt-radius-md);
+    padding: 1rem;
+    box-shadow: var(--rpt-shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.rpt-stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--rpt-text-muted);
+    margin: 0;
+}
+
+.rpt-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--rpt-text-primary);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.rpt-stat-value--small {
+    font-size: 1.1rem;
+}
+
+/* Card de tabla - FIX OVERFLOW */
+.rpt-table-card {
+    background: var(--rpt-surface);
+    border-radius: var(--rpt-radius-lg);
+    box-shadow: var(--rpt-shadow-md);
+    overflow: hidden;
+    min-width: 0;
+    /* Permite que se contraiga */
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rpt-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--rpt-border);
+}
+
+.rpt-table-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--rpt-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rpt-table-title-icon {
+    color: var(--rpt-primary);
+}
+
+.rpt-table-title-icon--fresh {
+    color: #3498db;
+}
+
+.rpt-table-title-icon--probetas {
+    color: #9b59b6;
+}
+
+.rpt-table-count {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--rpt-text-muted);
+    background: var(--rpt-surface-muted);
+    padding: 0.25rem 0.625rem;
+    border-radius: 100px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DataTable Container - CRÍTICO PARA FIX OVERFLOW
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-datatable {
+    width: 100%;
+    max-width: 100%;
+    /* Mantener el scroll dentro de la tarjeta sin expandir el layout */
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.reports-module .rpt-datatable .p-datatable {
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+}
+
+/* Wrapper del DataTable para controlar overflow */
+.reports-module .rpt-datatable .p-datatable-wrapper {
+    overflow-x: auto !important;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Tabla interna */
+.reports-module .rpt-datatable .p-datatable-table {
+    width: max-content;
+    min-width: 100%;
+    table-layout: auto;
+}
+
+/* Columnas con anchos controlados */
+.reports-module .rpt-datatable .p-datatable-thead > tr > th,
+.reports-module .rpt-datatable .p-datatable-tbody > tr > td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: none;
+    min-width: 110px;
+    word-break: break-word;
+}
+
+/* Columna nombre más ancha */
+.reports-module .rpt-datatable .p-datatable-thead>tr>th:first-child,
+.reports-module .rpt-datatable .p-datatable-tbody>tr>td:first-child {
+    max-width: 150px;
+}
+
+.reports-module .rpt-datatable .p-datatable-thead>tr>th:first-child {
+    border-top-left-radius: 0;
+}
+
+.reports-module .rpt-datatable .p-datatable-thead>tr>th:last-child {
+    border-top-right-radius: 0;
+}
+
+/* Scrollbar estilizado para la tabla */
+.rpt-datatable::-webkit-scrollbar {
+    height: 8px;
+}
+
+.rpt-datatable::-webkit-scrollbar-track {
+    background: var(--rpt-surface-muted);
+    border-radius: 4px;
+}
+
+.rpt-datatable::-webkit-scrollbar-thumb {
+    background: var(--rpt-border-strong);
+    border-radius: 4px;
+}
+
+.rpt-datatable::-webkit-scrollbar-thumb:hover {
+    background: var(--rpt-text-muted);
+}
+
+/* Estado vacío */
+.rpt-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--rpt-surface);
+    border-radius: var(--rpt-radius-lg);
+    box-shadow: var(--rpt-shadow-sm);
+}
+
+.rpt-empty-state-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            rgba(245, 166, 35, 0.15) 0%,
+            rgba(245, 166, 35, 0.05) 100%);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.rpt-empty-state-icon i {
+    font-size: 1.75rem;
+    color: var(--rpt-warning);
+}
+
+.rpt-empty-state-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--rpt-text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.rpt-empty-state-text {
+    font-size: 0.875rem;
+    color: var(--rpt-text-muted);
+    margin: 0;
+    max-width: 320px;
+}
+
+/* Loading state */
+.rpt-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+/* Status badges para probetas */
+.rpt-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--rpt-radius-sm);
+    min-width: 85px;
+    justify-content: center;
+}
+
+.rpt-status-badge--curando {
+    background: rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+}
+
+.rpt-status-badge--pendiente {
+    background: rgba(241, 196, 15, 0.15);
+    color: #d68910;
+}
+
+.rpt-status-badge--ensayada {
+    background: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+.rpt-status-badge--descartada {
+    background: rgba(231, 76, 60, 0.15);
+    color: #c0392b;
+}
+
+.rpt-status-badge--perdida {
+    background: rgba(149, 165, 166, 0.2);
+    color: #7f8c8d;
+}
+
+/* Overdue styles */
+.rpt-row-overdue {
+    background: rgba(231, 76, 60, 0.07) !important;
+}
+
+.rpt-status-badge--vencida {
+    background: rgba(231, 76, 60, 0.2);
+    color: #c0392b;
+    font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dialog de PDF
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-pdf-dialog .p-dialog-content {
+    padding: 0 !important;
+}
+
+.rpt-pdf-dialog-content {
+    padding: 1.5rem;
+}
+
+.rpt-pdf-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.rpt-pdf-option-card {
+    background: var(--rpt-surface-muted);
+    border: 1px solid var(--rpt-border);
+    border-radius: var(--rpt-radius-md);
+    padding: 1rem;
+}
+
+.rpt-pdf-option-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--rpt-text-primary);
+    margin: 0 0 0.875rem 0;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--rpt-border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rpt-pdf-option-title i {
+    opacity: 0.7;
+}
+
+.rpt-pdf-option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.rpt-pdf-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.rpt-pdf-checkbox label {
+    font-size: 0.825rem;
+    color: var(--rpt-text-primary);
+    cursor: pointer;
+}
+
+.rpt-pdf-checkbox .p-checkbox-disabled+label {
+    color: var(--rpt-text-muted);
+    cursor: not-allowed;
+}
+
+.rpt-pdf-footer-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rpt-border);
+}
+
+.rpt-pdf-input-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.rpt-pdf-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.rpt-pdf-input-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--rpt-text-muted);
+}
+
+.rpt-pdf-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 1.5rem;
+    background: var(--rpt-surface-muted);
+    border-top: 1px solid var(--rpt-border);
+}
+
+.rpt-generate-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: var(--rpt-primary) !important;
+    border: none !important;
+    border-radius: var(--rpt-radius-sm);
+    color: white !important;
+    transition: var(--rpt-transition);
+}
+
+.rpt-generate-btn:hover {
+    background: var(--rpt-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Mobile filter button
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-mobile-filter-btn {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--rpt-primary) !important;
+    border: none !important;
+    color: white !important;
+    box-shadow: var(--rpt-shadow-lg);
+    z-index: 100;
+    cursor: pointer;
+    transition: var(--rpt-transition);
+}
+
+.rpt-mobile-filter-btn:hover {
+    transform: scale(1.05);
+    background: var(--rpt-primary-dark) !important;
+}
+
+/* Modificador para la página de Probetas (paleta violeta) */
+.rpt-mobile-filter-btn--probetas {
+    background: var(--purple-500) !important;
+}
+.rpt-mobile-filter-btn--probetas:hover {
+    background: var(--purple-600) !important;
+}
+
+.rpt-mobile-filter-btn i {
+    font-size: 1.25rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Alerta inline (probetas vencidas, etc.) — banner contextual con tema dark.
+   Reemplaza estilos inline hardcoded `#fdf0ef`/`#e74c3c` que en dark eran
+   ilegibles ("blanco ardiendo").
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-alert-overdue {
+    background: rgba(231, 76, 60, 0.08);
+    border: 1px solid var(--red-500);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.rpt-alert-overdue__icon {
+    color: var(--red-500);
+    font-size: 1.2rem;
+}
+.rpt-alert-overdue__title {
+    color: var(--red-600, #c0392b);
+    font-weight: 600;
+}
+.rpt-alert-overdue__hint {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+}
+[data-theme="dark"] .rpt-alert-overdue {
+    background: rgba(231, 76, 60, 0.15);
+}
+[data-theme="dark"] .rpt-alert-overdue__title {
+    color: #ff8c80;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Responsive Design
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .reports-module {
+        gap: 1rem;
+        --rpt-filter-width: 240px;
+    }
+
+    .rpt-filter-panel {
+        width: var(--rpt-filter-width);
+        min-width: var(--rpt-filter-width);
+        max-width: var(--rpt-filter-width);
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .reports-module {
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+
+    .rpt-filter-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        padding: 1rem;
+        padding-top: 4rem;
+    }
+
+    .rpt-filter-panel.mobile-visible {
+        transform: translateX(0);
+    }
+
+    .rpt-filter-close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--rpt-surface-muted);
+        border: 1px solid var(--rpt-border);
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--rpt-text-secondary);
+        transition: var(--rpt-transition);
+    }
+
+    .rpt-filter-close-btn:hover {
+        background: var(--rpt-surface);
+        color: var(--rpt-danger);
+    }
+
+    .rpt-mobile-filter-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rpt-main-panel {
+        width: 100%;
+    }
+
+    .rpt-report-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rpt-report-title {
+        font-size: 1.25rem;
+    }
+
+    .rpt-date-range {
+        grid-template-columns: 1fr;
+    }
+
+    .rpt-pdf-options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rpt-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Tabla más pequeña en mobile */
+    .reports-module .rpt-datatable .p-datatable-table {
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rpt-filter-panel {
+        padding: 0.75rem;
+        padding-top: 3.5rem;
+    }
+
+    .rpt-export-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .rpt-report-title {
+        font-size: 1.1rem;
+    }
+
+    .rpt-report-title-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+    }
+
+    .rpt-stats-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Overlay para mobile
+   ───────────────────────────────────────────────────────────────────────────── */
+.rpt-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.rpt-mobile-overlay.visible {
+    display: block;
+    opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Animaciones
+   ───────────────────────────────────────────────────────────────────────────── */
+@keyframes rpt-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rpt-table-card,
+.rpt-empty-state,
+.rpt-stat-card {
+    animation: rpt-fadeIn 0.3s ease;
+}

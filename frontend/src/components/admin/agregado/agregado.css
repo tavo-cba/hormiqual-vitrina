@@ -1,0 +1,3 @@
+.form-card .field-full > * {
+    width: 100% !important;   /* InputText, InputNumber, Dropdown… */
+  }

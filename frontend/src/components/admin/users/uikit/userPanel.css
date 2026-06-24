@@ -1,0 +1,70 @@
+/* ===== User Panel ===== */
+.user-panel {
+  padding: 0.5rem 0;
+}
+
+.user-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.user-panel-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-panel-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.panel-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.panel-label i {
+  font-size: 0.9rem;
+  width: 16px;
+  text-align: center;
+}
+
+.panel-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.plantas-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.planta-tag,
+.role-tag {
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-panel-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .user-panel-item.full-width {
+    grid-column: 1;
+  }
+}

@@ -1,0 +1,228 @@
+/* ============================================================
+   Comercial Help Dialog - Styles
+   ============================================================ */
+
+/* ---- Help Button (same pattern as CRM / Mantenimiento) ---- */
+.comercial-help-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 0;
+    color: var(--text-color-secondary) !important;
+    font-size: 1.3rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+}
+
+.comercial-help-btn:hover {
+    color: var(--text-color) !important;
+    background: var(--cover-input-bg) !important;
+}
+
+/* ---- Help Dialog Content ---- */
+.comercial-help-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.comercial-help-section h3 {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem 0;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--surface-border);
+}
+
+.comercial-help-section p {
+    color: var(--text-color-secondary);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.5;
+}
+
+.comercial-help-section ul,
+.comercial-help-section ol {
+    color: var(--text-color-secondary);
+    margin: 0;
+    padding-left: 1.5rem;
+    line-height: 1.7;
+}
+
+.comercial-help-section li {
+    margin-bottom: 0.25rem;
+}
+
+/* ---- Flow diagram ---- */
+.comercial-help-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 0;
+    flex-wrap: wrap;
+}
+
+.comercial-help-flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 90px;
+}
+
+.comercial-help-flow-step strong {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.comercial-help-flow-step small {
+    color: var(--text-color-secondary);
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+.comercial-help-flow-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.comercial-help-flow-arrow {
+    color: var(--text-color-secondary);
+    font-size: 1rem;
+}
+
+/* ---- Sub-section blocks ---- */
+.comercial-help-subsection {
+    background: var(--cover-input-bg);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    margin-bottom: 0.75rem;
+}
+
+.comercial-help-subsection h4 {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    margin: 0 0 0.4rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comercial-help-subsection p {
+    color: var(--text-color-secondary);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+/* ---- Tips section ---- */
+.comercial-help-tips {
+    background: var(--cover-input-bg);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+}
+
+.comercial-help-tips h3 {
+    border-bottom-color: transparent;
+}
+
+/* ---- Getting started section ---- */
+.comercial-help-getting-started {
+    background: linear-gradient(135deg, rgba(66, 165, 245, 0.08), rgba(76, 175, 80, 0.08));
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+}
+
+.comercial-help-getting-started h3 {
+    border-bottom-color: transparent;
+}
+
+.comercial-help-steps-numbered {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+}
+
+.comercial-help-steps-numbered li {
+    counter-increment: step-counter;
+    padding-left: 2.2rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.comercial-help-steps-numbered li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #42A5F5 0%, #4CAF50 100%);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Glossary ---- */
+.comercial-help-glossary {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+
+.comercial-help-glossary-item {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background: var(--cover-input-bg);
+}
+
+.comercial-help-glossary-item strong {
+    color: var(--text-color);
+    white-space: nowrap;
+    min-width: 140px;
+}
+
+.comercial-help-glossary-item span {
+    color: var(--text-color-secondary);
+}
+
+@media screen and (min-width: 768px) {
+    .comercial-help-glossary {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ---- Module group headers ---- */
+.comercial-help-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--surface-border);
+}
+
+.comercial-help-group-header i {
+    font-size: 1.1rem;
+}
+
+.comercial-help-group-header h3 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin: 0;
+}

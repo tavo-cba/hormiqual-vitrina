@@ -1,0 +1,115 @@
+/* Pestañas con estética inspirada en mantenimiento.jsx (subtabs con underline animado).
+   Reutilizable: envolvé el panel de contenido en un wrapper aparte.
+*/
+
+.entity-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.25rem 0.3rem;
+    border-bottom: 1px solid var(--surface-border);
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.entity-tabs::-webkit-scrollbar {
+    height: 4px;
+}
+.entity-tabs::-webkit-scrollbar-thumb {
+    background: var(--surface-border);
+    border-radius: 999px;
+}
+
+.entity-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.95rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    color: var(--text-color-secondary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.entity-tab > i {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+.entity-tab:hover {
+    background: var(--cover-input-bg);
+    color: var(--text-color);
+}
+
+.entity-tab.active {
+    color: #6e79eb;
+    background: var(--cover-input-bg);
+}
+
+.entity-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -1px;
+    height: 3px;
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(90deg, #6e79eb, #5eead4);
+    box-shadow: 0 0 6px rgba(110, 121, 235, 0.4);
+}
+
+[data-theme="dark"] .entity-tab.active {
+    color: #a5b4fc;
+}
+
+.entity-tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 20px;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: var(--surface-border);
+    color: var(--text-color-secondary);
+}
+
+.entity-tab.active .entity-tab-badge {
+    background: rgba(110, 121, 235, 0.95);
+    color: white;
+}
+
+.entity-tab-spinner {
+    font-size: 0.72rem;
+    color: #6e79eb;
+    opacity: 0.85;
+    margin-left: 0.15rem;
+}
+
+[data-theme="dark"] .entity-tab-spinner {
+    color: #a5b4fc;
+}
+
+/* Panel de contenido sugerido (clase opcional). */
+.entity-tab-panel {
+    padding: 1.25rem 0.25rem;
+}
+
+@media (max-width: 640px) {
+    .entity-tab {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.75rem;
+    }
+    .entity-tab-label {
+        display: none;
+    }
+}

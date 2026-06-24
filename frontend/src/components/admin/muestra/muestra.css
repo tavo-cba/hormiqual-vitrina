@@ -1,0 +1,44 @@
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+    font-size: 0.8rem;
+}
+
+.panel-detalles .p-multiselect-item {
+
+    max-width: 100%;
+    white-space: normal;
+    font-size: 0.8rem;
+    overflow: scroll;
+}
+
+.panel-detalles .p-multiselect-item {
+    display: flex;
+    align-items: center;
+    -webkit-line-clamp: 4;   
+}
+.lote-input {
+    background-color: transparent !important;
+    border: none;
+    border-bottom: 2px solid rgb(197, 197, 197);
+    border-radius: 0;
+    font-size: 3rem;
+
+    width: 5rem;
+    text-align: center;
+}
+
+@media (max-width: 720px) {
+    .panel-detalles .p-multiselect-item {
+        display: inline-block;
+        max-width: 100%;
+        white-space: normal;
+        font-size: 0.7rem;
+    }
+
+    .panel-detalles .p-multiselect-item {
+        display: flex;
+        align-items: center;
+
+        -webkit-line-clamp: 4;
+        overflow: hidden;
+    }
+}

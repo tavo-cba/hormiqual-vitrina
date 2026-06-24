@@ -1,0 +1,86 @@
+/**
+ * Estilos del módulo Probeta.
+ *
+ * M-UX-01 fix (auditoría 08, Bloque 8): los badges de estado ahora viven
+ * acá con override `[data-theme="dark"]` en vez de colores hardcoded en
+ * estilos inline en `probeta.jsx` y `ProbetaDetailDialog.jsx`. Si en el
+ * futuro se agrega un nuevo estado, basta agregar una clase nueva acá
+ * y mapear el id en `lib/constants/estadoProbeta.js`.
+ */
+
+.estado-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 550;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Curando — azul */
+.estado-badge--curando {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+[data-theme="dark"] .estado-badge--curando {
+  background: rgba(29, 78, 216, 0.2);
+  color: #93c5fd;
+}
+
+/* Pendiente — rojo claro (urgencia para romper) */
+.estado-badge--pendiente {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+[data-theme="dark"] .estado-badge--pendiente {
+  background: rgba(185, 28, 28, 0.2);
+  color: #fca5a5;
+}
+
+/* Ensayada — verde */
+.estado-badge--ensayada {
+  background: #d1fae5;
+  color: #047857;
+}
+[data-theme="dark"] .estado-badge--ensayada {
+  background: rgba(4, 120, 87, 0.2);
+  color: #6ee7b7;
+}
+
+/* Descartada — rojo intenso */
+.estado-badge--descartada {
+  background: #fecaca;
+  color: #991b1b;
+}
+[data-theme="dark"] .estado-badge--descartada {
+  background: rgba(153, 27, 27, 0.25);
+  color: #fca5a5;
+}
+
+/* Perdida — gris/rojo (similar a descartada pero distinguible) */
+.estado-badge--perdida {
+  background: #fde2e2;
+  color: #7f1d1d;
+}
+[data-theme="dark"] .estado-badge--perdida {
+  background: rgba(127, 29, 29, 0.25);
+  color: #fca5a5;
+}
+
+/* Badge "Pastón" — identifica probetas propias confeccionadas en un pastón
+   de prueba (sin Muestra, ligadas a MuestraPaston). */
+.probeta-paston-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.75rem;
+  background: #e0e7ff;
+  color: #3730a3;
+  white-space: nowrap;
+}
+[data-theme="dark"] .probeta-paston-badge {
+  background: rgba(55, 48, 163, 0.3);
+  color: #a5b4fc;
+}

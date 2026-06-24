@@ -1,0 +1,276 @@
+/* ===== Formulario de Usuario ===== */
+.user-form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.user-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--form-card-bg);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12);
+  margin-bottom: 0;
+}
+
+.user-form-header .header-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  transform: translateX(-4px);
+  background-color: var(--button-secondary) !important;
+}
+
+/* Content */
+.user-form-content {
+  background: var(--form-card-bg);
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--form-card-2);
+  border-radius: 10px;
+  border: 1px solid var(--datatable-lines);
+  transition: all 0.3s ease;
+  animation: fadeInScale 0.4s ease-out both;
+}
+
+.form-section:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.form-section:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.form-section:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.form-section:hover {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--datatable-lines);
+}
+
+.section-icon {
+  width: 36px;
+  height: 36px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--primary-gradient);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-color);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Section Content */
+.section-content {
+  animation: fadeIn 0.4s ease-out 0.2s both;
+}
+
+/* Form Labels */
+.form-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: var(--text-color);
+}
+
+.required-mark {
+  color: var(--lightred);
+  font-weight: bold;
+  margin-right: 0.25rem;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.checkbox-label:hover {
+  color: var(--hover-blue);
+}
+
+/* Permissions Section */
+.permissions-section {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.permissions-section:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.permissions-info-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--fondo-filtros);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--button-info);
+}
+
+.permissions-info-banner i {
+  font-size: 1.2rem;
+  color: var(--button-info);
+}
+
+.permissions-info-banner span {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--datatable-lines);
+  animation: fadeIn 0.5s ease-out 0.4s both;
+}
+
+.form-actions .p-button {
+  min-width: 160px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease;
+}
+
+.form-actions .p-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Form Fields */
+.field {
+  margin-bottom: 0;
+}
+
+.p-password,
+.p-inputtext,
+.p-dropdown,
+.p-multiselect {
+  transition: all 0.3s ease;
+}
+
+.p-password:focus-within,
+.p-inputtext:focus,
+.p-dropdown:focus,
+.p-multiselect:focus-within {
+  box-shadow: 0 0 0 3px rgba(110, 121, 235, 0.15) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-form-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .user-form-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .back-button {
+    align-self: flex-end;
+  }
+
+  .user-form-content {
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .p-button {
+    width: 100%;
+    min-width: 0;
+  }
+}

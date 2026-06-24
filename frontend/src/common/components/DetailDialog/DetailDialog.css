@@ -1,0 +1,376 @@
+/* ============================================
+   Unified Detail Dialog primitives
+   ============================================ */
+
+/* Container */
+.dd-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 0.25rem;
+}
+
+/* Header (use as Dialog header prop) */
+.dd-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding-right: 0.5rem;
+}
+
+.dd-header-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.dd-header-title > i {
+    color: #6e79eb;
+    font-size: 1.1rem;
+}
+
+[data-theme="dark"] .dd-header-title > i {
+    color: #a5b4fc;
+}
+
+/* Status Pill */
+.dd-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.dd-status > i {
+    font-size: 0.75rem;
+}
+
+.dd-status.accent-success { background: rgba(46, 125, 50, 0.12); color: #2e7d32; border-color: rgba(46, 125, 50, 0.3); }
+.dd-status.accent-info    { background: rgba(21, 101, 192, 0.12); color: #1565c0; border-color: rgba(21, 101, 192, 0.3); }
+.dd-status.accent-warning { background: rgba(230, 81, 0, 0.12); color: #e65100; border-color: rgba(230, 81, 0, 0.3); }
+.dd-status.accent-danger  { background: rgba(198, 40, 40, 0.12); color: #c62828; border-color: rgba(198, 40, 40, 0.3); }
+.dd-status.accent-neutral { background: rgba(97, 97, 97, 0.12); color: #616161; border-color: rgba(97, 97, 97, 0.3); }
+
+[data-theme="dark"] .dd-status.accent-success { background: rgba(46, 125, 50, 0.22); color: #81c784; border-color: rgba(129, 199, 132, 0.4); }
+[data-theme="dark"] .dd-status.accent-info    { background: rgba(21, 101, 192, 0.22); color: #90caf9; border-color: rgba(144, 202, 249, 0.4); }
+[data-theme="dark"] .dd-status.accent-warning { background: rgba(230, 81, 0, 0.22); color: #ffb74d; border-color: rgba(255, 183, 77, 0.4); }
+[data-theme="dark"] .dd-status.accent-danger  { background: rgba(198, 40, 40, 0.22); color: #ef9a9a; border-color: rgba(239, 154, 154, 0.4); }
+[data-theme="dark"] .dd-status.accent-neutral { background: rgba(189, 189, 189, 0.18); color: #bdbdbd; border-color: rgba(189, 189, 189, 0.35); }
+
+/* Hero */
+.dd-hero {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    background: linear-gradient(135deg, rgba(110, 121, 235, 0.1), rgba(94, 234, 212, 0.06));
+    border: 1px solid rgba(110, 121, 235, 0.25);
+    border-radius: 14px;
+}
+
+.dd-hero-icon {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6e79eb, #5eead4);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 14px rgba(110, 121, 235, 0.3);
+}
+
+.dd-hero-icon-person {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+}
+
+.dd-hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.dd-hero-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-color);
+    letter-spacing: 0.02em;
+}
+
+.dd-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-color-secondary);
+}
+
+.dd-hero-tag {
+    background: var(--cover-input-bg);
+    color: var(--text-color);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--surface-border);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+/* Stats Grid */
+.dd-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.6rem;
+}
+
+.dd-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.7rem 0.85rem;
+    background: rgba(110, 121, 235, 0.06);
+    border: 1px solid rgba(110, 121, 235, 0.18);
+    border-radius: 10px;
+}
+
+[data-theme="dark"] .dd-stat {
+    background: rgba(110, 121, 235, 0.1);
+    border-color: rgba(110, 121, 235, 0.22);
+}
+
+.dd-stat-icon {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(110, 121, 235, 0.12);
+    color: #6e79eb;
+    font-size: 0.85rem;
+}
+
+[data-theme="dark"] .dd-stat-icon {
+    background: rgba(110, 121, 235, 0.2);
+    color: #a5b4fc;
+}
+
+.dd-stat.accent-success .dd-stat-icon { color: #2e7d32; background: rgba(46, 125, 50, 0.12); }
+.dd-stat.accent-warning .dd-stat-icon { color: #e65100; background: rgba(230, 81, 0, 0.12); }
+.dd-stat.accent-danger  .dd-stat-icon { color: #c62828; background: rgba(198, 40, 40, 0.12); }
+.dd-stat.accent-info    .dd-stat-icon { color: #1565c0; background: rgba(21, 101, 192, 0.12); }
+
+[data-theme="dark"] .dd-stat.accent-success .dd-stat-icon { color: #81c784; background: rgba(46, 125, 50, 0.25); }
+[data-theme="dark"] .dd-stat.accent-warning .dd-stat-icon { color: #ffb74d; background: rgba(230, 81, 0, 0.25); }
+[data-theme="dark"] .dd-stat.accent-danger  .dd-stat-icon { color: #ef9a9a; background: rgba(198, 40, 40, 0.25); }
+[data-theme="dark"] .dd-stat.accent-info    .dd-stat-icon { color: #90caf9; background: rgba(21, 101, 192, 0.25); }
+
+.dd-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.dd-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+}
+
+.dd-stat-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.dd-stat-hint {
+    font-size: 0.72rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.1rem;
+}
+
+/* Section */
+.dd-section {
+    background: rgba(110, 121, 235, 0.04);
+    border: 1px solid rgba(110, 121, 235, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .dd-section {
+    background: rgba(110, 121, 235, 0.06);
+    border-color: rgba(110, 121, 235, 0.22);
+}
+
+.dd-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    background: rgba(110, 121, 235, 0.08);
+    border-bottom: 1px solid rgba(110, 121, 235, 0.18);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.dd-section-title-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dd-section-title-text > i {
+    color: #6e79eb;
+}
+
+[data-theme="dark"] .dd-section-title {
+    background: rgba(110, 121, 235, 0.12);
+    border-bottom-color: rgba(110, 121, 235, 0.25);
+}
+
+[data-theme="dark"] .dd-section-title-text > i {
+    color: #a5b4fc;
+}
+
+.dd-section-body {
+    padding: 0.6rem 0.85rem;
+}
+
+/* Callout */
+.dd-callout {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.dd-callout > i { font-size: 0.9rem; }
+
+.dd-callout.accent-success { background: rgba(46, 125, 50, 0.1); color: #2e7d32; border-color: rgba(46, 125, 50, 0.3); }
+.dd-callout.accent-warning { background: rgba(230, 81, 0, 0.1); color: #e65100; border-color: rgba(230, 81, 0, 0.3); }
+.dd-callout.accent-danger  { background: rgba(198, 40, 40, 0.1); color: #c62828; border-color: rgba(198, 40, 40, 0.3); }
+.dd-callout.accent-info    { background: rgba(21, 101, 192, 0.1); color: #1565c0; border-color: rgba(21, 101, 192, 0.3); }
+
+[data-theme="dark"] .dd-callout.accent-success { background: rgba(46, 125, 50, 0.2); color: #81c784; border-color: rgba(129, 199, 132, 0.4); }
+[data-theme="dark"] .dd-callout.accent-warning { background: rgba(230, 81, 0, 0.2); color: #ffb74d; border-color: rgba(255, 183, 77, 0.4); }
+[data-theme="dark"] .dd-callout.accent-danger  { background: rgba(198, 40, 40, 0.2); color: #ef9a9a; border-color: rgba(239, 154, 154, 0.4); }
+[data-theme="dark"] .dd-callout.accent-info    { background: rgba(21, 101, 192, 0.2); color: #90caf9; border-color: rgba(144, 202, 249, 0.4); }
+
+/* Numbered list */
+.dd-numbered-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.dd-numbered-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.55rem 0.65rem;
+    background: rgba(110, 121, 235, 0.06);
+    border: 1px solid rgba(110, 121, 235, 0.16);
+    border-radius: 8px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+[data-theme="dark"] .dd-numbered-item {
+    background: rgba(110, 121, 235, 0.09);
+    border-color: rgba(110, 121, 235, 0.2);
+}
+
+.dd-numbered-item:hover {
+    background: rgba(110, 121, 235, 0.12);
+    border-color: rgba(110, 121, 235, 0.4);
+}
+
+[data-theme="dark"] .dd-numbered-item:hover {
+    background: rgba(110, 121, 235, 0.18);
+}
+
+.dd-numbered-num {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(110, 121, 235, 0.18);
+    color: #6e79eb;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .dd-numbered-num {
+    color: #a5b4fc;
+    background: rgba(165, 180, 252, 0.18);
+}
+
+.dd-numbered-text {
+    flex: 1 1 auto;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+/* Note */
+.dd-note {
+    white-space: pre-line;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* Empty */
+.dd-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    color: var(--text-color-secondary);
+}
+
+.dd-empty > i {
+    font-size: 2rem;
+    opacity: 0.4;
+}
+
+@media (max-width: 640px) {
+    .dd-hero { padding: 0.85rem; }
+    .dd-hero-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+    .dd-hero-title { font-size: 1rem; }
+    .dd-header { flex-wrap: wrap; gap: 0.5rem; }
+}

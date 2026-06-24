@@ -1,0 +1,15 @@
+/**
+ * Bug 2 / 2026-05-29 — Filas resaltadas para alertas asignadas al usuario.
+ * Fondo ambar suave que llama la atencion sin gritar. Override en dark theme
+ * para mantener contraste correcto.
+ */
+
+.p-datatable .p-datatable-tbody > tr.alerta-asignada-a-mi {
+  background-color: rgba(255, 193, 7, 0.08);
+  border-left: 3px solid var(--yellow-500, #f59e0b);
+}
+
+[data-theme="dark"] .p-datatable .p-datatable-tbody > tr.alerta-asignada-a-mi {
+  background-color: rgba(255, 193, 7, 0.15);
+  border-left: 3px solid #fbbf24;
+}

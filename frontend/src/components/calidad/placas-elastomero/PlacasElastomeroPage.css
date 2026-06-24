@@ -1,0 +1,90 @@
+/* Banner informativo con buen contraste en ambos temas. Reemplaza al
+   <Message severity="info"> de PrimeReact que en dark theme renderiza el
+   icono dentro de un círculo casi ilegible. */
+.placas-info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border-radius: 6px;
+    border: 1px solid #90caf9;
+    background: #e3f2fd;
+    color: #0d47a1;
+    font-size: 0.875rem;
+    line-height: 1.35;
+}
+.placas-info-banner i { margin-top: 2px; color: #1565c0; font-size: 1rem; }
+
+[data-theme="dark"] .placas-info-banner {
+    background: rgba(33, 150, 243, 0.16);
+    border-color: rgba(144, 202, 249, 0.45);
+    color: #bbdefb;
+}
+[data-theme="dark"] .placas-info-banner i { color: #90caf9; }
+
+/* Banner de "laboratorio común" en el diálogo de activación de placas.
+   Light theme: fondo verde claro + texto verde oscuro.
+   Dark theme: fondo verde semitransparente + texto verde claro.
+   Pensado para tener al menos AA de contraste en ambos modos. */
+.placas-lab-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border-radius: 6px;
+    border: 1px solid #a5d6a7;
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-size: 0.875rem;
+    line-height: 1.35;
+}
+.placas-lab-banner i { margin-top: 2px; color: #2e7d32; }
+.placas-lab-banner strong { color: #1b5e20; }
+
+[data-theme="dark"] .placas-lab-banner {
+    background: rgba(46, 125, 50, 0.18);
+    border-color: rgba(129, 199, 132, 0.45);
+    color: #c8e6c9;
+}
+[data-theme="dark"] .placas-lab-banner i { color: #81c784; }
+[data-theme="dark"] .placas-lab-banner strong { color: #e8f5e9; }
+
+/* Etiqueta de laboratorio al lado del nombre de cada prensa en el MultiSelect. */
+.placas-lab-tag {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    white-space: nowrap;
+}
+[data-theme="dark"] .placas-lab-tag { color: #b0bec5; }
+
+/* ── Fix de contraste del MultiSelect del filtro de estado ──
+   PrimeReact en dark theme dejaba los items "highlighted" (seleccionados) con
+   un background azul claro y texto blanco — ilegible. Oscurecemos el highlight
+   y aseguramos color de texto suficiente. La clase `placas-estado-filter` se
+   propaga al panel via `panelClassName`. */
+.placas-estado-filter-panel .p-multiselect-items .p-multiselect-item {
+    color: var(--text-color);
+}
+.placas-estado-filter-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+    background: #e3f2fd;
+    color: #0d47a1;
+    font-weight: 600;
+}
+.placas-estado-filter-panel .p-multiselect-items .p-multiselect-item:hover:not(.p-highlight) {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .placas-estado-filter-panel .p-multiselect-items .p-multiselect-item {
+    color: #e0e0e0;
+}
+[data-theme="dark"] .placas-estado-filter-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+    background: rgba(33, 150, 243, 0.22);
+    color: #ffffff;
+    font-weight: 600;
+}
+[data-theme="dark"] .placas-estado-filter-panel .p-multiselect-items .p-multiselect-item:hover:not(.p-highlight) {
+    background: rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .placas-estado-filter-panel .p-multiselect-items .p-multiselect-item.p-highlight:hover {
+    background: rgba(33, 150, 243, 0.32);
+}

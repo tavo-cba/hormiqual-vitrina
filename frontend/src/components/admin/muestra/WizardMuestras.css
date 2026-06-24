@@ -1,0 +1,525 @@
+/* ============================================================
+   WizardMuestras — overrides de tema "cyan / laboratorio"
+   Reutiliza .wizard-mant-* y .wizard-cl-mockup-*
+   ============================================================ */
+
+/* ─── Alineación general de párrafos ──────────────────────── */
+.wizard-mant-muestras .wizard-mant-step-content > p,
+.wizard-mant-muestras .wizard-mant-callout > div > p,
+.wizard-mant-muestras .wizard-muestras-feature > div > p,
+.wizard-mant-muestras .wizard-muestras-informe-card > div > p,
+.wizard-mant-muestras .wizard-muestras-timeline li > div > p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+/* ─── Tema cyan (laboratorio / curado) ────────────────────── */
+.wizard-muestras-sidebar-icon {
+    background: linear-gradient(135deg, #06b6d4, #0e7490) !important;
+}
+
+.wizard-muestras-hero-icon {
+    background: linear-gradient(135deg, #06b6d4, #0e7490) !important;
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3) !important;
+}
+
+.wizard-muestras-progress-fill {
+    background: linear-gradient(90deg, #06b6d4, #16a34a) !important;
+}
+
+/* ─── Cards de bienvenida ─────────────────────────────────── */
+.wizard-muestras-cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* ─── Timeline del ciclo completo (vertical numerada) ────── */
+.wizard-muestras-timeline {
+    list-style: none;
+    counter-reset: muestras-tl;
+    padding: 0;
+    margin: 1.25rem 0;
+    position: relative;
+}
+
+.wizard-muestras-timeline li {
+    counter-increment: muestras-tl;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0.85rem;
+    padding: 0 0 1.25rem 0;
+    position: relative;
+}
+
+.wizard-muestras-timeline li:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: 0;
+    width: 2px;
+    background: var(--surface-border);
+}
+
+.wizard-muestras-tl-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #0e7490);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.wizard-muestras-timeline li > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.65rem 0.95rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+}
+
+.wizard-muestras-timeline li > div strong {
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.wizard-muestras-timeline li > div small {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+.wizard-muestras-timeline li > div p {
+    margin: 0.35rem 0 0;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* ─── Comparativa propio vs tercero ───────────────────────── */
+.wizard-muestras-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-muestras-compare { grid-template-columns: 1fr; }
+}
+
+.wizard-muestras-compare-col {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    background: var(--cover-input-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.wizard-muestras-compare-col.propio  { border-top: 3px solid #06b6d4; }
+.wizard-muestras-compare-col.tercero { border-top: 3px solid #8b5cf6; }
+
+.wizard-muestras-compare-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.wizard-muestras-compare-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-muestras-compare-head h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.wizard-muestras-compare-head small {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+}
+
+.wizard-muestras-compare-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wizard-muestras-compare-col ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.wizard-muestras-compare-col ul li > i {
+    color: #16a34a;
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+    width: 12px;
+    text-align: center;
+}
+
+.wizard-muestras-compare-col ul li > span {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.wizard-muestras-compare-when {
+    border-top: 1px solid var(--surface-border);
+    padding-top: 0.75rem;
+    margin-top: auto;
+}
+
+.wizard-muestras-compare-when strong {
+    color: var(--text-color);
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-muestras-compare-when p {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* ─── Lista numerada de pasos ─────────────────────────────── */
+.wizard-muestras-steps-list {
+    list-style: none;
+    counter-reset: muestras-steps;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.wizard-muestras-steps-list li {
+    counter-increment: muestras-steps;
+    position: relative;
+    padding: 0.85rem 0.85rem 0.85rem 3.2rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.wizard-muestras-steps-list li::before {
+    content: counter(muestras-steps);
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #06b6d4, #0e7490);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ─── Feature cards (probetas y curado) ───────────────────── */
+.wizard-muestras-feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-muestras-feature-grid { grid-template-columns: 1fr; }
+}
+
+.wizard-muestras-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-muestras-feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.wizard-muestras-feature > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.wizard-muestras-feature h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.wizard-muestras-feature p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+/* ─── Cards de stats de placas (4 columnas) ──────────────── */
+.wizard-muestras-placas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin: 1rem 0;
+}
+
+@media (max-width: 600px) {
+    .wizard-muestras-placas-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.wizard-muestras-placa-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.85rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    background: var(--cover-input-bg);
+    gap: 0.3rem;
+}
+
+.wizard-muestras-placa-card i {
+    font-size: 1.5rem;
+}
+
+.wizard-muestras-placa-card strong {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    line-height: 1;
+}
+
+.wizard-muestras-placa-card small {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+}
+
+.wizard-muestras-placa-card.stock i       { color: #0ea5e9; }
+.wizard-muestras-placa-card.uso i         { color: #16a34a; }
+.wizard-muestras-placa-card.agotadas i    { color: #ef4444; }
+.wizard-muestras-placa-card.descartadas i { color: var(--text-color-secondary); }
+
+/* ─── Mockup carta Shewhart ───────────────────────────────── */
+.wizard-muestras-shewhart-mock {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    color: var(--text-color);
+}
+
+.wizard-muestras-shewhart-mock svg {
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    display: block;
+}
+
+.wizard-muestras-shewhart-leyenda {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    justify-content: center;
+}
+
+.wizard-muestras-shewhart-leyenda .dot {
+    display: inline-block;
+    width: 12px;
+    height: 3px;
+    margin-right: 0.35rem;
+    vertical-align: middle;
+}
+
+.wizard-muestras-shewhart-leyenda .dot.mean      { background: #10B981; }
+.wizard-muestras-shewhart-leyenda .dot.s1        { background: #F59E0B; }
+.wizard-muestras-shewhart-leyenda .dot.s2        { background: #EF4444; }
+.wizard-muestras-shewhart-leyenda .dot.violation {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #DC2626; vertical-align: middle;
+    margin-right: 0.35rem;
+}
+
+/* ─── Cards de informes (3 columnas) ─────────────────────── */
+.wizard-muestras-informes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+}
+
+.wizard-muestras-informe-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1.1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-muestras-informe-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-muestras-informe-card > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.wizard-muestras-informe-card h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.wizard-muestras-informe-card p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+/* ============================================================
+   Banner "Configuración del módulo en pausa" + botón Configurar
+   (compartido con el resto de wizards)
+   ============================================================ */
+
+.mant-wizard-resume-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(22, 163, 74, 0.08));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+[data-theme="dark"] .mant-wizard-resume-banner {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(22, 163, 74, 0.15));
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.mant-wizard-resume-banner-text {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1 1 280px;
+}
+
+.mant-wizard-resume-banner-text > i {
+    font-size: 1.4rem;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .mant-wizard-resume-banner-text > i {
+    color: #6ee7b7;
+}
+
+.mant-wizard-resume-banner-text strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    display: block;
+}
+
+.mant-wizard-resume-banner-text small {
+    color: var(--text-color-secondary);
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.mant-wizard-resume-banner-actions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mant-wizard-btn {
+    padding: 0.45rem 1.1rem !important;
+    width: auto !important;
+    min-width: 130px !important;
+    border-radius: 8px !important;
+    height: auto !important;
+}
+
+.mant-wizard-btn .p-button-label {
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+}
+
+.mant-wizard-btn .p-button-icon {
+    flex: 0 0 auto !important;
+}

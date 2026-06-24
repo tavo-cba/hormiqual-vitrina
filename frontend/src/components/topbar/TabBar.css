@@ -1,0 +1,969 @@
+/* ============================================================================
+   TABBAR - Modern Browser-style Tab Navigation
+   ============================================================================ */
+
+/* Main Container
+   ========================================================================== */
+.tabbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    display: flex;
+    align-items: stretch;
+    background: var(--topbar-background, #f8f9fb);
+    border-bottom: 1px solid var(--surface-border, rgba(0, 0, 0, 0.08));
+    z-index: 1100;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    user-select: none;
+}
+
+/* ============================================================================
+   ACTIONS — Left group (Back, Reload) & Right group (Search, Favorites, Add)
+   ============================================================================ */
+
+.tabbar__actions-left {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    padding: 0 6px 0 10px;
+}
+
+.tabbar__actions-right {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    padding: 0 10px 0 6px;
+}
+
+/* Divider between button groups */
+.tabbar__actions-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--surface-border, rgba(0, 0, 0, 0.12));
+    flex-shrink: 0;
+    margin: 0 4px;
+    border-radius: 1px;
+}
+
+[data-theme="dark"] .tabbar__actions-divider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Action button base */
+.tabbar__action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-color-secondary, #6b7280);
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    font-size: 13px;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+    outline: none;
+}
+
+.tabbar__action-btn:hover:not(:disabled) {
+    background: var(--surface-border, rgba(0, 0, 0, 0.06));
+    color: var(--text-color, #111827);
+}
+
+.tabbar__action-btn:active:not(:disabled) {
+    transform: scale(0.92);
+    background: var(--surface-border, rgba(0, 0, 0, 0.10));
+}
+
+.tabbar__action-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+[data-theme="dark"] .tabbar__action-btn {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="dark"] .tabbar__action-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .tabbar__action-btn:active:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================================
+   TAB AREA
+   ============================================================================ */
+
+.tabbar__tabs {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    min-width: 0;
+}
+
+.tabbar__container {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 4px 0;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    align-items: flex-end;
+}
+
+.tabbar__container::-webkit-scrollbar {
+    display: none;
+}
+
+/* ============================================================================
+   INDIVIDUAL TAB — Chrome/Edge style
+   ============================================================================ */
+.tabbar__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+    padding: 8px 8px 8px 12px;
+    min-width: fit-content;
+    max-width: 220px;
+    border-radius: 10px 10px 0 0;
+    border: none;
+    background: transparent;
+    color: var(--text-color-secondary, #6b7280);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    outline: none;
+    flex-shrink: 0;
+    animation: tabbar-slide-in 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Subtle separator between tabs */
+.tabbar__tab::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: var(--surface-border, rgba(0, 0, 0, 0.10));
+    transition: opacity 0.15s ease;
+}
+
+.tabbar__tab:last-of-type::after,
+.tabbar__tab--active::after,
+.tabbar__tab--active + .tabbar__tab::after {
+    opacity: 0;
+}
+
+.tabbar__tab:hover {
+    background: var(--surface-border, rgba(0, 0, 0, 0.05));
+    color: var(--text-color, #374151);
+}
+
+.tabbar__tab:hover::after,
+.tabbar__tab:hover + .tabbar__tab::after {
+    opacity: 0;
+}
+
+.tabbar__tab:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--primary-color, #3b82f6);
+}
+
+/* Active Tab — raised with bottom connection */
+.tabbar__tab.tabbar__tab--active {
+    background: var(--chart-background, #ffffff);
+    color: var(--text-color, #1f2937);
+    font-weight: 600;
+    box-shadow:
+        -1px 0 0 var(--surface-border, rgba(0,0,0,0.08)),
+        1px 0 0 var(--surface-border, rgba(0,0,0,0.08)),
+        0 -2px 4px rgba(0,0,0,0.04);
+    z-index: 2;
+}
+
+.tabbar__tab.tabbar__tab--active:hover {
+    background: var(--chart-background, #ffffff);
+}
+
+/* Close Animation */
+.tabbar__tab--closing {
+    pointer-events: none;
+    min-width: 0 !important;
+    gap: 0 !important;
+}
+
+/* Drag & Drop States */
+.tabbar__tab--dragging {
+    opacity: 0;
+    cursor: grabbing !important;
+}
+
+.tabbar__tab--drop-placeholder {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.tabbar__tab--drop-target {
+    border-color: var(--primary-color, #3b82f6);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================================================
+   TAB ICON
+   ============================================================================ */
+.tabbar__tab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+    flex-shrink: 0;
+}
+
+.tabbar__tab:hover .tabbar__tab-icon,
+.tabbar__tab--active .tabbar__tab-icon {
+    opacity: 1;
+}
+
+/* ============================================================================
+   TAB LABEL
+   ============================================================================ */
+.tabbar__tab-label {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* ============================================================================
+   TAB CLOSE BUTTON
+   ============================================================================ */
+.tabbar__tab-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-color-secondary, #6b7280);
+    font-size: 10px;
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+    flex-shrink: 0;
+    padding: 0;
+    outline: none;
+    opacity: 0.5;
+}
+
+.tabbar__tab:hover .tabbar__tab-close {
+    opacity: 0.7;
+}
+
+.tabbar__tab--active .tabbar__tab-close {
+    opacity: 0.7;
+}
+
+.tabbar__tab-close:hover {
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-color, #1f2937);
+    transform: scale(1.15);
+}
+
+.tabbar__tab-close:active {
+    transform: scale(0.9);
+}
+
+.tabbar__tab--active .tabbar__tab-close:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] .tabbar {
+    background: var(--topbar-background, #1a1d23);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .tabbar__tab {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .tabbar__tab::after {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .tabbar__tab:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] .tabbar__tab.tabbar__tab--active {
+    background: var(--chart-background, #282c34);
+    color: #ffffff;
+    box-shadow:
+        -1px 0 0 rgba(255, 255, 255, 0.06),
+        1px 0 0 rgba(255, 255, 255, 0.06),
+        0 -2px 6px rgba(0,0,0,0.15);
+}
+
+[data-theme="dark"] .tabbar__tab.tabbar__tab--active:hover {
+    background: var(--chart-background, #282c34);
+}
+
+[data-theme="dark"] .tabbar__tab-close {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .tabbar__tab-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .tabbar__tab--active .tabbar__tab-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .tabbar__tab--drop-placeholder {
+    background: rgba(96, 165, 250, 0.1);
+}
+
+/* ============================================================================
+   SCROLL BUTTONS
+   ============================================================================ */
+.tabbar__scroll-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: var(--text-color-secondary, #6b7280);
+    font-size: 11px;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.15s ease;
+    outline: none;
+    background: transparent;
+}
+
+.tabbar__scroll-button--left {
+    left: 0;
+    background: linear-gradient(to right,
+            var(--topbar-background, #f8f9fb) 60%,
+            transparent 100%);
+    padding-left: 6px;
+}
+
+.tabbar__scroll-button--right {
+    right: 0;
+    background: linear-gradient(to left,
+            var(--topbar-background, #f8f9fb) 60%,
+            transparent 100%);
+    padding-right: 6px;
+}
+
+.tabbar__scroll-button:hover {
+    color: var(--text-color, #111827);
+}
+
+.tabbar__scroll-button:active {
+    transform: scale(0.9);
+}
+
+[data-theme="dark"] .tabbar__scroll-button {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="dark"] .tabbar__scroll-button--left {
+    background: linear-gradient(to right,
+            var(--topbar-background, #1a1d23) 60%,
+            transparent 100%);
+}
+
+[data-theme="dark"] .tabbar__scroll-button--right {
+    background: linear-gradient(to left,
+            var(--topbar-background, #1a1d23) 60%,
+            transparent 100%);
+}
+
+[data-theme="dark"] .tabbar__scroll-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================================
+   EMPTY STATE
+   ============================================================================ */
+.tabbar__empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-color-secondary, #9ca3af);
+    font-size: 12px;
+    padding: 6px 10px;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+/* ============================================================================
+   SEARCH
+   ============================================================================ */
+.tabbar__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.tabbar__search-btn--active {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.tabbar__search-btn--active:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+}
+
+.tabbar__search-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(480px, 85vw);
+    z-index: 200;
+    animation: search-panel-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes search-panel-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.tabbar__search-suggest.search-suggest {
+    max-width: none;
+    width: 100%;
+}
+
+/* ============================================================================
+   "+" BUTTON — inline with tabs
+   ============================================================================ */
+.tabbar__add-btn {
+    font-size: 13px;
+}
+
+.tabbar__add-btn-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-color-secondary, #9ca3af);
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 12px;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+    outline: none;
+    padding: 0;
+    margin-left: 4px;
+    margin-bottom: 6px;
+    align-self: flex-end;
+}
+
+.tabbar__add-btn-inline:hover {
+    background: var(--surface-border, rgba(0, 0, 0, 0.06));
+    color: var(--text-color, #111827);
+}
+
+.tabbar__add-btn-inline:active {
+    transform: scale(0.9);
+}
+
+[data-theme="dark"] .tabbar__add-btn-inline {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="dark"] .tabbar__add-btn-inline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================================
+   FAVORITES BUTTON & DROPDOWN
+   ============================================================================ */
+
+.tabbar__favorites-wrapper {
+    position: relative;
+}
+
+.tabbar__favorites-btn {
+    color: var(--text-color-secondary, #6b7280);
+}
+
+.tabbar__favorites-btn--has-items {
+    color: #d4a017;
+}
+
+.tabbar__favorites-btn--has-items:hover {
+    color: #b8860b !important;
+}
+
+.tabbar__favorites-btn--active {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.tabbar__favorites-btn--active:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+}
+
+[data-theme="dark"] .tabbar__favorites-btn--has-items {
+    color: #fbbf24;
+}
+
+[data-theme="dark"] .tabbar__favorites-btn--active {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+/* Favorites dropdown panel */
+.tabbar__favorites-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 320px;
+    background: var(--chart-background, #ffffff);
+    border: 1px solid var(--surface-border, rgba(0, 0, 0, 0.1));
+    border-radius: 12px;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.07),
+        0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 20px 25px -5px rgba(0, 0, 0, 0.04);
+    z-index: 200;
+    overflow: hidden;
+    animation: favorites-dropdown-enter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .tabbar__favorites-dropdown {
+    background: var(--chart-background, #282c34);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.2),
+        0 10px 15px -3px rgba(0, 0, 0, 0.25),
+        0 20px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes favorites-dropdown-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Dropdown header */
+.tabbar__favorites-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color, #1f2937);
+    border-bottom: 1px solid var(--surface-border, rgba(0, 0, 0, 0.06));
+    letter-spacing: 0.01em;
+}
+
+.tabbar__favorites-header i {
+    color: #f59e0b;
+    font-size: 14px;
+}
+
+[data-theme="dark"] .tabbar__favorites-header {
+    color: var(--text-color, #e5e7eb);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Hint text */
+.tabbar__favorites-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 11.5px;
+    color: var(--text-color-secondary, #6b7280);
+    background: rgba(245, 158, 11, 0.04);
+    border-bottom: 1px solid var(--surface-border, rgba(0, 0, 0, 0.04));
+    line-height: 1.4;
+}
+
+.tabbar__favorites-hint i {
+    color: #f59e0b;
+    font-size: 11px;
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .tabbar__favorites-hint {
+    background: rgba(245, 158, 11, 0.03);
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Favorites list */
+.tabbar__favorites-list {
+    padding: 6px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+/* Individual favorite item */
+.tabbar__favorites-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    position: relative;
+}
+
+.tabbar__favorites-item:hover {
+    background: rgba(99, 102, 241, 0.06);
+}
+
+[data-theme="dark"] .tabbar__favorites-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.tabbar__favorites-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    color: #6366f1;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .tabbar__favorites-item-icon {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.12) 100%);
+    color: #818cf8;
+}
+
+.tabbar__favorites-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.tabbar__favorites-item-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-color, #1f2937);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .tabbar__favorites-item-label {
+    color: var(--text-color, #e5e7eb);
+}
+
+.tabbar__favorites-item-path {
+    font-size: 11px;
+    color: var(--text-color-secondary, #9ca3af);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 1px;
+    line-height: 1.3;
+}
+
+/* Remove button */
+.tabbar__favorites-item-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-color-secondary, #9ca3af);
+    font-size: 11px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.12s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.tabbar__favorites-item:hover .tabbar__favorites-item-remove {
+    opacity: 1;
+}
+
+.tabbar__favorites-item-remove:hover {
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+}
+
+[data-theme="dark"] .tabbar__favorites-item-remove:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+}
+
+/* Empty state */
+.tabbar__favorites-empty {
+    padding: 28px 24px;
+    text-align: center;
+}
+
+.tabbar__favorites-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(251, 191, 36, 0.08) 100%);
+    color: #f59e0b;
+    font-size: 20px;
+}
+
+[data-theme="dark"] .tabbar__favorites-empty-icon {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.06) 100%);
+    color: #fbbf24;
+}
+
+.tabbar__favorites-empty-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color, #1f2937);
+    margin: 0 0 8px;
+}
+
+[data-theme="dark"] .tabbar__favorites-empty-title {
+    color: var(--text-color, #e5e7eb);
+}
+
+.tabbar__favorites-empty-hint {
+    font-size: 12px;
+    color: var(--text-color-secondary, #6b7280);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.tabbar__favorites-empty-hint i {
+    color: var(--text-color-secondary, #6b7280);
+    margin-right: 2px;
+}
+
+.tabbar__favorites-empty-hint strong {
+    color: var(--text-color, #374151);
+}
+
+[data-theme="dark"] .tabbar__favorites-empty-hint strong {
+    color: var(--text-color, #d1d5db);
+}
+
+/* ============================================================================
+   ANIMATION KEYFRAMES
+   ============================================================================ */
+@keyframes tabbar-slide-in {
+    from {
+        opacity: 0;
+        max-width: 0;
+        padding-left: 0;
+        padding-right: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        max-width: 250px;
+        padding-left: 12px;
+        padding-right: 8px;
+        transform: scale(1);
+    }
+}
+
+@keyframes tabbar-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+    }
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 1024px) {
+    .tabbar {
+        height: 44px;
+    }
+
+    .tabbar__tab {
+        padding: 7px 7px 7px 10px;
+        font-size: 12px;
+    }
+
+    .tabbar__tab-label {
+        max-width: 130px;
+    }
+}
+
+@media (max-width: 720px) {
+    .tabbar {
+        height: 40px;
+        left: 0 !important;
+        width: 100% !important;
+    }
+
+    .tabbar__container {
+        padding: 5px 2px 0;
+    }
+
+    .tabbar__tab {
+        padding: 6px 6px 6px 8px;
+        gap: 6px;
+        font-size: 11.5px;
+    }
+
+    .tabbar__tab-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 11px;
+    }
+
+    .tabbar__tab-label {
+        max-width: 90px;
+    }
+
+    .tabbar__tab-close {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+    }
+
+    .tabbar__scroll-button {
+        width: 24px;
+        font-size: 10px;
+    }
+
+    .tabbar__search-panel {
+        right: 0;
+        left: auto;
+        width: calc(100vw - 24px);
+    }
+
+    .tabbar__actions-left,
+    .tabbar__actions-right {
+        padding: 0 4px;
+    }
+
+    .tabbar__action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabbar__tab-label {
+        max-width: 70px;
+    }
+
+    .tabbar__tab-icon {
+        display: none;
+    }
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+.tabbar__tab:focus-visible::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 12px 12px 0 0;
+    border: 2px solid var(--primary-color, #3b82f6);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tabbar,
+    .tabbar__tab,
+    .tabbar__tab-icon,
+    .tabbar__tab-close,
+    .tabbar__scroll-button,
+    .tabbar__search-panel {
+        transition: none;
+        animation: none;
+    }
+
+    .tabbar__container {
+        scroll-behavior: auto;
+    }
+}
+
+/* ============================================================================
+   PRINT
+   ============================================================================ */
+@media print {
+    .tabbar {
+        display: none;
+    }
+}

@@ -1,0 +1,84 @@
+/* Desktop: show table, hide cards */
+.piletas-mobile-cards {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Mobile: hide table, show cards */
+    .piletas-desktop-table {
+        display: none !important;
+    }
+    .piletas-mobile-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+        margin-top: 0.75rem;
+    }
+    .piletas-card {
+        background: var(--chart-background);
+        border: 1px solid var(--surface-border);
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .piletas-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    .piletas-card__nombre {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text-color);
+    }
+    .piletas-card__planta {
+        font-size: 0.8rem;
+        color: var(--text-color-secondary);
+    }
+    .piletas-card__stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    .piletas-card__stat {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+    .piletas-card__stat-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-color-secondary);
+    }
+    .piletas-card__stat-value {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    .piletas-card__devices {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .piletas-card__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding-top: 0.4rem;
+        border-top: 1px solid var(--surface-border);
+    }
+    .piletas-card__time {
+        font-size: 0.75rem;
+        color: var(--text-color-secondary);
+    }
+    .piletas-card__actions {
+        display: flex;
+        gap: 0.3rem;
+    }
+}

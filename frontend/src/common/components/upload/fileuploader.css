@@ -1,0 +1,89 @@
+/* usa la clase que pusimos en headerTemplate */
+.file-overlay {
+  position: absolute !important;
+  inset: 0;
+  /* cubre todo el contenedor */
+  opacity: 0;
+  /* invisible */
+  border: none;
+  /* sin bordes */
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  /* mano al pasar */
+}
+
+/* Opcional: elimina la barra superior de botones que PrimeReact reserva */
+.custom-uploader .p-fileupload-buttonbar {
+  display: none;
+  /* no queremos mostrarla */
+}
+
+.file-card {
+  background-color: var(--background-dark);
+  border-radius: 7px;
+  padding: 2rem !important;
+}
+
+.file-uploaded {
+  background-color: var(--background-dark);
+  font-size: 0.9rem;
+}
+
+.image-upload-avatar .p-button .p-button-icon-left {
+  display: none;
+}
+#fileuploader-image .p-button-icon {
+  display: none;
+}
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.profile-upload {
+  border-radius: 7px;
+  padding: 0;
+  border: none;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+
+.profile-uploaded {
+  border-radius: 7px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-shadow: none !important;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--new-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.avatar-container:hover .avatar-overlay {
+  opacity: 1;
+}

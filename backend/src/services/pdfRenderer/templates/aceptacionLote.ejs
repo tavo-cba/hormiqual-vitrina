@@ -1,0 +1,464 @@
+<%
+// Humaniza códigos tipo 'lote_estimadores' o 'NO_APTO' → 'lote estimadores' / 'NO APTO'.
+const humanize = (s) => s == null ? '' : String(s).replace(/_/g, ' ');
+const METODOLOGIA_LABEL = {
+  lote_estimadores: 'estimadores §6.2.3.7 (3 a 29 resultados)',
+  lote_pleno:       'estadística plena §6.2.3.8 (30 o más resultados)',
+  no_aplica_m1:     'no aplica (menos de 3 resultados)',
+  no_aplica:        'no aplica',
+};
+const lote = data.lote || {};
+const cumplimiento = data.cumplimiento || {};
+// Orden cronológico ascendente por fechaConfeccion: el cálculo del 3-MA
+// (CIRSOC §6.2.3.7.a) asigna cada ventana a la 3ra muestra del triplete
+// ordenada por fecha de confección. Si el detalles llega desordenado, los
+// 3-MA visibles no corresponden con la posición cronológica que ven los
+// stakeholders.
+const detalles = (data.detalles || []).slice().sort((a, b) => {
+  const da = new Date(a.fechaConfeccion || a.fechaToma || 0).getTime();
+  const db = new Date(b.fechaConfeccion || b.fechaToma || 0).getTime();
+  return da - db;
+});
+const veredicto = data.veredictoGlobal || {};
+const contexto = data.contexto || {};
+const fresco = data.fresco || null;
+const empresa = data.empresa || {};
+const hoy = helpers.formatDate(new Date());
+
+const fmt = (v, p) => helpers.formatNumber(v, { precision: p ?? 2 });
+const esc = helpers.escape;
+
+function classVeredicto(v) {
+  if (!v) return 'informativo';
+  switch (String(v).toUpperCase()) {
+    case 'APTO': return 'apto';
+    case 'NO_APTO': return 'no-apto';
+    case 'ACEPTABLE_CON_RESERVAS': return 'reservas';
+    default: return 'informativo';
+  }
+}
+function labelVeredicto(v) {
+  switch (String(v ?? '').toUpperCase()) {
+    case 'APTO': return 'APTO';
+    case 'NO_APTO': return 'NO APTO';
+    case 'ACEPTABLE_CON_RESERVAS': return 'ACEPTABLE CON RESERVAS';
+    default: return '— sin veredicto —';
+  }
+}
+
+// Helpers para los 3 veredictos paralelos.
+function verdictCard(cumple) {
+  if (cumple === true) return { label: 'CUMPLE', cls: 'ok' };
+  if (cumple === false) return { label: 'NO CUMPLE', cls: 'fail' };
+  return { label: 'no aplica', cls: 'na' };
+}
+const m1Verdict = verdictCard(cumplimiento.cumpleCirsocM1);
+const m2Verdict = verdictCard(cumplimiento.cumpleCirsocM2);
+const iramRaw = cumplimiento.cumpleIramAutocontrol;
+const iramVerdict = verdictCard(iramRaw && typeof iramRaw === 'object' ? iramRaw.cumple : iramRaw);
+
+// Umbrales para resaltar valores fuera de criterio en la tabla. Sin esto
+// el informe es una "caja negra": el lote dice NO_APTO sin que se vea qué
+// muestra concreta lo arrastra abajo.
+const fck = Number(lote.resistencia_diseno) || 0;
+const sigma = Number(lote.desviacion_estandar) || 0;
+const TOL_M1 = fck > 35 ? fck * 0.10 : 3.5;  // CIRSOC §6.2.3.7.b/c
+const UMBRAL_INDIV_M1 = fck - TOL_M1;          // M1 individual: f'c - 3,5 (o 0,1·f'c si f'c>35)
+const UMBRAL_INDIV_M2 = fck;                   // M2 individual: f'c
+const UMBRAL_MA_M1    = fck;                   // M1 3-MA: f'c
+const UMBRAL_MA_M2    = fck + 5;               // M2 3-MA: f'c + 5
+const k_iram = (iramRaw && typeof iramRaw === 'object' && Number.isFinite(iramRaw.k)) ? iramRaw.k : 1.000;
+const UMBRAL_MA_IRAM  = fck + k_iram * sigma;  // IRAM autocontrol
+const UMBRAL_DISP     = 15.0;                  // IRAM 1666 §5.2.1
+%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Informe de aceptación de obra</title>
+  <style><%- baseCss %></style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ─────── Header con logo + datos empresa + emisión ─────── -->
+    <%
+    // Iniciales del nombre de empresa como fallback cuando no hay logo,
+    // para que el header no quede desbalanceado.
+    function getIniciales(s) {
+      if (!s) return '';
+      const palabras = String(s).replace(/[.,]/g, '').split(/\s+/).filter(Boolean);
+      // Filtrar sufijos legales (SRL, SA, SAS, Ltda, Inc, etc.) para que
+      // no consuman las iniciales útiles.
+      const main = palabras.filter((w) => !/^(s\.?r\.?l|s\.?a|s\.?a\.?s|c[ií]a|ltda|inc|llc)$/i.test(w));
+      const target = main.length ? main : palabras;
+      if (target.length >= 2) {
+        return (target[0][0] + target[1][0]).toUpperCase();
+      }
+      // Una sola palabra → primeras 2 letras (ej. "Arideros" → "AR").
+      const w = target[0] || '';
+      return w.substring(0, 2).toUpperCase();
+    }
+    %>
+    <header class="report-header">
+      <div class="report-header__brand">
+        <% if (empresa.logoDataUrl) { %>
+          <img class="report-header__logo" src="<%= empresa.logoDataUrl %>" alt="<%= esc(empresa.nombre) %>" />
+        <% } else { %>
+          <div class="report-header__logo-fallback"><%= esc(getIniciales(empresa.nombre)) %></div>
+        <% } %>
+        <div>
+          <h1 class="report-header__company-name"><%= esc(empresa.nombre || 'HormiQual') %></h1>
+          <% if (empresa.direccion) { %>
+            <p class="report-header__company-meta"><%= esc(empresa.direccion) %></p>
+          <% } %>
+          <% if (empresa.cuit) { %>
+            <p class="report-header__company-meta">CUIT: <%= esc(empresa.cuit) %></p>
+          <% } %>
+        </div>
+      </div>
+      <div class="report-header__meta">
+        <div><strong>Emitido</strong> <%= hoy %></div>
+        <% if (contexto.edadDiseno) { %>
+          <div>Edad de diseño: <strong><%= contexto.edadDiseno %> días</strong></div>
+        <% } %>
+      </div>
+    </header>
+
+    <!-- ─────── Título del documento ─────── -->
+    <h1 class="report-title">Informe de aceptación de obra</h1>
+    <p class="report-subtitle">
+      CIRSOC 200-2024 §6.2.3 / §6.2.4 — Métodos 1 y 2 / IRAM 1666:2020 §A.7.10 — Autocontrol del productor
+    </p>
+
+    <!-- ─────── Veredicto global destacado ─────── -->
+    <% if (veredicto && veredicto.codigo) { %>
+      <% const vc = classVeredicto(veredicto.codigo); %>
+      <% const icons = { apto: '✓', 'no-apto': '✗', reservas: '!', informativo: '?' }; %>
+      <div class="veredicto-banner veredicto-banner--<%= vc %>">
+        <div class="veredicto-banner__icon"><%= icons[vc] || '?' %></div>
+        <div class="veredicto-banner__body">
+          <span class="veredicto-banner__label">Veredicto del lote:</span>
+          <span class="veredicto-banner__title"><%= labelVeredicto(veredicto.codigo) %></span>
+          <% if (veredicto.criterio) { %>
+            <span class="veredicto-banner__criterio">Criterio contractual: <%= esc(veredicto.criterio) %></span>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- ─────── Sección 1+2: Identificación + estadísticas en grid ─────── -->
+    <div class="grid-2 no-break">
+      <div>
+        <h2 class="section">1. Identificación del lote</h2>
+        <table class="kv">
+          <tr><td class="k">Cliente</td>      <td class="v"><%= esc(lote.cliente || '—') %></td></tr>
+          <tr><td class="k">Obra</td>         <td class="v"><%= esc(lote.obra || '—') %></td></tr>
+          <tr><td class="k">Planta</td>       <td class="v"><%= esc(lote.planta || '—') %></td></tr>
+          <tr><td class="k">Tipo de hormigón</td><td class="v"><%= esc(lote.tipoHormigon || '—') %></td></tr>
+          <tr><td class="k">Dosificación</td> <td class="v"><%= esc(lote.dosificacionNombre || '—') %></td></tr>
+          <% if (contexto.filtros && (contexto.filtros.desde || contexto.filtros.hasta)) { %>
+            <tr><td class="k">Período</td>
+                <td class="v">
+                  <%= contexto.filtros.desde ? helpers.formatDate(contexto.filtros.desde) : '—' %>
+                  al
+                  <%= contexto.filtros.hasta ? helpers.formatDate(contexto.filtros.hasta) : '—' %>
+                </td></tr>
+          <% } %>
+        </table>
+      </div>
+      <div>
+        <h2 class="section">2. Estadísticas del lote</h2>
+        <table class="kv">
+          <tr><td class="k">Muestras (n)</td>  <td class="v num"><%= lote.tamanoLote ?? '—' %></td></tr>
+          <tr><td class="k">f'<sub>cm</sub> (media)</td><td class="v num"><%= fmt(lote.resistencia_media) %> MPa</td></tr>
+          <tr><td class="k">Desv&iacute;o est&aacute;ndar (s)</td>    <td class="v num"><%= fmt(lote.desviacion_estandar) %> MPa</td></tr>
+          <% // CV viene del backend como "7.40%" (con punto). Reformatear es-AR. %>
+          <% const cvNum = lote.coef_variacion != null ? parseFloat(String(lote.coef_variacion).replace('%','').replace(',','.')) : null; %>
+          <tr><td class="k">CV</td>            <td class="v num"><%= cvNum != null && Number.isFinite(cvNum) ? helpers.formatNumber(cvNum, { precision: 1 }) + ' %' : '&mdash;' %></td></tr>
+          <tr><td class="k">f'<sub>ck</sub> (estimado)</td><td class="v num"><%= fmt(lote.caracteristica) %> MPa</td></tr>
+          <tr><td class="k">Mín / Máx</td>     <td class="v num"><%= fmt(lote.minima) %> / <%= fmt(lote.maxima) %> MPa</td></tr>
+          <tr><td class="k">Resistencia objetivo (f'<sub>c</sub>)</td><td class="v num"><%= fmt(lote.resistencia_diseno) %> MPa</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─────── Cumplimiento (3 criterios paralelos) ─────── -->
+    <h2 class="section">3. Criterios de cumplimiento</h2>
+    <p class="small muted" style="margin-top:-4px;">
+      Los tres criterios responden a preguntas distintas. CIRSOC 200-2024 §6.2.3 (M1)
+      y CIRSOC 200-2024 §6.2.4 (M2) son criterios de aceptación cliente — la
+      elección entre ambos es contractual. IRAM 1666:2020 §A.7.10 es autocontrol
+      del productor para detectar corrimiento del proceso.
+    </p>
+
+    <div class="cumplimiento-grid no-break">
+      <div class="cumpli-card cumpli-card--<%= m1Verdict.cls %>">
+        <p class="cumpli-card__norma">CIRSOC 200-2024 &sect;6.2.3</p>
+        <h3 class="cumpli-card__title">Modo 1 - Aceptaci&oacute;n cliente</h3>
+        <p class="cumpli-card__verdict cumpli-card__verdict--<%= m1Verdict.cls %>"><%= m1Verdict.label %></p>
+        <p class="cumpli-card__subtitle">
+          Individual &gt;= f'<sub>c</sub> - 3,5 MPa.<br/>
+          MM3 &gt;= f'<sub>c</sub>.
+        </p>
+      </div>
+      <div class="cumpli-card cumpli-card--<%= m2Verdict.cls %>">
+        <p class="cumpli-card__norma">CIRSOC 200-2024 &sect;6.2.4</p>
+        <h3 class="cumpli-card__title">Modo 2 - Aceptaci&oacute;n cliente estricto</h3>
+        <p class="cumpli-card__verdict cumpli-card__verdict--<%= m2Verdict.cls %>"><%= m2Verdict.label %></p>
+        <p class="cumpli-card__subtitle">
+          Individual &gt;= f'<sub>c</sub> (sin tolerancia).<br/>
+          MM3 &gt;= f'<sub>c</sub> + 5 MPa.
+        </p>
+      </div>
+      <div class="cumpli-card cumpli-card--<%= iramVerdict.cls %>">
+        <p class="cumpli-card__norma">IRAM 1666:2020 &sect;A.7.10</p>
+        <h3 class="cumpli-card__title">Autocontrol del productor</h3>
+        <p class="cumpli-card__verdict cumpli-card__verdict--<%= iramVerdict.cls %>"><%= iramVerdict.label %></p>
+        <p class="cumpli-card__subtitle">
+          MM3 &gt;= f'<sub>c</sub> + k(n)&times;s.<br/>
+          Alerta temprana de corrimiento del proceso.
+        </p>
+      </div>
+    </div>
+
+    <% if (cumplimiento.evaluacionMetodologia) { %>
+      <p class="tiny muted">
+        <strong>Metodolog&iacute;a CIRSOC aplicada:</strong>
+        <%= esc(METODOLOGIA_LABEL[cumplimiento.evaluacionMetodologia] || humanize(cumplimiento.evaluacionMetodologia)) %><% if (lote.viaM1Aplicada) { %> &middot; V&iacute;a M1: <%= esc(lote.viaM1Aplicada) %><% } %>
+      </p>
+    <% } %>
+
+    <!-- ─────── Detalle muestra a muestra ─────── -->
+    <h2 class="section">4. Detalle de muestras</h2>
+    <p class="leyenda-tabla__intro">
+      En la tabla siguiente, las celdas destacadas indican muestras que
+      apartan al lote del cumplimiento normativo:
+    </p>
+    <ul class="leyenda-tabla">
+      <li>
+        <span class="leyenda-chip leyenda-chip--fail">Rojo</span>
+        valor por debajo del criterio de aceptaci&oacute;n base (Modo 1) o del
+        autocontrol del productor (IRAM 1666:2020).
+      </li>
+      <li>
+        <span class="leyenda-chip leyenda-chip--warn">&Aacute;mbar</span>
+        cumple Modo 1 pero no Modo 2. Modo 2 se aplica solo cuando el
+        contrato lo exige expl&iacute;citamente; queda como informaci&oacute;n
+        para el director de obra.
+      </li>
+    </ul>
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Remito</th>
+          <th class="num">f'<sub>cm</sub> (MPa)</th>
+          <th class="num">Edad (d)</th>
+          <th class="num">3-MA</th>
+          <th class="num">Disp. (%)</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (detalles.length === 0) { %>
+          <tr><td colspan="7" class="center muted">Sin muestras en el rango filtrado.</td></tr>
+        <% } %>
+        <% for (const d of detalles) { %>
+          <%
+          const v = Number(d.resistenciaPromedio);
+          const ma = d.mmPromedio != null ? Number(d.mmPromedio) : null;
+          // Clasificar la celda según los criterios que viola.
+          // Individual: M2 (más estricto) implica M1, así que basta ver M2.
+          let indivCls = '';
+          let indivTitle = '';
+          if (Number.isFinite(v)) {
+            if (v < UMBRAL_INDIV_M1) { indivCls = 'cell-fail';
+              indivTitle = `Viola M1 individual (< f'c − ${fmt(TOL_M1, 1)} = ${fmt(UMBRAL_INDIV_M1)} MPa).`;
+            } else if (v < UMBRAL_INDIV_M2) { indivCls = 'cell-warn';
+              indivTitle = `Viola M2 individual (< f'c = ${fmt(UMBRAL_INDIV_M2)} MPa). Cumple M1.`;
+            }
+          }
+          // 3-MA: tres criterios M1, M2, IRAM. Mostramos el más estricto que falle.
+          let maCls = '';
+          let maTitle = '';
+          if (ma != null && Number.isFinite(ma)) {
+            const fallasMA = [];
+            if (ma < UMBRAL_MA_M1)   fallasMA.push(`M1 (3-MA &lt; ${fmt(UMBRAL_MA_M1)} MPa)`);
+            if (ma < UMBRAL_MA_M2)   fallasMA.push(`M2 (3-MA &lt; ${fmt(UMBRAL_MA_M2)} MPa)`);
+            if (ma < UMBRAL_MA_IRAM) fallasMA.push(`IRAM (3-MA &lt; ${fmt(UMBRAL_MA_IRAM)} MPa)`);
+            if (fallasMA.length > 0) {
+              // Si falla M1 o IRAM (que son los críticos), rojo. Si solo M2, amber.
+              maCls = (ma < UMBRAL_MA_M1 || ma < UMBRAL_MA_IRAM) ? 'cell-fail' : 'cell-warn';
+              maTitle = 'Viola: ' + fallasMA.join(', ') + '.';
+            }
+          }
+          // Dispersión: > 15% es crítico (IRAM 1666 §5.2.1).
+          let dispCls = '';
+          let dispTitle = '';
+          if (d.dispersionPct != null && Number.isFinite(Number(d.dispersionPct))) {
+            const dp = Number(d.dispersionPct);
+            if (dp > UMBRAL_DISP) { dispCls = 'cell-fail';
+              dispTitle = `Dispersión &gt; 15 % (IRAM 1666 §5.2.1: revisar moldeo/curado/ensayo).`;
+            }
+          }
+          // Las muestras con n<2 ya no llegan a esta tabla (descartadas por
+          // CIRSOC §6.1.6.1 a una sección separada). Si llega una sin disp
+          // calculable es un edge case raro que mostramos como '—'.
+          const dispText = d.dispersionPct != null && Number.isFinite(Number(d.dispersionPct))
+            ? fmt(d.dispersionPct, 1) + ' %'
+            : '—';
+          %>
+          <tr>
+            <td><%= helpers.formatDate(d.fechaConfeccion) %></td>
+            <td><%= esc(d.remito || '—') %></td>
+            <td class="num <%= indivCls %>" title="<%= indivTitle %>"><%= fmt(d.resistenciaPromedio) %></td>
+            <td class="num"><%= d.edadEnsayo ?? '—' %></td>
+            <td class="num <%= maCls %>" title="<%= maTitle %>"><%= ma != null ? fmt(ma) : '—' %></td>
+            <td class="num <%= dispCls %>" title="<%= dispTitle %>"><%- dispText %></td>
+            <td class="small"><%= esc(d.observacionesLote || d.observaciones || '') %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <!-- ─────── Muestras descartadas por n<2 (CIRSOC §6.1.6.1) ─────── -->
+    <% const inv = data.muestrasInvalidas || []; if (inv.length > 0) { %>
+      <div class="seccion-descartadas">
+        <h3 class="subsection">Muestras descartadas del c&aacute;lculo (<%= inv.length %>)</h3>
+        <p class="small muted seccion-descartadas__intro">
+          Seg&uacute;n CIRSOC 200-2024 &sect;6.1.6.1 / IRAM 1666:2020, el resultado de
+          un ensayo es el promedio de al menos 2 probetas a la edad de dise&ntilde;o.
+          Las siguientes muestras tienen una sola probeta y no constituyen un
+          ensayo v&aacute;lido para evaluaci&oacute;n del lote.
+        </p>
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Remito</th>
+              <th class="num">Probeta &uacute;nica (MPa)</th>
+              <th class="num">Edad (d)</th>
+              <th>Motivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const m of inv) { %>
+              <tr>
+                <td><%= helpers.formatDate(m.fechaConfeccion) %></td>
+                <td><%= esc(m.remito || '—') %></td>
+                <td class="num"><%= fmt(m.resistenciaPromedio) %></td>
+                <td class="num"><%= m.edadEnsayo ?? '—' %></td>
+                <td class="small">n=<%= m.cantidadProbetas ?? 1 %> probeta &mdash; ensayo no v&aacute;lido (CIRSOC 200-2024 &sect;6.1.6.1).</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <!-- ─────── Hormigón fresco (si vino) ─────── -->
+    <% if (fresco && fresco.summary) { %>
+      <h2 class="section">5. Hormigón fresco</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Ensayo</th><th class="num">Valor</th><th>Veredicto</th><th>Observación</th></tr>
+        </thead>
+        <tbody>
+          <% for (const ev of ['asentamiento','temperatura','aire']) { %>
+            <% const f = fresco[ev]; if (!f) continue; %>
+            <tr>
+              <td class="bold"><%= ev.charAt(0).toUpperCase() + ev.slice(1) %></td>
+              <td class="num"><%= esc(f.valor != null ? fmt(f.valor) : '—') %></td>
+              <td>
+                <% const sevCls = f.severity === 'ok' ? 'ok' : (f.severity === 'critical' ? 'fail' : 'reservas'); %>
+                <span class="veredicto-chip veredicto-chip--<%= sevCls %>"><%= esc((f.severity || '').toUpperCase()) %></span>
+              </td>
+              <td class="small"><%= esc(f.motivo || '') %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <!-- ─────── Notas y advertencias ─────── -->
+    <% if (lote.loteSubdimensionado) { %>
+      <div class="aviso">
+        <strong>Aviso CIRSOC 200-2024 §6.2.2.4:</strong> el lote tiene menos de 5 muestras —
+        la estadística es referencial y no debería usarse como criterio de
+        aceptación final. Se recomienda completar el muestreo.
+      </div>
+    <% } %>
+    <% if (lote.desviacionReferencial) { %>
+      <div class="aviso aviso--info">
+        <strong>Nota CIRSOC 200-2024 §6.2.3.4:</strong> con n &lt; 15 la desviación
+        estándar tiene escaso valor estadístico y se reporta como referencial.
+      </div>
+    <% } %>
+
+    <!-- Bloque final: glosario + firmas dentro de un wrapper que ocupa la
+         altura útil completa de la última página, así las firmas quedan
+         ancladas al pie con margin-top:auto. Detalles en _base.css → .last-page-block. -->
+    <div class="last-page-block">
+    <div class="glosario">
+      <p class="glosario__titulo">Glosario</p>
+      <dl class="glosario__lista">
+        <dt>f'<sub>c</sub></dt>
+        <dd><strong>Resistencia especificada del proyecto</strong> (input
+            contractual). El cumplimiento del lote seg&uacute;n CIRSOC 200-2024
+            &sect;6.2.3 / &sect;6.2.4 se eval&uacute;a comparando media m&oacute;vil y
+            resultados individuales contra f'<sub>c</sub>, no contra
+            f'<sub>ck</sub>.</dd>
+
+        <dt>f'<sub>cm</sub></dt>
+        <dd>Resistencia media a compresi&oacute;n del lote (promedio aritm&eacute;tico
+            de los resultados v&aacute;lidos).</dd>
+
+        <dt>f'<sub>ck</sub> (estimado)</dt>
+        <dd>Estimador estad&iacute;stico de la resistencia caracter&iacute;stica del lote
+            = f'<sub>cm</sub> &minus; 1,28&times;s. Indicador <em>informativo</em>
+            del comportamiento de la poblaci&oacute;n; no es por s&iacute; mismo el
+            criterio de aceptaci&oacute;n.</dd>
+
+        <dt>s</dt>
+        <dd>Desv&iacute;o est&aacute;ndar muestral. Para n &lt; 15 la norma lo
+            considera referencial (CIRSOC 200-2024 &sect;6.2.3.4).</dd>
+
+        <dt>3-MA</dt>
+        <dd>Media m&oacute;vil de 3 muestras consecutivas en orden cronol&oacute;gico
+            (CIRSOC 200-2024 &sect;6.2.3.7.a / IRAM 1666:2020 &sect;A.7.10).</dd>
+
+        <dt>Disp.</dt>
+        <dd>Dispersi&oacute;n entre probetas de la misma muestra: rango / promedio.
+            L&iacute;mite IRAM 1666:2020 &sect;5.2.1: 15 %.</dd>
+
+        <dt>k(n)</dt>
+        <dd>Factor t-Student de IRAM 1666:2020 Tabla A.3, aplicable a lotes
+            de 15 a 29 muestras para corregir s muestral; = 1,000 para 30
+            muestras o m&aacute;s. Para n &lt; 15 la tabla no aplica y el
+            autocontrol IRAM se reporta como "no aplicable".</dd>
+      </dl>
+    </div>
+
+    <!-- ─────── Firmas ─────── -->
+    <div class="firmas">
+      <div class="firma">
+        <div class="firma__line"></div>
+        <div class="firma__role">Responsable de Calidad</div>
+        <div class="firma__detail">de la planta productora</div>
+      </div>
+      <div class="firma">
+        <div class="firma__line"></div>
+        <div class="firma__role">Director Técnico</div>
+        <div class="firma__detail">matriculado</div>
+      </div>
+      <div class="firma">
+        <div class="firma__line"></div>
+        <div class="firma__role">Recibió en obra</div>
+        <div class="firma__detail">aclaración + fecha</div>
+      </div>
+    </div>
+    </div><!-- /.last-page-block -->
+  </div>
+</body>
+</html>

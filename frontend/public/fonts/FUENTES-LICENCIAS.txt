@@ -1,0 +1,21 @@
+Fuentes incluidas para el módulo "Editor de PDF"
+=================================================
+
+Todas las fuentes son libres y redistribuibles. Origen: Google Fonts
+(github.com/google/fonts).
+
+SIL Open Font License 1.1 (OFL) — https://scripts.sil.org/OFL
+  Carlito (clon métrico libre de Calibri), Lato, Poppins, Arvo,
+  Crimson Text, Bebas Neue, Great Vibes, Pacifico, Allura, Alex Brush,
+  Indie Flower, Sacramento.
+
+Bitstream Vera / Public domain-like (DejaVu Fonts License)
+  DejaVu Sans — https://dejavu-fonts.github.io  (ya estaba en el proyecto)
+
+Cada licencia OFL permite uso, modificación y redistribución incluidos en
+productos. El texto completo de cada licencia está disponible en la página
+de cada familia en fonts.google.com.
+
+Nota: Arial y Calibri NO se incluyen por ser propietarias de Microsoft.
+Como reemplazo se usan Helvetica (estándar del PDF, métricamente equivalente
+a Arial) y Carlito (clon métrico de Calibri).

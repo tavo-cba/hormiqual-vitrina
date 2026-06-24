@@ -1,0 +1,408 @@
+{
+  "normaRef": "IRAM 1627:1997",
+  "version": "2.0.0",
+  "description": "Curvas granulométricas IRAM 1627:1997 — Valores EXACTOS de las tablas 1 a 8. Verificados contra la norma.",
+
+  "finos": {
+    "referenciaTabla": "Tabla 1",
+    "serieTamices": "IRAM",
+    "curvas": {
+      "A": {
+        "specMode": "MAX_ONLY",
+        "tipo": "BANDA",
+        "descripcion": "Curva A — Límite superior para agregado fino (Tabla 1)",
+        "puntos": [
+          { "aberturaMm": 9.5,  "max": 100 },
+          { "aberturaMm": 4.75, "max": 95 },
+          { "aberturaMm": 2.36, "max": 80 },
+          { "aberturaMm": 1.18, "max": 50 },
+          { "aberturaMm": 0.6,  "max": 25 },
+          { "aberturaMm": 0.3,  "max": 10 },
+          { "aberturaMm": 0.15, "max": 2 }
+        ]
+      },
+      "B": {
+        "specMode": "MAX_ONLY",
+        "tipo": "BANDA",
+        "descripcion": "Curva B — Límite superior para agregado fino (Tabla 1)",
+        "puntos": [
+          { "aberturaMm": 9.5,  "max": 100 },
+          { "aberturaMm": 4.75, "max": 100 },
+          { "aberturaMm": 2.36, "max": 100 },
+          { "aberturaMm": 1.18, "max": 85 },
+          { "aberturaMm": 0.6,  "max": 60 },
+          { "aberturaMm": 0.3,  "max": 30 },
+          { "aberturaMm": 0.15, "max": 10 }
+        ]
+      },
+      "C": {
+        "specMode": "MAX_ONLY",
+        "tipo": "BANDA",
+        "descripcion": "Curva C — Límite superior para agregado fino (Tabla 1)",
+        "puntos": [
+          { "aberturaMm": 9.5,  "max": 100 },
+          { "aberturaMm": 4.75, "max": 100 },
+          { "aberturaMm": 2.36, "max": 100 },
+          { "aberturaMm": 1.18, "max": 100 },
+          { "aberturaMm": 0.6,  "max": 95 },
+          { "aberturaMm": 0.3,  "max": 50 },
+          { "aberturaMm": 0.15, "max": 10 }
+        ]
+      }
+    }
+  },
+
+  "gruesos": {
+    "referenciaTabla": "Tabla 2",
+    "serieTamices": "IRAM",
+    "rangos": [
+      {
+        "rango": "53 a 4.75",
+        "puntos": [
+          { "aberturaMm": 63,    "min": 100,  "max": 100 },
+          { "aberturaMm": 53,    "min": 95,   "max": 100 },
+          { "aberturaMm": 26.5,  "min": 35,   "max": 70 },
+          { "aberturaMm": 13.2,  "min": 15,   "max": 30 },
+          { "aberturaMm": 4.75,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "37.5 a 4.75",
+        "puntos": [
+          { "aberturaMm": 53,    "min": 100,  "max": 100 },
+          { "aberturaMm": 37.5,  "min": 95,   "max": 100 },
+          { "aberturaMm": 19,    "min": 35,   "max": 70 },
+          { "aberturaMm": 9.5,   "min": 10,   "max": 30 },
+          { "aberturaMm": 4.75,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "26.5 a 4.75",
+        "puntos": [
+          { "aberturaMm": 37.5,  "min": 100,  "max": 100 },
+          { "aberturaMm": 26.5,  "min": 95,   "max": 100 },
+          { "aberturaMm": 13.2,  "min": 25,   "max": 60 },
+          { "aberturaMm": 4.75,  "min": 0,    "max": 10 },
+          { "aberturaMm": 2.36,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "19 a 4.75",
+        "puntos": [
+          { "aberturaMm": 26.5,  "min": 100,  "max": 100 },
+          { "aberturaMm": 19,    "min": 90,   "max": 100 },
+          { "aberturaMm": 9.5,   "min": 20,   "max": 55 },
+          { "aberturaMm": 4.75,  "min": 0,    "max": 10 },
+          { "aberturaMm": 2.36,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "13.2 a 4.75",
+        "puntos": [
+          { "aberturaMm": 19,    "min": 100,  "max": 100 },
+          { "aberturaMm": 13.2,  "min": 90,   "max": 100 },
+          { "aberturaMm": 9.5,   "min": 40,   "max": 70 },
+          { "aberturaMm": 4.75,  "min": 0,    "max": 15 },
+          { "aberturaMm": 2.36,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "53 a 26.5",
+        "puntos": [
+          { "aberturaMm": 63,    "min": 100,  "max": 100 },
+          { "aberturaMm": 53,    "min": 90,   "max": 100 },
+          { "aberturaMm": 37.5,  "min": 35,   "max": 70 },
+          { "aberturaMm": 26.5,  "min": 0,    "max": 15 },
+          { "aberturaMm": 13.2,  "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "37.5 a 19",
+        "puntos": [
+          { "aberturaMm": 53,    "min": 100,  "max": 100 },
+          { "aberturaMm": 37.5,  "min": 90,   "max": 100 },
+          { "aberturaMm": 26.5,  "min": 20,   "max": 55 },
+          { "aberturaMm": 19,    "min": 0,    "max": 15 },
+          { "aberturaMm": 9.5,   "min": 0,    "max": 5 }
+        ]
+      },
+      {
+        "rango": "9.5 a 2.36",
+        "puntos": [
+          { "aberturaMm": 13.2,  "min": 100,  "max": 100 },
+          { "aberturaMm": 9.5,   "min": 85,   "max": 100 },
+          { "aberturaMm": 4.75,  "min": 10,   "max": 30 },
+          { "aberturaMm": 2.36,  "min": 0,    "max": 10 },
+          { "aberturaMm": 1.18,  "min": 0,    "max": 5 }
+        ]
+      }
+    ]
+  },
+
+  "totales": {
+    "serieTamices": "IRAM",
+    "tablas": {
+      "53": {
+        "referenciaTabla": "Tabla 3",
+        "tmnMm": 53,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 63,   "target": 100 },
+            { "aberturaMm": 53,   "target": 95 },
+            { "aberturaMm": 37.5, "target": 78 },
+            { "aberturaMm": 26.5, "target": 59 },
+            { "aberturaMm": 19,   "target": 51 },
+            { "aberturaMm": 13.2, "target": 44 },
+            { "aberturaMm": 9.5,  "target": 40 },
+            { "aberturaMm": 4.75, "target": 33 },
+            { "aberturaMm": 2.36, "target": 25 },
+            { "aberturaMm": 1.18, "target": 18 },
+            { "aberturaMm": 0.6,  "target": 10 },
+            { "aberturaMm": 0.3,  "target": 4 },
+            { "aberturaMm": 0.15, "target": 1 }
+          ],
+          "B": [
+            { "aberturaMm": 63,   "target": 100 },
+            { "aberturaMm": 53,   "target": 100 },
+            { "aberturaMm": 37.5, "target": 91 },
+            { "aberturaMm": 26.5, "target": 82 },
+            { "aberturaMm": 19,   "target": 71 },
+            { "aberturaMm": 13.2, "target": 59 },
+            { "aberturaMm": 9.5,  "target": 53 },
+            { "aberturaMm": 4.75, "target": 44 },
+            { "aberturaMm": 2.36, "target": 41 },
+            { "aberturaMm": 1.18, "target": 37 },
+            { "aberturaMm": 0.6,  "target": 27 },
+            { "aberturaMm": 0.3,  "target": 14 },
+            { "aberturaMm": 0.15, "target": 4 }
+          ],
+          "C": [
+            { "aberturaMm": 63,   "target": 100 },
+            { "aberturaMm": 53,   "target": 100 },
+            { "aberturaMm": 37.5, "target": 95 },
+            { "aberturaMm": 26.5, "target": 90 },
+            { "aberturaMm": 19,   "target": 85 },
+            { "aberturaMm": 13.2, "target": 79 },
+            { "aberturaMm": 9.5,  "target": 74 },
+            { "aberturaMm": 4.75, "target": 63 },
+            { "aberturaMm": 2.36, "target": 53 },
+            { "aberturaMm": 1.18, "target": 42 },
+            { "aberturaMm": 0.6,  "target": 30 },
+            { "aberturaMm": 0.3,  "target": 17 },
+            { "aberturaMm": 0.15, "target": 4 }
+          ]
+        }
+      },
+      "37.5": {
+        "referenciaTabla": "Tabla 4",
+        "tmnMm": 37.5,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 53,   "target": 100 },
+            { "aberturaMm": 37.5, "target": 97 },
+            { "aberturaMm": 26.5, "target": 78 },
+            { "aberturaMm": 19,   "target": 60 },
+            { "aberturaMm": 13.2, "target": 52 },
+            { "aberturaMm": 9.5,  "target": 45 },
+            { "aberturaMm": 4.75, "target": 39 },
+            { "aberturaMm": 2.36, "target": 29 },
+            { "aberturaMm": 1.18, "target": 20 },
+            { "aberturaMm": 0.6,  "target": 10 },
+            { "aberturaMm": 0.3,  "target": 4 },
+            { "aberturaMm": 0.15, "target": 1 }
+          ],
+          "B": [
+            { "aberturaMm": 53,   "target": 100 },
+            { "aberturaMm": 37.5, "target": 98 },
+            { "aberturaMm": 26.5, "target": 85 },
+            { "aberturaMm": 19,   "target": 71 },
+            { "aberturaMm": 13.2, "target": 61 },
+            { "aberturaMm": 9.5,  "target": 52 },
+            { "aberturaMm": 4.75, "target": 43 },
+            { "aberturaMm": 2.36, "target": 38 },
+            { "aberturaMm": 1.18, "target": 33 },
+            { "aberturaMm": 0.6,  "target": 22 },
+            { "aberturaMm": 0.3,  "target": 9 },
+            { "aberturaMm": 0.15, "target": 2 }
+          ],
+          "C": [
+            { "aberturaMm": 53,   "target": 100 },
+            { "aberturaMm": 37.5, "target": 100 },
+            { "aberturaMm": 26.5, "target": 94 },
+            { "aberturaMm": 19,   "target": 88 },
+            { "aberturaMm": 13.2, "target": 83 },
+            { "aberturaMm": 9.5,  "target": 77 },
+            { "aberturaMm": 4.75, "target": 66 },
+            { "aberturaMm": 2.36, "target": 53 },
+            { "aberturaMm": 1.18, "target": 42 },
+            { "aberturaMm": 0.6,  "target": 30 },
+            { "aberturaMm": 0.3,  "target": 17 },
+            { "aberturaMm": 0.15, "target": 4 }
+          ]
+        }
+      },
+      "26.5": {
+        "referenciaTabla": "Tabla 5",
+        "tmnMm": 26.5,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 37.5, "target": 100 },
+            { "aberturaMm": 26.5, "target": 95 },
+            { "aberturaMm": 19,   "target": 75 },
+            { "aberturaMm": 13.2, "target": 55 },
+            { "aberturaMm": 9.5,  "target": 48 },
+            { "aberturaMm": 4.75, "target": 35 },
+            { "aberturaMm": 2.36, "target": 27 },
+            { "aberturaMm": 1.18, "target": 19 },
+            { "aberturaMm": 0.6,  "target": 10 },
+            { "aberturaMm": 0.3,  "target": 4 },
+            { "aberturaMm": 0.15, "target": 1 }
+          ],
+          "B": [
+            { "aberturaMm": 37.5, "target": 100 },
+            { "aberturaMm": 26.5, "target": 98 },
+            { "aberturaMm": 19,   "target": 82 },
+            { "aberturaMm": 13.2, "target": 66 },
+            { "aberturaMm": 9.5,  "target": 58 },
+            { "aberturaMm": 4.75, "target": 43 },
+            { "aberturaMm": 2.36, "target": 38 },
+            { "aberturaMm": 1.18, "target": 33 },
+            { "aberturaMm": 0.6,  "target": 22 },
+            { "aberturaMm": 0.3,  "target": 9 },
+            { "aberturaMm": 0.15, "target": 2 }
+          ],
+          "C": [
+            { "aberturaMm": 37.5, "target": 100 },
+            { "aberturaMm": 26.5, "target": 100 },
+            { "aberturaMm": 19,   "target": 94 },
+            { "aberturaMm": 13.2, "target": 87 },
+            { "aberturaMm": 9.5,  "target": 81 },
+            { "aberturaMm": 4.75, "target": 69 },
+            { "aberturaMm": 2.36, "target": 56 },
+            { "aberturaMm": 1.18, "target": 44 },
+            { "aberturaMm": 0.6,  "target": 31 },
+            { "aberturaMm": 0.3,  "target": 18 },
+            { "aberturaMm": 0.15, "target": 5 }
+          ]
+        }
+      },
+      "19": {
+        "referenciaTabla": "Tabla 6",
+        "tmnMm": 19,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 26.5, "target": 100 },
+            { "aberturaMm": 19,   "target": 94 },
+            { "aberturaMm": 13.2, "target": 70 },
+            { "aberturaMm": 9.5,  "target": 55 },
+            { "aberturaMm": 4.75, "target": 41 },
+            { "aberturaMm": 2.36, "target": 32 },
+            { "aberturaMm": 1.18, "target": 22 },
+            { "aberturaMm": 0.6,  "target": 11 },
+            { "aberturaMm": 0.3,  "target": 4 },
+            { "aberturaMm": 0.15, "target": 1 }
+          ],
+          "B": [
+            { "aberturaMm": 26.5, "target": 100 },
+            { "aberturaMm": 19,   "target": 97 },
+            { "aberturaMm": 13.2, "target": 77 },
+            { "aberturaMm": 9.5,  "target": 65 },
+            { "aberturaMm": 4.75, "target": 46 },
+            { "aberturaMm": 2.36, "target": 43 },
+            { "aberturaMm": 1.18, "target": 36 },
+            { "aberturaMm": 0.6,  "target": 24 },
+            { "aberturaMm": 0.3,  "target": 10 },
+            { "aberturaMm": 0.15, "target": 2 }
+          ],
+          "C": [
+            { "aberturaMm": 26.5, "target": 100 },
+            { "aberturaMm": 19,   "target": 100 },
+            { "aberturaMm": 13.2, "target": 93 },
+            { "aberturaMm": 9.5,  "target": 86 },
+            { "aberturaMm": 4.75, "target": 72 },
+            { "aberturaMm": 2.36, "target": 58 },
+            { "aberturaMm": 1.18, "target": 44 },
+            { "aberturaMm": 0.6,  "target": 28 },
+            { "aberturaMm": 0.3,  "target": 15 },
+            { "aberturaMm": 0.15, "target": 4 }
+          ]
+        }
+      },
+      "13.2": {
+        "referenciaTabla": "Tabla 7",
+        "tmnMm": 13.2,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 19,   "target": 100 },
+            { "aberturaMm": 13.2, "target": 95 },
+            { "aberturaMm": 9.5,  "target": 70 },
+            { "aberturaMm": 4.75, "target": 48 },
+            { "aberturaMm": 2.36, "target": 36 },
+            { "aberturaMm": 1.18, "target": 24 },
+            { "aberturaMm": 0.6,  "target": 12 },
+            { "aberturaMm": 0.3,  "target": 5 },
+            { "aberturaMm": 0.15, "target": 2 }
+          ],
+          "B": [
+            { "aberturaMm": 19,   "target": 100 },
+            { "aberturaMm": 13.2, "target": 97 },
+            { "aberturaMm": 9.5,  "target": 78 },
+            { "aberturaMm": 4.75, "target": 52 },
+            { "aberturaMm": 2.36, "target": 48 },
+            { "aberturaMm": 1.18, "target": 41 },
+            { "aberturaMm": 0.6,  "target": 27 },
+            { "aberturaMm": 0.3,  "target": 12 },
+            { "aberturaMm": 0.15, "target": 3 }
+          ],
+          "C": [
+            { "aberturaMm": 19,   "target": 100 },
+            { "aberturaMm": 13.2, "target": 100 },
+            { "aberturaMm": 9.5,  "target": 93 },
+            { "aberturaMm": 4.75, "target": 78 },
+            { "aberturaMm": 2.36, "target": 64 },
+            { "aberturaMm": 1.18, "target": 50 },
+            { "aberturaMm": 0.6,  "target": 35 },
+            { "aberturaMm": 0.3,  "target": 20 },
+            { "aberturaMm": 0.15, "target": 5 }
+          ]
+        }
+      },
+      "9.5": {
+        "referenciaTabla": "Tabla 8",
+        "tmnMm": 9.5,
+        "curvas": {
+          "A": [
+            { "aberturaMm": 13.2, "target": 100 },
+            { "aberturaMm": 9.5,  "target": 88 },
+            { "aberturaMm": 4.75, "target": 35 },
+            { "aberturaMm": 2.36, "target": 25 },
+            { "aberturaMm": 1.18, "target": 15 },
+            { "aberturaMm": 0.6,  "target": 8 },
+            { "aberturaMm": 0.3,  "target": 3 },
+            { "aberturaMm": 0.15, "target": 0 }
+          ],
+          "B": [
+            { "aberturaMm": 13.2, "target": 100 },
+            { "aberturaMm": 9.5,  "target": 95 },
+            { "aberturaMm": 4.75, "target": 44 },
+            { "aberturaMm": 2.36, "target": 31 },
+            { "aberturaMm": 1.18, "target": 23 },
+            { "aberturaMm": 0.6,  "target": 12 },
+            { "aberturaMm": 0.3,  "target": 5 },
+            { "aberturaMm": 0.15, "target": 1 }
+          ],
+          "C": [
+            { "aberturaMm": 13.2, "target": 100 },
+            { "aberturaMm": 9.5,  "target": 100 },
+            { "aberturaMm": 4.75, "target": 50 },
+            { "aberturaMm": 2.36, "target": 38 },
+            { "aberturaMm": 1.18, "target": 27 },
+            { "aberturaMm": 0.6,  "target": 16 },
+            { "aberturaMm": 0.3,  "target": 7 },
+            { "aberturaMm": 0.15, "target": 3 }
+          ]
+        }
+      }
+    }
+  }
+}

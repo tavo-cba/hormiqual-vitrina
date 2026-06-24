@@ -1,0 +1,680 @@
+/* ============================================================
+   WizardCatalogoEnsayos — overrides de tema "ensayo / laboratorio"
+   ============================================================
+   Reutilizamos las primitivas .wizard-mant-* (shell del wizard) y
+   .wizard-cl-mockup-* (mockups de pantallas). Acá solo definimos:
+     - tema púrpura del sidebar y hero
+     - cards de bienvenida (6 columnas)
+     - comparativa prescriptivo / prestacional
+     - cards del set base (Agregados / Agua)
+     - mockups de tabla del catálogo y de ficha de material
+     - cards de niveles de caracterización
+     - tabla de periodicidades
+     - cards de evaluación + snapshots
+   ============================================================ */
+
+/* ─── Alineación general de párrafos (scoped al wizard) ──── */
+.wizard-mant-cat-ens .wizard-mant-step-content > p,
+.wizard-mant-cat-ens .wizard-mant-callout > div > p,
+.wizard-mant-cat-ens .wizard-cat-ens-feature-body > p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+.wizard-mant-cat-ens .wizard-cat-ens-set-body p {
+    text-align: left;
+}
+
+/* ─── Tema púrpura del sidebar y hero ─────────────────────── */
+.wizard-cat-ens-sidebar-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+}
+
+.wizard-cat-ens-hero-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3) !important;
+}
+
+.wizard-cat-ens-progress-fill {
+    background: linear-gradient(90deg, #8b5cf6, #16a34a) !important;
+}
+
+/* ─── Cards de bienvenida ─────────────────────────────────── */
+.wizard-cat-ens-cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* ─── Comparativa prescriptivo / prestacional ─────────────── */
+.wizard-cat-ens-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-cat-ens-compare {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wizard-cat-ens-compare-col {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: var(--cover-input-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* R12 (auditoría 01-calidad): púrpura es brand-identity del wizard de
+   catálogo, se preserva. Los bordes semánticos (rojo prescriptivo, cian
+   individual) migran a CSS vars. */
+.wizard-cat-ens-compare-col.prest {
+    border-top: 3px solid #8b5cf6;
+}
+
+.wizard-cat-ens-compare-col.presc {
+    border-top: 3px solid var(--red-500);
+}
+
+.wizard-cat-ens-compare-col.indiv {
+    border-top: 3px solid var(--cyan-500);
+}
+
+.wizard-cat-ens-compare-col.camp {
+    border-top: 3px solid #8b5cf6;
+}
+
+/* Variante compacta — para usar en mitad de un step que ya tiene otros bloques */
+.wizard-cat-ens-compare.wizard-cat-ens-compare-tight {
+    margin: 0.75rem 0 1rem;
+}
+
+.wizard-cat-ens-compare.wizard-cat-ens-compare-tight .wizard-cat-ens-compare-col {
+    padding: 1rem;
+}
+
+.wizard-cat-ens-compare-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.wizard-cat-ens-compare-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-cat-ens-compare-head h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.wizard-cat-ens-compare-head small {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+}
+
+.wizard-cat-ens-compare-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wizard-cat-ens-compare-col ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.wizard-cat-ens-compare-col ul li > i {
+    color: var(--green-600);
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+    width: 12px;
+    text-align: center;
+}
+
+.wizard-cat-ens-compare-col ul li > span {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: inline;
+    text-align: left;
+}
+
+.wizard-cat-ens-compare-when {
+    border-top: 1px solid var(--surface-border);
+    padding-top: 0.75rem;
+    margin-top: auto;
+}
+
+.wizard-cat-ens-compare-when strong {
+    color: var(--text-color);
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-cat-ens-compare-when p {
+    color: var(--text-color-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ─── Set base: cards de Agregados / Agua ─────────────────── */
+.wizard-cat-ens-set-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-cat-ens-set-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wizard-cat-ens-set-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-cat-ens-set-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.wizard-cat-ens-set-icon.agregados {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.wizard-cat-ens-set-icon.agua {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+.wizard-cat-ens-set-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.wizard-cat-ens-set-body strong {
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.wizard-cat-ens-set-body p {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.45;
+}
+
+.wizard-cat-ens-set-count {
+    color: var(--text-color-secondary);
+    font-style: italic;
+    font-size: 0.78rem;
+}
+
+/* ─── Mockup tabla catálogo + ficha material ──────────────── */
+.wizard-cat-ens-mockup-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.wizard-cat-ens-mockup-table thead th {
+    text-align: left;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--surface-border);
+    background: var(--surface-section);
+}
+
+.wizard-cat-ens-mockup-table tbody td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--surface-border);
+    color: var(--text-color);
+    vertical-align: middle;
+}
+
+.wizard-cat-ens-mockup-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.wizard-cat-ens-norma {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.74rem;
+    color: var(--text-color-secondary);
+}
+
+/* Chips de contexto en mockup */
+.wizard-cat-ens-chip {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-right: 0.25rem;
+}
+
+.wizard-cat-ens-chip.on {
+    background: rgba(22, 163, 74, 0.15);
+    color: #15803d;
+}
+
+[data-theme="dark"] .wizard-cat-ens-chip.on {
+    background: rgba(22, 163, 74, 0.25);
+    color: #86efac;
+}
+
+.wizard-cat-ens-chip.off {
+    background: var(--surface-100);
+    color: var(--text-color-secondary);
+    opacity: 0.5;
+}
+
+/* Tags de caracterización / oblig. en mockup */
+.wizard-cat-ens-tag {
+    display: inline-block;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.wizard-cat-ens-tag.basica {
+    background: rgba(22, 163, 74, 0.15);
+    color: #15803d;
+}
+
+[data-theme="dark"] .wizard-cat-ens-tag.basica {
+    background: rgba(22, 163, 74, 0.25);
+    color: #86efac;
+}
+
+.wizard-cat-ens-tag.avanzada {
+    background: rgba(14, 165, 233, 0.15);
+    color: #0369a1;
+}
+
+[data-theme="dark"] .wizard-cat-ens-tag.avanzada {
+    background: rgba(14, 165, 233, 0.25);
+    color: #7dd3fc;
+}
+
+.wizard-cat-ens-tag.oblig {
+    background: rgba(239, 68, 68, 0.15);
+    color: #b91c1c;
+}
+
+[data-theme="dark"] .wizard-cat-ens-tag.oblig {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+.wizard-cat-ens-tag.muted {
+    background: var(--surface-100);
+    color: var(--text-color-secondary);
+    opacity: 0.55;
+}
+
+/* Toolbar simulada del mockup ficha material */
+.wizard-cat-ens-mockup-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    border-bottom: 1px dashed var(--surface-border);
+    margin-bottom: 0.5rem;
+}
+
+.wizard-cat-ens-mockup-search,
+.wizard-cat-ens-mockup-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    background: var(--surface-100);
+    border: 1px solid var(--surface-border);
+}
+
+.wizard-cat-ens-mockup-add {
+    background: rgba(139, 92, 246, 0.1);
+    color: #6d28d9;
+    border-color: rgba(139, 92, 246, 0.3);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .wizard-cat-ens-mockup-add {
+    color: #c4b5fd;
+}
+
+/* ─── Niveles de caracterización: 3 cards ─────────────────── */
+.wizard-cat-ens-niveles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 992px) {
+    .wizard-cat-ens-niveles {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wizard-cat-ens-nivel {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    background: var(--cover-input-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.wizard-cat-ens-nivel-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.wizard-cat-ens-nivel-icon.ninguna {
+    background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.wizard-cat-ens-nivel-icon.basica {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.wizard-cat-ens-nivel-icon.avanzada {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+.wizard-cat-ens-nivel-body h4 {
+    margin: 0 0 0.55rem 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.wizard-cat-ens-nivel-body h4 small {
+    color: var(--text-color-secondary);
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-left: 0.3rem;
+}
+
+.wizard-cat-ens-nivel-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.wizard-cat-ens-nivel-body ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.wizard-cat-ens-nivel-body ul li > i {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    flex-shrink: 0;
+    width: 12px;
+    text-align: center;
+}
+
+.wizard-cat-ens-nivel-body ul li > span {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* ─── Tabla de periodicidades ─────────────────────────────── */
+.wizard-cat-ens-period-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.wizard-cat-ens-period-table thead th {
+    background: var(--surface-section);
+    color: var(--text-color);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.wizard-cat-ens-period-table tbody td {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--surface-border);
+    color: var(--text-color);
+}
+
+.wizard-cat-ens-period-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.wizard-cat-ens-period-table .text-color-secondary {
+    color: var(--text-color-secondary);
+    font-size: 0.82rem;
+}
+
+/* Cards de status de vencimiento */
+.wizard-cat-ens-vencimiento-mock {
+    margin-top: 1.25rem;
+}
+
+.wizard-cat-ens-status-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .wizard-cat-ens-status-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wizard-cat-ens-status-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border-radius: 10px;
+    border: 1px solid var(--surface-border);
+    background: var(--cover-input-bg);
+}
+
+.wizard-cat-ens-status-card i {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.wizard-cat-ens-status-card strong {
+    display: block;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.wizard-cat-ens-status-card small {
+    color: var(--text-color-secondary);
+    font-size: 0.75rem;
+}
+
+/* R12 (auditoría 01-calidad): estados semánticos a CSS vars. */
+.wizard-cat-ens-status-card.valid i { color: var(--green-600); }
+.wizard-cat-ens-status-card.warn i { color: var(--orange-500); }
+.wizard-cat-ens-status-card.expired i { color: var(--red-500); }
+
+/* ─── Lista numerada de pasos (carga ensayo) ──────────────── */
+.wizard-cat-ens-steps-list {
+    list-style: none;
+    counter-reset: cat-ens-steps;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.wizard-cat-ens-steps-list li {
+    counter-increment: cat-ens-steps;
+    position: relative;
+    padding: 0.85rem 0.85rem 0.85rem 3.2rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.wizard-cat-ens-steps-list li::before {
+    content: counter(cat-ens-steps);
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ─── Cards de features (evaluación + snapshots) ──────────── */
+.wizard-cat-ens-feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wizard-cat-ens-feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wizard-cat-ens-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1.1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    background: var(--cover-input-bg);
+}
+
+.wizard-cat-ens-feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-cat-ens-feature-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.wizard-cat-ens-feature-body h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.wizard-cat-ens-feature-body p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.wizard-cat-ens-feature-body small {
+    color: var(--text-color-secondary);
+    font-size: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.wizard-cat-ens-feature-body code {
+    background: var(--surface-100);
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    margin: 0 0.15rem;
+}

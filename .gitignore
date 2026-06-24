@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+config/config.json
+_*.json
+*.pem
+*.key
+*.crt
+.afip-cache/
+dist/
+build/
+*.log
+.DS_Store

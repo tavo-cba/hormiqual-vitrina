@@ -1,0 +1,2556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presupuesto — HormiWhite | Hormiqual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ============================================
+       CSS RESET & BASE
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Hormiqual Blues */
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+      --blue-400: #60a5fa;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a8a;
+      --blue-950: #172554;
+
+      --cyan-500: #0ea5e9;
+      --cyan-50: #ecfeff;
+      --cyan-100: #cffafe;
+
+      /* Slates */
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+
+      /* Geolocker Oranges */
+      --orange-50: #fff7ed;
+      --orange-100: #ffedd5;
+      --orange-200: #fed7aa;
+      --orange-400: #fb923c;
+      --orange-500: #f97316;
+      --orange-600: #ea580c;
+      --orange-700: #c2410c;
+
+      /* Greens */
+      --green-50: #f0fdf4;
+      --green-100: #dcfce7;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+
+      /* WhatsApp */
+      --whatsapp: #25D366;
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+      --shadow-xl: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--slate-700);
+      line-height: 1.6;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.2;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 639px) {
+      .container {
+        padding: 0 0.25rem;
+      }
+
+      .section-modules,
+      .section-other,
+      .section-detail,
+      .section-geolocker,
+      .section-footer {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .section-condition {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .hero {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue-500);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: var(--slate-500);
+      max-width: 600px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header .section-subtitle {
+      margin: 0.5rem auto 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-blue {
+      background: var(--blue-50);
+      color: var(--blue-700);
+    }
+
+    .badge-cyan {
+      background: var(--cyan-50);
+      color: #0284c7;
+    }
+
+    .badge-green {
+      background: var(--green-50);
+      color: var(--green-700);
+    }
+
+    .badge-orange {
+      background: var(--orange-50);
+      color: var(--orange-700);
+    }
+
+    /* ============================================
+       SCROLL ANIMATIONS
+       ============================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       SECTION 1 — HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-800) 40%, var(--blue-600) 100%);
+      overflow: hidden;
+      padding: 2rem 1.5rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -15%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: var(--blue-200);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      text-align: left;
+    }
+
+    .glass-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.95rem;
+    }
+
+    .glass-card-row:last-child { border-bottom: none; }
+
+    .glass-card-label {
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .glass-card-value {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+
+    .hero-scroll i { color: rgba(255,255,255,0.45); }
+
+    @keyframes bounce-down {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Decorative shapes */
+    .hero-shape {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      opacity: 0.06;
+      background: #fff;
+      pointer-events: none;
+    }
+    .hero-shape-1 { width: 120px; height: 120px; top: 10%; left: 5%; transform: rotate(15deg); }
+    .hero-shape-2 { width: 80px; height: 80px; bottom: 20%; right: 8%; transform: rotate(-20deg); }
+    .hero-shape-3 { width: 60px; height: 60px; top: 35%; right: 15%; transform: rotate(45deg); border-radius: 50%; }
+
+    /* ============================================
+       SECTION 2 — CONDICIÓN ESPECIAL
+       ============================================ */
+    .section-condition {
+      padding: 4rem 1.5rem;
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-condition::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .condition-banner {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .condition-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-top: 0.15rem;
+    }
+
+    .condition-text {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+
+    .condition-text strong {
+      color: #fff;
+      font-size: 1.05rem;
+    }
+
+    /* ============================================
+       SECTION 3 — MÓDULOS SOLICITADOS
+       ============================================ */
+    .section-modules {
+      padding: 5rem 1.5rem;
+      background: var(--slate-50);
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .module-card {
+      background: #fff;
+      border: 1px solid var(--blue-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .module-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-2px);
+    }
+
+    .module-card-accent {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-500));
+    }
+
+    .module-card-body {
+      padding: 1.75rem 1.5rem;
+    }
+
+    .module-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .module-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--blue-50);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue-600);
+    }
+
+    .module-card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .module-card-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin: 0.75rem 0 0.25rem;
+    }
+
+    .module-card-price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--slate-400);
+    }
+
+    .module-card-desc {
+      font-size: 0.9rem;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .module-card-feature {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--slate-700);
+    }
+
+    .module-card-feature strong {
+      color: var(--blue-800);
+    }
+
+    .module-card-feature-green {
+      background: var(--green-50);
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--green-700);
+      font-weight: 500;
+    }
+
+    /* Summary Table */
+    .summary-table-wrapper {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .summary-table thead th {
+      background: var(--slate-50);
+      color: var(--slate-500);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .summary-table tbody td {
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-700);
+    }
+
+    .summary-table tbody tr:last-child td {
+      border-bottom: none;
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 1rem;
+      background: var(--blue-50);
+    }
+
+    .summary-table .price-col {
+      text-align: right;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ============================================
+       SECTION 4 — OTROS MÓDULOS
+       ============================================ */
+    .section-other {
+      padding: 5rem 1.5rem;
+      background: #fff;
+    }
+
+    .other-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .other-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .other-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .other-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .other-card-icon.rrhh { background: #fae8ff; color: #a855f7; }
+    .other-card-icon.calidad { background: #fef3c7; color: #d97706; }
+    .other-card-icon.comercial { background: #dbeafe; color: var(--blue-600); }
+
+    .other-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .other-card-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .other-card-price span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--slate-400);
+    }
+
+    .other-card-desc {
+      font-size: 0.85rem;
+      color: var(--slate-500);
+      line-height: 1.6;
+    }
+
+    /* Discount banner */
+    .discount-banner {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--green-50), #ecfdf5);
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .discount-banner-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--green-500);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .discount-banner-text {
+      font-size: 0.92rem;
+      color: var(--slate-700);
+      line-height: 1.55;
+    }
+
+    .discount-banner-text strong {
+      color: var(--green-700);
+      font-size: 1rem;
+    }
+
+    .note-footer {
+      font-size: 0.8rem;
+      color: var(--slate-400);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 1rem;
+    }
+
+    /* ============================================
+       DETAIL SECTIONS (5-9) — SHARED STYLES
+       ============================================ */
+    .section-detail {
+      padding: 5rem 1.5rem;
+    }
+
+    .section-detail.bg-slate { background: var(--slate-50); }
+    .section-detail.bg-white { background: #fff; }
+
+    .detail-header {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-500));
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #fff;
+    }
+
+    .detail-header-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-header h2 {
+      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+      font-weight: 700;
+    }
+
+    .detail-header p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-top: 0.15rem;
+    }
+
+    /* Feature list */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--blue-50);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-top: 0.1rem;
+    }
+
+    .feature-text h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-text p {
+      font-size: 0.88rem;
+      color: var(--slate-500);
+      line-height: 1.55;
+    }
+
+    /* Sub-section card */
+    .subsection-card {
+      border: 1.5px solid var(--cyan-500);
+      background: var(--blue-50);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .subsection-card .badge { margin-bottom: 1rem; }
+
+    .subsection-note {
+      font-style: italic;
+      color: var(--slate-500);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    .validation-list {
+      list-style: none;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .validation-list li {
+      position: relative;
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .validation-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan-500);
+      font-weight: 600;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+
+    .timeline-step:last-child { padding-bottom: 0; }
+
+    .timeline-dot-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .timeline-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .timeline-line {
+      width: 2px;
+      flex: 1;
+      min-height: 20px;
+      background: var(--blue-200);
+    }
+
+    .timeline-step:last-child .timeline-line { display: none; }
+
+    .timeline-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      padding-top: 0.45rem;
+    }
+
+    /* Quote callout */
+    .quote-callout {
+      background: linear-gradient(135deg, var(--blue-50), #f0f9ff);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      margin-top: 0;
+    }
+
+    .quote-callout::before {
+      content: '"';
+      font-family: 'Outfit', serif;
+      font-size: 4rem;
+      color: var(--blue-200);
+      position: absolute;
+      top: 0.25rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+
+    .quote-callout p {
+      font-size: 0.95rem;
+      color: var(--slate-600);
+      line-height: 1.65;
+      font-style: italic;
+      padding-left: 2rem;
+    }
+
+    /* Highlighted card (maintenance GPS, etc) */
+    .highlight-card {
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .highlight-card.green {
+      background: var(--green-50);
+      border: 1.5px solid #86efac;
+      color: var(--green-700);
+    }
+
+    .highlight-card.blue {
+      background: var(--blue-50);
+      border: 1.5px solid var(--blue-200);
+      color: var(--blue-800);
+    }
+
+    .highlight-card strong {
+      font-weight: 700;
+    }
+
+    /* ============================================
+       PORTAL CARDS (RRHH)
+       ============================================ */
+    .portal-card {
+      border: 2px solid var(--cyan-500);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .portal-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .portal-card > p {
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .portal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .portal-list li {
+      font-size: 0.88rem;
+      color: var(--slate-700);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .portal-list li .emoji {
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    /* ============================================
+       SECTION 10 — GEOLOCKER
+       ============================================ */
+    .section-geolocker {
+      padding: 5rem 1.5rem;
+      background: linear-gradient(135deg, var(--slate-900) 0%, #1a1a2e 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-geolocker::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .geo-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      object-fit: contain;
+    }
+
+    .geo-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--orange-500);
+      margin-bottom: 1rem;
+    }
+
+    .geo-header h2 {
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .geo-header h2 span { color: var(--orange-400); }
+
+    .geo-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    .geo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      transition: background 0.2s ease;
+    }
+
+    .geo-card:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .geo-card-emoji {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .geo-card h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--orange-400);
+      margin-bottom: 0.2rem;
+    }
+
+    .geo-card p {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+
+    /* Geolocker pricing cards (mobile-friendly) */
+    .geo-pricing {
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-pricing-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .geo-pricing-card.highlight {
+      background: rgba(249,115,22,0.12);
+      border-color: rgba(249,115,22,0.3);
+    }
+
+    .geo-pricing-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .geo-pricing-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .geo-pricing-card.highlight .geo-pricing-value {
+      color: var(--orange-400);
+    }
+
+    .geo-pricing-card.highlight .geo-pricing-label {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .geo-pricing-note {
+      font-size: 0.78rem;
+      color: var(--orange-400);
+      margin-top: -0.25rem;
+    }
+
+    /* Geolocker highlight cards */
+    .geo-notice {
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-notice strong { color: var(--orange-400); }
+
+    .geo-banner {
+      background: linear-gradient(135deg, var(--orange-600), var(--orange-500));
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-banner p {
+      font-size: 0.92rem;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    .geo-banner strong { font-weight: 700; }
+
+    .geo-quote {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-quote::before {
+      content: '"';
+      font-family: 'Outfit', serif;
+      font-size: 4rem;
+      color: rgba(249,115,22,0.3);
+      position: absolute;
+      top: 0.25rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+
+    .geo-quote p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+      font-style: italic;
+      padding-left: 2rem;
+    }
+
+    /* ============================================
+       SECTION 11 — FOOTER / CTA
+       ============================================ */
+    .section-footer {
+      padding: 5rem 1.5rem 3rem;
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-800) 40%, var(--blue-600) 100%);
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-footer::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-content h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-content .subtitle {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: var(--blue-200);
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .contact-item i {
+      color: var(--blue-300);
+      width: 20px;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 1rem 2.25rem;
+      background: var(--whatsapp);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+    }
+
+    .cta-button:hover {
+      background: #20bd5a;
+      transform: translateY(-1px);
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-bottom {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+
+    /* ============================================
+       WHATSAPP FAB
+       ============================================ */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 1000;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+
+    .whatsapp-fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+    }
+
+    .whatsapp-fab svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* ============================================
+       COMMERCIAL SUB-SECTIONS
+       ============================================ */
+    .commercial-subsection {
+      margin-bottom: 2rem;
+    }
+
+    .commercial-subsection h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-800);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--blue-100);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .inline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-left: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .inline-list li {
+      font-size: 0.87rem;
+      color: var(--slate-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .inline-list li .emoji {
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       DESKTOP MEDIA QUERIES
+       ============================================ */
+    @media (min-width: 640px) {
+      .modules-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .other-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .geo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .section-condition { padding: 5rem 2rem; }
+      .section-modules { padding: 6rem 2rem; }
+      .section-other { padding: 6rem 2rem; }
+      .section-detail { padding: 6rem 2rem; }
+      .section-geolocker { padding: 6rem 2rem; }
+      .section-footer { padding: 6rem 2rem 3rem; }
+
+      .hero-logo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .glass-card {
+        padding: 2rem;
+      }
+
+      .timeline {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0;
+      }
+
+      .timeline-step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+        padding-bottom: 0;
+      }
+
+      .timeline-dot-wrapper {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .timeline-dot {
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-line {
+        height: 2px;
+        width: 100%;
+        min-height: auto;
+        flex: 1;
+        position: relative;
+        top: 17px;
+      }
+
+      .timeline-step:first-child .timeline-dot-wrapper::before { display: none; }
+      .timeline-step:first-child .timeline-dot-wrapper { justify-content: center; }
+
+      .contact-items {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container { padding: 0 2rem; }
+
+      .hero-logo {
+        width: 110px;
+        height: 110px;
+      }
+
+      .hero-content {
+        max-width: 640px;
+      }
+
+      .module-card-body {
+        padding: 2rem;
+      }
+
+      .portal-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .portal-card { margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       SECTION 1 — HERO
+       ============================================ -->
+  <section class="hero">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+
+    <div class="hero-content">
+      <img src="/img/LogoHormiqual.png" alt="Hormiqual" class="hero-logo" id="heroLogo">
+      <div class="hero-logo-fallback" id="heroLogoFallback">HORMIQUAL</div>
+
+      <h1>PRESUPUESTO</h1>
+      <p class="hero-subtitle">Solución integral para tu hormigonera</p>
+      <div class="hero-divider"></div>
+
+      <div class="glass-card">
+        <div class="glass-card-row">
+          <span class="glass-card-label">Cliente</span>
+          <span class="glass-card-value">HormiWhite</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Fecha</span>
+          <span class="glass-card-value">27 de abril de 2026</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Validez</span>
+          <span class="glass-card-value">30 días</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Moneda</span>
+          <span class="glass-card-value">USD (dólares estadounidenses)</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#condicion" class="hero-scroll" aria-label="Scroll hacia abajo">
+      <i data-lucide="chevron-down" style="width:32px;height:32px;"></i>
+    </a>
+  </section>
+
+  <!-- ============================================
+       SECTION 2 — CONDICIÓN ESPECIAL
+       ============================================ -->
+  <section class="section-condition" id="condicion">
+    <div class="container fade-up">
+      <div class="condition-banner">
+        <div class="condition-icon">
+          <i data-lucide="gift" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="condition-text">
+          <strong>2 meses de prueba sin compromiso de compra.</strong> Podés usar el sistema completo durante 60 días para evaluar la plataforma con tu equipo, sin ninguna obligación.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 3 — MÓDULOS SOLICITADOS
+       ============================================ -->
+  <section class="section-modules" id="modulos">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label"><i data-lucide="layers" style="width:16px;height:16px;"></i> Selección</span>
+        <h2 class="section-title">Módulos solicitados</h2>
+        <p class="section-subtitle">Los módulos que elegiste para tu operación</p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Card 1: RRHH -->
+        <div class="module-card fade-up">
+          <div class="module-card-accent"></div>
+          <div class="module-card-body">
+            <div class="module-card-header">
+              <div class="module-card-icon">
+                <i data-lucide="users" style="width:24px;height:24px;"></i>
+              </div>
+              <span class="badge badge-blue">Solicitado</span>
+            </div>
+            <h3 class="module-card-title">RRHH</h3>
+            <div class="module-card-price">USD 350 <span>/mes + IVA</span></div>
+            <p class="module-card-desc">Liquidación de sueldos, recibos digitales, libro de sueldos ARCA, portal de empleados, registro horario QR, pedidos de EPP y más.</p>
+          </div>
+        </div>
+
+        <!-- Card 2: Calidad -->
+        <div class="module-card fade-up">
+          <div class="module-card-accent"></div>
+          <div class="module-card-body">
+            <div class="module-card-header">
+              <div class="module-card-icon">
+                <i data-lucide="flask-conical" style="width:24px;height:24px;"></i>
+              </div>
+              <span class="badge badge-blue">Solicitado</span>
+            </div>
+            <h3 class="module-card-title">Calidad (Laboratorio)</h3>
+            <div class="module-card-price">USD 450 <span>/mes + IVA</span></div>
+            <p class="module-card-desc">Control de calidad con muestras, probetas, ensayos de resistencia, control CUSUM, cumplimiento CIRSOC, eficiencia de cemento e IA integrada.</p>
+          </div>
+        </div>
+
+        <!-- Card 3: Mantenimiento -->
+        <div class="module-card fade-up">
+          <div class="module-card-accent"></div>
+          <div class="module-card-body">
+            <div class="module-card-header">
+              <div class="module-card-icon">
+                <i data-lucide="wrench" style="width:24px;height:24px;"></i>
+              </div>
+              <span class="badge badge-blue">Solicitado</span>
+            </div>
+            <h3 class="module-card-title">Mantenimiento de Flota</h3>
+            <div class="module-card-price">USD 150 <span>/mes + IVA</span></div>
+            <p class="module-card-desc">Control preventivo automático de toda tu flota: alertas de vencimientos, checklists desde el celular, historial por vehículo, RTO, matafuegos y más.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Table -->
+      <div class="summary-table-wrapper fade-up">
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th class="price-col">Precio mensual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RRHH</td>
+              <td class="price-col">USD 350 + IVA</td>
+            </tr>
+            <tr>
+              <td>Calidad (Laboratorio)</td>
+              <td class="price-col">USD 450 + IVA</td>
+            </tr>
+            <tr>
+              <td>Mantenimiento de Flota</td>
+              <td class="price-col">USD 150 + IVA</td>
+            </tr>
+            <tr>
+              <td><strong>Total mensual</strong></td>
+              <td class="price-col"><strong>USD 950 + IVA</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 4 — OTROS MÓDULOS DISPONIBLES
+       ============================================ -->
+  <section class="section-other">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label"><i data-lucide="grid-3x3" style="width:16px;height:16px;"></i> Catálogo</span>
+        <h2 class="section-title">Otros módulos disponibles</h2>
+        <p class="section-subtitle">Podés incorporarlos en cualquier momento</p>
+      </div>
+
+      <div class="other-grid">
+        <!-- Comercial -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon comercial">
+            <i data-lucide="receipt" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">Comercial</h3>
+          <div class="other-card-price">USD 350 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Facturación electrónica ARCA con CAE automático, cuentas corrientes, cobranzas, presupuestos, portal de clientes con acceso a facturas, remitos y deuda.</p>
+        </div>
+
+        <!-- Producción -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon rrhh">
+            <i data-lucide="factory" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">Producción</h3>
+          <div class="other-card-price">USD 250 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Gestión completa del ciclo productivo: despachos, pedidos, dosificaciones, estados en tiempo real y gestión multi-planta.</p>
+        </div>
+      </div>
+
+      <p class="note-footer fade-up">Todos los precios están expresados en dólares estadounidenses (USD) + IVA. Todos los módulos incluyen soporte técnico personalizado, actualizaciones constantes y capacitación. Infraestructura cloud, backup diario automático y servidor incluidos sin cargo adicional.</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 5 — DETALLE: PRODUCCIÓN
+       ============================================ -->
+  <section class="section-detail bg-slate" id="produccion">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="factory" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo Producción</h2>
+          <p>Gestión completa del ciclo productivo</p>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🏭</div>
+          <div class="feature-text">
+            <h4>Gestión de despachos y pedidos</h4>
+            <p>Cargá pedidos, asigná despachos, controlá estados en tiempo real (pendiente, cargando, en ruta, entregado). Todo desde una sola pantalla.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🧪</div>
+          <div class="feature-text">
+            <h4>Control de dosificaciones</h4>
+            <p>Gestioná todas tus recetas de hormigón con sus componentes: cementos, agregados, aditivos, fibras.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🏗️</div>
+          <div class="feature-text">
+            <h4>Gestión multi-planta</h4>
+            <p>Si tenés más de una planta, manejá todo desde el mismo sistema con datos separados o consolidados.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <h4>Estadísticas por estado</h4>
+            <p>Visualizá cuántos despachos están pendientes, en curso, entregados. Detectá cuellos de botella al instante.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">👷</div>
+          <div class="feature-text">
+            <h4>Asignación de responsables</h4>
+            <p>Asigná un responsable de carga del pedido y el chofer a cada despacho. Trazabilidad completa.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📜</div>
+          <div class="feature-text">
+            <h4>Historial completo</h4>
+            <p>Cada despacho, cada pedido, cada cambio queda registrado. Consultá el historial cuando lo necesites.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planificación a medida -->
+      <div class="subsection-card fade-up">
+        <span class="badge badge-cyan">🔧 Desarrollo a medida</span>
+        <div class="feature-list" style="margin-bottom: 0.5rem;">
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--cyan-50);">📋</div>
+            <div class="feature-text">
+              <h4>Planificación y carga de pedidos</h4>
+              <p>Cargá pedidos con toda la información necesaria, planificá entregas y recibí alertas automáticas de capacidad, disponibilidad y tiempos de despacho.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--cyan-50);">✅</div>
+            <div class="feature-text">
+              <h4>Validaciones automáticas inteligentes</h4>
+              <ul class="validation-list">
+                <li>Capacidad productiva por hora de la planta</li>
+                <li>Máximo de despacho por día</li>
+                <li>Frecuencia de carga por camión (cada cuánto se puede despachar)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--cyan-50);">🗓️</div>
+            <div class="feature-text">
+              <h4>Planificación optimizada</h4>
+              <p>El sistema te indica cómo distribuir la producción en el tiempo según tus restricciones reales.</p>
+            </div>
+          </div>
+        </div>
+        <p class="subsection-note">Este submódulo se desarrolla a medida adaptándose a la operatoria específica del cliente.</p>
+      </div>
+
+      <!-- Timeline Producción -->
+      <div class="timeline fade-up">
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Pedido</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Planificación</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Despacho</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Producción</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+          </div>
+          <span class="timeline-label">Seguimiento</span>
+        </div>
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>Dejá de coordinar la producción por WhatsApp y Excel. Con Hormiqual tenés visibilidad total de tu operación: sabés qué se produjo, qué está en ruta, y qué falta. Todo en tiempo real, desde cualquier dispositivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 6 — DETALLE: MANTENIMIENTO
+       ============================================ -->
+  <section class="section-detail bg-white" id="mantenimiento">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="wrench" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo Mantenimiento de Flota</h2>
+          <p>Control preventivo automático de toda tu flota</p>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🔔</div>
+          <div class="feature-text">
+            <h4>Alertas automáticas de mantenimiento</h4>
+            <p>Configurá una vez, el sistema te avisa siempre. Cambio de aceite, filtros, correas, lo que necesites.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📋</div>
+          <div class="feature-text">
+            <h4>Checklists de equipos por choferes</h4>
+            <p>Los choferes completan checklists desde el celular antes de salir. Sabés el estado real de cada unidad.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🔧</div>
+          <div class="feature-text">
+            <h4>Registro de mantenimientos realizados</h4>
+            <p>Historial completo de cada intervención: qué se hizo, cuándo, quién lo hizo, cuánto costó.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📅</div>
+          <div class="feature-text">
+            <h4>Vencimientos automáticos</h4>
+            <p>RTO, matafuegos, seguros, VTV: el sistema te avisa con anticipación para que nunca se te pase una fecha.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">⛽</div>
+          <div class="feature-text">
+            <h4>Combustible integrado con WhatsApp</h4>
+            <p>Los choferes registran las cargas de combustible por texto o audio de WhatsApp. Detectá consumos irregulares automáticamente.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <h4>Informes de consumo por equipo</h4>
+            <p>Gráficos de consumo por período, comparativas entre equipos, alertas de irregularidades.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🛢️</div>
+          <div class="feature-text">
+            <h4>Stock de tanques</h4>
+            <p>Si tenés tanques propios, controlá el nivel y recibí alertas de nivel bajo.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📍</div>
+          <div class="feature-text">
+            <h4>Integración con GPS (Geolocker)</h4>
+            <p>Ubicación en tiempo real de toda tu flota, historial de recorridos, geocercas inteligentes.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🔄</div>
+          <div class="feature-text">
+            <h4>Notificaciones preventivas</h4>
+            <p>No esperes a que se rompa. El sistema te avisa antes para que puedas planificar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Mantenimiento -->
+      <div class="timeline fade-up">
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Configuración</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Programación</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Ejecución</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Checklists</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Vencimientos</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">6</div>
+          </div>
+          <span class="timeline-label">Combustible</span>
+        </div>
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>No pierdas más plata por roturas evitables ni multas por vencimientos olvidados. Hormiqual Mantenimiento automatiza el seguimiento completo de tu flota: vos solo configurás una vez y el sistema se encarga de avisarte todo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 7 — DETALLE: RRHH
+       ============================================ -->
+  <section class="section-detail bg-slate" id="rrhh">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="users" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo RRHH</h2>
+          <p>Gestión integral de recursos humanos</p>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">💰</div>
+          <div class="feature-text">
+            <h4>Liquidación de sueldos automatizada</h4>
+            <p>Conceptos 100% configurables. Calculá sueldos, horas extras, descuentos y aportes en minutos. Exportá archivos para pago bancario.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📄</div>
+          <div class="feature-text">
+            <h4>Libro de sueldos digital (ARCA)</h4>
+            <p>Cumplimiento automático con la normativa de ARCA. Generación del libro de sueldos digital sin esfuerzo.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📱</div>
+          <div class="feature-text">
+            <h4>Recibos de sueldo digitales con firma</h4>
+            <p>Cada empleado recibe su recibo en el portal y lo firma electrónicamente. Sin papel, sin demoras.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">⏰</div>
+          <div class="feature-text">
+            <h4>Registro horario y horas trabajadas</h4>
+            <p>Sistema QR propio incluido. Los empleados fichan con QR rotativo desde el celular o un dispositivo en planta. Cálculo automático de horas.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🦺</div>
+          <div class="feature-text">
+            <h4>Pedidos de EPP</h4>
+            <p>Los empleados solicitan equipos de protección personal desde el portal. Vos aprobás y llevás el control.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🏦</div>
+          <div class="feature-text">
+            <h4>Archivos para pago bancario</h4>
+            <p>Generá los archivos TXT/CSV que necesita tu banco para acreditar sueldos masivamente.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">⚠️</div>
+          <div class="feature-text">
+            <h4>Control de vencimientos</h4>
+            <p>Carnet de conducir, ART, exámenes médicos preocupacionales. Todo con alertas automáticas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portales -->
+      <div class="portal-cards-grid">
+        <div class="portal-card fade-up">
+          <h3>Portal de Empleados — Autogestión total</h3>
+          <p>Un espacio completo para cada empleado. Desde su celular pueden:</p>
+          <ul class="portal-list">
+            <li><span class="emoji">📋</span> Solicitar licencias y vacaciones</li>
+            <li><span class="emoji">💵</span> Pedir adelantos de sueldo</li>
+            <li><span class="emoji">🕐</span> Ver sus horarios y horas trabajadas</li>
+            <li><span class="emoji">📄</span> Descargar recibos de sueldo</li>
+            <li><span class="emoji">🦺</span> Solicitar EPP</li>
+            <li><span class="emoji">✍️</span> Firmar documentos electrónicamente</li>
+            <li><span class="emoji">✅</span> Completar checklists de camiones</li>
+            <li><span class="emoji">📱</span> Todo accesible desde el celular</li>
+          </ul>
+        </div>
+
+        <div class="portal-card fade-up">
+          <h3>Portal de Clientes — Transparencia total</h3>
+          <p>Tus clientes acceden a su propia cuenta y pueden ver:</p>
+          <ul class="portal-list">
+            <li><span class="emoji">📦</span> Seguimiento de pedidos en tiempo real</li>
+            <li><span class="emoji">🚛</span> Estado de despachos (cargando, en ruta, entregado)</li>
+            <li><span class="emoji">🧪</span> Probetas en curado con días restantes</li>
+            <li><span class="emoji">📊</span> Resultados de rotura instantáneos</li>
+            <li><span class="emoji">📄</span> Facturas y remitos</li>
+            <li><span class="emoji">🛒</span> Órdenes de compra</li>
+            <li><span class="emoji">📑</span> Generación de informes en PDF</li>
+            <li><span class="emoji">📜</span> Historial completo de operaciones</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quote-callout fade-up" style="margin-top: 2rem;">
+        <p>Dejá de perder horas liquidando sueldos a mano, persiguiendo firmas de recibos y respondiendo consultas de empleados. Con Hormiqual RRHH todo es automático: el empleado se autogestiona y vos te enfocás en lo que importa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 8 — DETALLE: CALIDAD / LABORATORIO
+       ============================================ -->
+  <section class="section-detail bg-white" id="calidad">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="flask-conical" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo Calidad / Laboratorio</h2>
+          <p>Control de calidad inteligente para tu hormigón</p>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🧪</div>
+          <div class="feature-text">
+            <h4>Registro de muestras y probetas</h4>
+            <p>Cargá cada muestra con su dosificación, obra, fecha y ubicación. Trazabilidad total desde la planta.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">💪</div>
+          <div class="feature-text">
+            <h4>Ensayos de resistencia a compresión</h4>
+            <p>Registrá resultados de rotura por edad (7, 28 días o las que configures). Visualizá al instante si cumple.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🌡️</div>
+          <div class="feature-text">
+            <h4>Seguimiento de curado</h4>
+            <p>Controlá temperatura y condiciones de curado. Con hardware propio de Hormiqual para automatizar piletas.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <h4>Reportes de resistencia por edad</h4>
+            <p>Gráficos y tablas automáticas que muestran la evolución de resistencia por dosificación, obra o período.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📈</div>
+          <div class="feature-text">
+            <h4>Control estadístico CUSUM</h4>
+            <p>Análisis avanzado para detectar tendencias y desviaciones sistemáticas antes de que se conviertan en problemas.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🏛️</div>
+          <div class="feature-text">
+            <h4>Cumplimiento CIRSOC</h4>
+            <p>Verificá automáticamente si tus hormigones cumplen con la normativa argentina vigente.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🧮</div>
+          <div class="feature-text">
+            <h4>Eficiencia de cemento</h4>
+            <p>Medí cuántos kg de cemento necesitás por MPa de resistencia. Optimizá costos sin perder calidad.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🤖</div>
+          <div class="feature-text">
+            <h4>Inteligencia Artificial integrada</h4>
+            <p>Análisis predictivo, detección de anomalías, sugerencias de optimización de dosificaciones. La IA te ayuda a ahorrar cemento y mejorar calidad.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📤</div>
+          <div class="feature-text">
+            <h4>Exportación a PDF y Excel</h4>
+            <p>Generá informes profesionales para tus clientes o para auditorías con un click.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-card blue fade-up">
+        <strong>Hardware de laboratorio disponible (no incluido):</strong> Hormiqual ofrece hardware propio de laboratorio: control de temperatura de piletas, bombas de circulación y alertas automáticas. Se adquiere por separado e integra directamente con el sistema.
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>No esperes a que un hormigón no cumpla para enterarte. Hormiqual Calidad te da visibilidad instantánea de cada probeta, cada ensayo y cada tendencia. Y con IA integrada, el sistema te sugiere cómo optimizar para ahorrar cemento sin comprometer resistencia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 9 — DETALLE: COMERCIAL
+       ============================================ -->
+  <section class="section-detail bg-slate" id="comercial">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="receipt" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo Comercial</h2>
+          <p>Facturación, cobranzas y gestión comercial integral</p>
+        </div>
+      </div>
+
+      <!-- Facturación -->
+      <div class="commercial-subsection fade-up">
+        <h3>🧾 Facturación Electrónica ARCA</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">🧾</div>
+            <div class="feature-text">
+              <h4>Facturas electrónicas A, B y C</h4>
+              <p>Generá facturas con CAE automático directamente desde el sistema. Sin entrar a la página de ARCA nunca más.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📋</div>
+            <div class="feature-text">
+              <h4>Notas de crédito y débito</h4>
+              <p>Emití notas vinculadas a facturas existentes en segundos.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✅</div>
+            <div class="feature-text">
+              <h4>Validación de CUIT/DNI</h4>
+              <p>El sistema valida automáticamente los datos fiscales de tus clientes.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔄</div>
+            <div class="feature-text">
+              <h4>Obtención automática de CAE</h4>
+              <p>El CAE se obtiene al instante, sin intervención manual. Facturá en 3 clicks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuentas Corrientes -->
+      <div class="commercial-subsection fade-up">
+        <h3>💳 Cuentas Corrientes y Cobranzas</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">💳</div>
+            <div class="feature-text">
+              <h4>Cuentas corrientes de clientes</h4>
+              <p>Cada factura, remito, nota de crédito y pago se refleja automáticamente en la cuenta corriente del cliente.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💰</div>
+            <div class="feature-text">
+              <h4>Registro de cobranzas y pagos</h4>
+              <p>Registrá cobros parciales, totales, en efectivo, transferencia o cheque. Todo queda trazado.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-text">
+              <h4>Estado de deuda en tiempo real</h4>
+              <p>Sabé al instante cuánto te debe cada cliente y hace cuánto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Órdenes de Venta -->
+      <div class="commercial-subsection fade-up">
+        <h3>🛒 Órdenes de Venta y Portal Online</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">🛒</div>
+            <div class="feature-text">
+              <h4>Órdenes de venta</h4>
+              <p>Generá OV desde pedidos y convertílas en despachos y facturas automáticamente.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🌐</div>
+            <div class="feature-text">
+              <h4>Portal de clientes online</h4>
+              <p>Tus clientes entran a su portal y ven:</p>
+              <ul class="inline-list" style="margin-top: 0.5rem;">
+                <li><span class="emoji">•</span> Todas sus facturas emitidas</li>
+                <li><span class="emoji">•</span> Remitos de cada entrega</li>
+                <li><span class="emoji">•</span> Cobros registrados y saldos</li>
+                <li><span class="emoji">•</span> Estado de deuda actualizado</li>
+                <li><span class="emoji">•</span> Historial completo de operaciones</li>
+                <li><span class="emoji">•</span> Informes descargables en PDF</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presupuestos -->
+      <div class="commercial-subsection fade-up">
+        <h3>📝 Presupuestos y Gestión</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">📝</div>
+            <div class="feature-text">
+              <h4>Generación de presupuestos</h4>
+              <p>Armá presupuestos profesionales y convertílos en OV con un click cuando el cliente confirma.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">👥</div>
+            <div class="feature-text">
+              <h4>Base de datos centralizada</h4>
+              <p>Todos tus clientes y proveedores en un solo lugar con datos fiscales, contacto y condiciones comerciales.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Comercial -->
+      <div class="timeline fade-up">
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Pedido</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">2</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Orden de Venta</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">3</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Despacho</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">4</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Remito</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">5</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Factura con CAE</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">6</div>
+            <div class="timeline-line"></div>
+          </div>
+          <span class="timeline-label">Cuenta corriente</span>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-dot">7</div>
+          </div>
+          <span class="timeline-label">Portal del cliente</span>
+        </div>
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>Dejá de facturar a mano en la página de ARCA, de llevar cuentas corrientes en Excel y de responder llamados de clientes preguntando cuánto deben. Con Hormiqual Comercial todo es automático: facturás en 3 clicks, las cuentas corrientes se actualizan solas, y tus clientes ven todo online.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 10 — GEOLOCKER
+       ============================================ -->
+  <section class="section-geolocker" id="geolocker">
+    <div class="container">
+      <div class="geo-header fade-up">
+        <img src="/img/GeolockerLogo.png" alt="Geolocker" class="geo-logo" id="geoLogo">
+        <div class="geo-logo-fallback" id="geoLogoFallback">GEOLOCKER</div>
+        <h2><span>Geolocker</span> — Rastreo Satelital GPS</h2>
+        <p>Sabé dónde está cada camión, mixer y equipo en todo momento. Directamente desde tu panel de Hormiqual, sin apps externas.</p>
+      </div>
+
+      <div class="geo-grid">
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">📍</div>
+          <div>
+            <h4>Ubicación en tiempo real</h4>
+            <p>Actualización cada 10 segundos. Sabé exactamente dónde está cada unidad.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">🗺️</div>
+          <div>
+            <h4>Geocercas inteligentes</h4>
+            <p>Definí zonas y recibí alertas cuando un equipo entra o sale de un área delimitada.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">📧</div>
+          <div>
+            <h4>Alertas por correo</h4>
+            <p>Notificaciones automáticas por email ante eventos configurables.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">📜</div>
+          <div>
+            <h4>Historial de recorridos</h4>
+            <p>Consultá las rutas de cualquier equipo en cualquier fecha.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">📊</div>
+          <div>
+            <h4>Reportes PDF y Excel</h4>
+            <p>Generá informes de recorridos, tiempos, paradas y kilómetros.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">🇦🇷</div>
+          <div>
+            <h4>Cobertura en toda Argentina</h4>
+            <p>Chips multicobertura que enganchan la antena más cercana.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">🔗</div>
+          <div>
+            <h4>Integración total con Hormiqual</h4>
+            <p>La flota se ve directo en el sistema, sin otra plataforma.</p>
+          </div>
+        </div>
+        <div class="geo-card fade-up">
+          <div class="geo-card-emoji">🛰️</div>
+          <div>
+            <h4>Equipos Teltonika</h4>
+            <p>Productos importados de Europa, máxima calidad y confiabilidad.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="geo-pricing fade-up">
+        <div class="geo-pricing-card">
+          <div class="geo-pricing-label">Mensualidad del servicio</div>
+          <div class="geo-pricing-value">USD 10 /mes + IVA por equipo</div>
+        </div>
+        <div class="geo-pricing-card">
+          <div class="geo-pricing-label">Instalación por equipo (única vez)</div>
+          <div class="geo-pricing-value">USD 50 + IVA por equipo</div>
+        </div>
+        <div class="geo-pricing-card">
+          <div class="geo-pricing-label">Equipo GPS Teltonika (única vez)</div>
+          <div class="geo-pricing-value">USD 120 + IVA por equipo</div>
+        </div>
+      </div>
+
+      <div class="geo-banner fade-up">
+        <p>🌐 <strong>Chip multicobertura (opcional)</strong> — A diferencia de otros servicios de rastreo que dependen de una sola operadora (Claro, Movistar), Geolocker ofrece chips que enganchan automáticamente la antena más cercana, garantizando cobertura en zonas rurales y rutas donde otros servicios pierden señal. Es opcional y no está incluido en el precio detallado arriba.</p>
+      </div>
+
+      <div class="geo-quote fade-up">
+        <p>Sabé dónde está cada camión sin llamar al chofer. Controlá tiempos de entrega, detectá desvíos y optimizá recorridos. Todo integrado en Hormiqual, sin apps externas ni plataformas separadas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 11 — CIERRE / CONTACTO
+       ============================================ -->
+  <section class="section-footer" id="contacto">
+    <div class="container footer-content">
+      <img src="/img/LogoHormiqual.png" alt="Hormiqual" class="footer-logo" id="footerLogo">
+      <div class="footer-logo-fallback" id="footerLogoFallback">HORMIQUAL</div>
+
+      <h2>¿Listo para digitalizar tu hormigonera?</h2>
+      <p class="subtitle">2 meses de prueba sin compromiso</p>
+
+      <div class="contact-items">
+        <div class="contact-item">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          <span>+54 9 351 689 3823</span>
+        </div>
+        <a href="mailto:ventas@hormiqual.com" class="contact-item">
+          <i data-lucide="mail" style="width:18px;height:18px;"></i>
+          <span>ventas@hormiqual.com</span>
+        </a>
+        <div class="contact-item">
+          <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+          <span>Córdoba, Argentina</span>
+        </div>
+        <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="contact-item">
+          <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="cta-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contactar por WhatsApp
+      </a>
+
+      <p class="footer-tagline">Soporte uno a uno · Desarrollo a medida · IA integrada</p>
+
+      <div class="footer-bottom">
+        © 2026 Hormiqual — Un software 100% hecho en Argentina
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHATSAPP FAB
+       ============================================ -->
+  <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Contactar por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      // Logo fallbacks
+      const heroLogo = document.getElementById('heroLogo');
+      const footerLogo = document.getElementById('footerLogo');
+      const geoLogo = document.getElementById('geoLogo');
+
+      if (heroLogo) {
+        heroLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('heroLogoFallback').style.display = 'block';
+        };
+      }
+      if (footerLogo) {
+        footerLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('footerLogoFallback').style.display = 'block';
+        };
+      }
+      if (geoLogo) {
+        geoLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('geoLogoFallback').style.display = 'block';
+        };
+      }
+
+      // Scroll animations with IntersectionObserver
+      const fadeElements = document.querySelectorAll('.fade-up');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        fadeElements.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        // Fallback: show all elements
+        fadeElements.forEach(function(el) {
+          el.classList.add('is-visible');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

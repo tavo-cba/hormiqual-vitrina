@@ -1,0 +1,67 @@
+/* Theme Toggle Button - Minimalist Design */
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 0.625rem 0.75rem;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--surface-100);
+  color: var(--text-color);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.98);
+}
+
+.theme-toggle-btn:focus {
+  outline: none;
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 1px solid var(--surface-border);
+  outline-offset: -1px;
+}
+
+.theme-toggle-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle-icon {
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-btn:hover .theme-toggle-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.theme-toggle-label {
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Sun/Moon icon animations */
+[data-theme="dark"] .fa-sun {
+  color: #fbbf24;
+}
+
+[data-theme="light"] .fa-moon {
+  color: var(--text-color-secondary);
+}

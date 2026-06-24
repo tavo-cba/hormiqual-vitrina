@@ -1,0 +1,163 @@
+/* =====================================================
+   DETAIL PAGE HEADER — para páginas detalle/formulario.
+   Diseño más compacto que PageHeader y con slot de acciones a la derecha.
+   ===================================================== */
+
+.detail-page-header {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.detail-page-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.detail-page-header-text {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.detail-page-header-text h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: -0.015em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-page-header-subtitle {
+    margin-top: 0.2rem;
+    font-size: 0.825rem;
+    color: var(--text-color-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Back button — replica el estilo del PageHeader para coherencia visual */
+.p-button.detail-page-header-back,
+button.detail-page-header-back {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cover-input-bg) !important;
+    border: 1px solid var(--surface-border) !important;
+    border-radius: 9px !important;
+    color: var(--text-color) !important;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: none !important;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.p-button.detail-page-header-back .p-button-icon,
+button.detail-page-header-back i {
+    font-size: 0.95rem;
+    color: inherit;
+}
+
+.p-button.detail-page-header-back:hover,
+button.detail-page-header-back:hover {
+    background: rgba(0, 0, 0, 0.06) !important;
+    border-color: var(--text-color-secondary) !important;
+}
+
+[data-theme="dark"] .p-button.detail-page-header-back:hover,
+[data-theme="dark"] button.detail-page-header-back:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.p-button.detail-page-header-back:active,
+button.detail-page-header-back:active {
+    transform: scale(0.94);
+}
+
+.p-button.detail-page-header-back:focus,
+button.detail-page-header-back:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.p-button.detail-page-header-back:focus-visible,
+button.detail-page-header-back:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: none !important;
+}
+
+/* Icon circle (más chico que PageHeader) */
+.detail-page-header-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1d4ed8 100%);
+    border-radius: 10px;
+    color: white;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+/* Acciones (botones a la derecha) */
+.detail-page-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-page-header {
+        padding: 0.5rem 0;
+    }
+    .detail-page-header-left {
+        gap: 0.5rem;
+    }
+    .p-button.detail-page-header-back,
+    button.detail-page-header-back {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px;
+        border-radius: 8px !important;
+    }
+    .detail-page-header-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+    .detail-page-header-text h2 {
+        font-size: 1.05rem;
+    }
+    .detail-page-header-subtitle {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .detail-page-header-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

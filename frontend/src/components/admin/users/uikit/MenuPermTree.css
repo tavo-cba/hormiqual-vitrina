@@ -1,0 +1,387 @@
+/* ===== Menu Permission Tree ===== */
+.menu-perm-tree {
+  width: 100%;
+}
+
+/* Leyenda de permisos */
+.permissions-legend {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--form-card-2);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--datatable-lines);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.legend-icon {
+  font-size: 0.95rem;
+  width: 20px;
+  text-align: center;
+}
+
+.legend-icon-info {
+  color: var(--button-info);
+}
+
+.legend-icon-success {
+  color: var(--button-success);
+}
+
+.legend-icon-warning {
+  color: #f59e0b;
+}
+
+.legend-icon-danger {
+  color: var(--button-danger);
+}
+
+/* Accordion */
+.permissions-accordion {
+  border: none;
+  background: transparent;
+}
+
+.permissions-accordion .p-accordion-header {
+  margin-bottom: 0.75rem;
+}
+
+.permissions-accordion .p-accordion-header-link {
+  background: var(--form-card-2);
+  border: 1px solid var(--datatable-lines);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.permissions-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:hover {
+  background: var(--chart-background-hover);
+  border-color: var(--button-info);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateX(4px);
+}
+
+.permissions-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+  background: var(--primary-gradient);
+  border-color: var(--button-info);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 0.5rem;
+}
+
+.header-icon {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.permission-count-badge {
+  font-weight: 600;
+  padding: 0.35rem 0.7rem;
+  border-radius: 12px;
+}
+
+.permissions-accordion .p-accordion-content {
+  background: var(--form-card-bg);
+  border: 1px solid var(--datatable-lines);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 0;
+  margin-top: -0.75rem;
+}
+
+.accordion-content {
+  padding: 1.5rem;
+}
+
+/* Menu Nodes */
+.menu-node {
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.parent-node {
+  margin-bottom: 0;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--inputtext-back);
+  border-radius: 8px;
+  border: 1px solid var(--datatable-lines);
+  transition: all 0.3s ease;
+  gap: 1rem;
+}
+
+.node-header:hover {
+  background: var(--chart-background-hover);
+  border-color: var(--button-info);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
+  transform: translateX(2px);
+}
+
+.node-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.node-icon {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.node-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-children {
+  margin-top: 0.5rem;
+  padding-left: 0;
+  border-left: 2px solid var(--datatable-lines);
+  margin-left: 12px;
+  padding-left: 12px;
+}
+
+.node-children .menu-node {
+  animation: slideIn 0.3s ease-out both;
+}
+
+.node-children .menu-node:nth-child(1) { animation-delay: 0.05s; }
+.node-children .menu-node:nth-child(2) { animation-delay: 0.1s; }
+.node-children .menu-node:nth-child(3) { animation-delay: 0.15s; }
+.node-children .menu-node:nth-child(4) { animation-delay: 0.2s; }
+.node-children .menu-node:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Permission Checkboxes */
+.permission-checkboxes {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.permission-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.permission-checkbox-item:hover {
+  transform: scale(1.05);
+}
+
+.permission-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.permission-label:hover {
+  color: var(--hover-blue);
+}
+
+.permission-label i {
+  font-size: 0.85rem;
+}
+
+/* Toggle "Todo" — marca los 4 permisos de la fila */
+.perm-row-toggle {
+  padding-right: 1rem;
+  margin-right: 0.25rem;
+  border-right: 1px solid var(--datatable-lines);
+}
+
+.perm-checkbox-row .p-checkbox-box {
+  border-color: var(--text-color-secondary);
+}
+
+.perm-checkbox-row .p-checkbox-box.p-highlight {
+  background-color: var(--text-color-secondary);
+  border-color: var(--text-color-secondary);
+}
+
+/* estado intermedio: algunos permisos marcados, no todos */
+.perm-checkbox-row .p-checkbox-box:has(input:indeterminate) {
+  background-color: var(--text-color-secondary);
+  border-color: var(--text-color-secondary);
+}
+
+.perm-checkbox-row .p-checkbox-box:has(input:indeterminate)::after {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+/* Checkbox Styling */
+.perm-checkbox {
+  transition: all 0.2s ease;
+}
+
+.perm-checkbox:hover {
+  transform: scale(1.1);
+}
+
+.perm-checkbox-info .p-checkbox-box {
+  border-color: var(--button-info);
+}
+
+.perm-checkbox-info .p-checkbox-box.p-highlight {
+  background-color: var(--button-info);
+  border-color: var(--button-info);
+}
+
+.perm-checkbox-success .p-checkbox-box {
+  border-color: var(--button-success);
+}
+
+.perm-checkbox-success .p-checkbox-box.p-highlight {
+  background-color: var(--button-success);
+  border-color: var(--button-success);
+}
+
+.perm-checkbox-warning .p-checkbox-box {
+  border-color: #f59e0b;
+}
+
+.perm-checkbox-warning .p-checkbox-box.p-highlight {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.perm-checkbox-danger .p-checkbox-box {
+  border-color: var(--button-danger);
+}
+
+.perm-checkbox-danger .p-checkbox-box.p-highlight {
+  background-color: var(--button-danger);
+  border-color: var(--button-danger);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .permissions-legend {
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .legend-item {
+    font-size: 0.75rem;
+  }
+
+  .node-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .permission-checkboxes {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .permission-label span {
+    display: none;
+  }
+
+  .permission-label {
+    gap: 0;
+  }
+
+  .permission-label i {
+    font-size: 1.1rem;
+  }
+
+  .node-children {
+    margin-left: 8px;
+    padding-left: 8px;
+  }
+
+  .node-name {
+    font-size: 0.85rem;
+  }
+
+  .accordion-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .permissions-legend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .permission-checkboxes {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .permission-checkbox-item {
+    width: calc(50% - 0.375rem);
+  }
+
+  .perm-row-toggle {
+    width: 100%;
+    padding-right: 0;
+    margin-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--datatable-lines);
+    padding-bottom: 0.5rem;
+  }
+}

@@ -1,0 +1,231 @@
+/* ── Placa de elastómero (IRAM 1709) ── */
+
+.placa-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--surface-border);
+    background: var(--surface-card, var(--surface-100));
+    margin-top: 0.25rem;
+}
+
+.placa-card__icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.placa-card__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.placa-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.placa-card__title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.placa-card__ext-badge {
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(234, 179, 8, 0.22);
+    color: #92400e;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .placa-card__ext-badge {
+    background: rgba(234, 179, 8, 0.3);
+    color: #fde047;
+}
+
+.placa-card__extended-note {
+    margin-top: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text-color);
+    background: rgba(234, 179, 8, 0.08);
+    border: 1px dashed rgba(234, 179, 8, 0.4);
+}
+
+[data-theme="dark"] .placa-card__extended-note {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.5);
+}
+
+.placa-card__counter {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.placa-card__rest {
+    color: var(--text-color-secondary);
+    font-weight: 400;
+    margin-left: 0.25rem;
+}
+
+.placa-card__bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(127, 127, 127, 0.18);
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .placa-card__bar {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.placa-card__bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s, background 0.3s;
+}
+
+.placa-card__diff-warn {
+    font-size: 0.75rem;
+    color: #d97706;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .placa-card__diff-warn {
+    color: #fbbf24;
+}
+
+/* ── Variantes por estado ── */
+.placa-card--ok {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.35);
+}
+.placa-card--ok .placa-card__icon { color: #16a34a; }
+[data-theme="dark"] .placa-card--ok {
+    background: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.45);
+}
+[data-theme="dark"] .placa-card--ok .placa-card__icon { color: #4ade80; }
+
+.placa-card--proximo {
+    background: rgba(245, 158, 11, 0.10);
+    border-color: rgba(245, 158, 11, 0.4);
+}
+.placa-card--proximo .placa-card__icon { color: #d97706; }
+[data-theme="dark"] .placa-card--proximo {
+    background: rgba(245, 158, 11, 0.16);
+    border-color: rgba(245, 158, 11, 0.5);
+}
+[data-theme="dark"] .placa-card--proximo .placa-card__icon { color: #fbbf24; }
+
+.placa-card--warn {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.45);
+}
+.placa-card--warn .placa-card__icon { color: #b45309; }
+[data-theme="dark"] .placa-card--warn {
+    background: rgba(234, 179, 8, 0.18);
+    border-color: rgba(234, 179, 8, 0.55);
+}
+[data-theme="dark"] .placa-card--warn .placa-card__icon { color: #fde047; }
+
+.placa-card--blocked {
+    background: rgba(239, 68, 68, 0.10);
+    border-color: rgba(239, 68, 68, 0.45);
+}
+.placa-card--blocked .placa-card__icon { color: #dc2626; }
+[data-theme="dark"] .placa-card--blocked {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.55);
+}
+[data-theme="dark"] .placa-card--blocked .placa-card__icon { color: #f87171; }
+
+/* ── Banner de extensión ── */
+.placa-extension-banner {
+    margin-top: 0.5rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid rgba(234, 179, 8, 0.5);
+    background: rgba(234, 179, 8, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+[data-theme="dark"] .placa-extension-banner {
+    background: rgba(234, 179, 8, 0.18);
+    border-color: rgba(234, 179, 8, 0.6);
+}
+
+.placa-extension-banner__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 240px;
+}
+
+.placa-extension-banner__icon {
+    color: #b45309;
+    font-size: 1rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .placa-extension-banner__icon {
+    color: #fde047;
+}
+
+.placa-extension-banner__text {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    line-height: 1.45;
+}
+
+.placa-extension-banner__sub {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.15rem;
+}
+
+.placa-extension-banner__btn.p-button {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: #1f2937;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.placa-extension-banner__btn.p-button:hover {
+    background: #d97706;
+    border-color: #d97706;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .placa-extension-banner__btn.p-button {
+    background: #fbbf24;
+    border-color: #fbbf24;
+    color: #1f2937;
+}
+
+[data-theme="dark"] .placa-extension-banner__btn.p-button:hover {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: #1f2937;
+}

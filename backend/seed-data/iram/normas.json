@@ -1,0 +1,46 @@
+{
+  "description": "Catálogo de normas IRAM — solo contiene linkTipos para vincular normas existentes con tipos de ensayo. Las normas se gestionan manualmente desde la UI.",
+  "version": "2.0.0",
+  "normas": [
+    {
+      "codigo": "IRAM 1505",
+      "linkTipos": ["IRAM1505_GRANULOMETRIA"]
+    },
+    {
+      "codigo": "IRAM 1520",
+      "linkTipos": ["IRAM1520_DENSIDAD_ABSORCION_FINO"]
+    },
+    {
+      "codigo": "IRAM 1533",
+      "linkTipos": ["IRAM1533_DENSIDAD_GRUESO"]
+    },
+    {
+      "codigo": "IRAM 1540",
+      "linkTipos": ["IRAM1674_MATERIAL_FINO_200"]
+    },
+    {
+      "codigo": "IRAM 1532",
+      "linkTipos": ["IRAM1532_LOS_ANGELES"]
+    },
+    {
+      "codigo": "IRAM 1647",
+      "linkTipos": ["IRAM1647_TERRONES_ARCILLA", "IRAM1647_SALES_SOLUBLES", "IRAM1647_SULFATOS_SO3", "IRAM1647_MATERIA_ORGANICA", "IRAM1647_MATERIAS_CARBONOSAS"]
+    },
+    {
+      "codigo": "IRAM 1882",
+      "linkTipos": ["IRAM1882_CLORUROS_SOLUBLES"]
+    },
+    {
+      "codigo": "IRAM 1548",
+      "linkTipos": ["IRAM1548_PESO_UNITARIO"]
+    },
+    {
+      "codigo": "IRAM 1687-1",
+      "linkTipos": ["IRAM1687_1_LAJOSIDAD"]
+    },
+    {
+      "codigo": "IRAM 1687-2",
+      "linkTipos": ["IRAM1687_2_ELONGACION"]
+    }
+  ]
+}

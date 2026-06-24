@@ -1,0 +1,25 @@
+{
+  "normaRef": "CIRSOC 200:2024 / Normas IRAM",
+  "version": "8.0.0",
+  "description": "Catálogo completo de ensayos de agregados. Todos CORE, 12m, 60d warning, obligatorio. El usuario personaliza desde la UI.",
+  "tipos": [
+    { "codigo": "IRAM1520_DENSIDAD_ABSORCION_FINO",  "nombre": "Densidad relativa y absorción — Agregado fino",                     "normaRef": "IRAM 1520",   "aplicaA": ["FINO"],           "categoria": "fisica",      "orden": 1,  "schemaKey": "DENSIDAD_ABSORCION" },
+    { "codigo": "IRAM1533_DENSIDAD_GRUESO",           "nombre": "Densidad, densidad relativa y absorción de agua — Agregado grueso", "normaRef": "IRAM 1533",   "aplicaA": ["GRUESO"],         "categoria": "fisica",      "orden": 2,  "schemaKey": "DENSIDAD_ABSORCION" },
+    { "codigo": "IRAM1674_MATERIAL_FINO_200",         "nombre": "Material fino que pasa por tamiz IRAM 75 µm (N.º 200)",            "normaRef": "IRAM 1540",   "aplicaA": ["FINO", "GRUESO"], "categoria": "limpieza",    "orden": 3,  "schemaKey": "PASA_200" },
+    { "codigo": "IRAM1505_GRANULOMETRIA",             "nombre": "Granulometría",                                                     "normaRef": "IRAM 1505",   "aplicaA": ["FINO", "GRUESO"], "categoria": "fisica",      "orden": 4,  "schemaKey": "GRANULOMETRIA_1505" },
+    { "codigo": "IRAM1687_1_LAJOSIDAD",               "nombre": "Índice de lajosidad",                                               "normaRef": "IRAM 1687-1", "aplicaA": ["GRUESO"],         "categoria": "forma",       "orden": 5,  "schemaKey": "LAJOSIDAD" },
+    { "codigo": "IRAM1687_2_ELONGACION",              "nombre": "Índice de elongación",                                              "normaRef": "IRAM 1687-2", "aplicaA": ["GRUESO"],         "categoria": "forma",       "orden": 6,  "schemaKey": "ELONGACION" },
+    { "codigo": "IRAM1532_LOS_ANGELES",               "nombre": "Desgaste Los Ángeles",                                              "normaRef": "IRAM 1532",   "aplicaA": ["GRUESO"],         "categoria": "mecanica",    "orden": 7,  "schemaKey": "LOS_ANGELES" },
+    { "codigo": "IRAM1647_TERRONES_ARCILLA",          "nombre": "Terrones de arcilla y partículas friables",                          "normaRef": "IRAM 1647",   "aplicaA": ["FINO", "GRUESO"], "categoria": "limpieza",    "orden": 8,  "schemaKey": "TERRONES_ARCILLA" },
+    { "codigo": "IRAM1647_SALES_SOLUBLES",            "nombre": "Sales solubles totales",                                            "normaRef": "IRAM 1647",   "aplicaA": ["FINO", "GRUESO"], "categoria": "quimica",     "orden": 9,  "schemaKey": "SALES_SOLUBLES" },
+    { "codigo": "IRAM1647_SULFATOS_SO3",              "nombre": "Sulfatos (expresados como SO₃)",                                    "normaRef": "IRAM 1647",   "aplicaA": ["FINO", "GRUESO"], "categoria": "quimica",     "orden": 10, "schemaKey": "SULFATOS_SO3" },
+    { "codigo": "IRAM1882_CLORUROS_SOLUBLES",         "nombre": "Cloruros solubles",                                                 "normaRef": "IRAM 1882",   "aplicaA": ["FINO", "GRUESO"], "categoria": "quimica",     "orden": 11, "schemaKey": "CLORUROS_SOLUBLES" },
+    { "codigo": "IRAM1647_MATERIA_ORGANICA",          "nombre": "Materia orgánica",                                                  "normaRef": "IRAM 1647",   "aplicaA": ["FINO"],           "categoria": "limpieza",    "orden": 12, "schemaKey": "MATERIA_ORGANICA" },
+    { "codigo": "IRAM1647_MATERIAS_CARBONOSAS",       "nombre": "Materias carbonosas",                                               "normaRef": "IRAM 1647",   "aplicaA": ["FINO", "GRUESO"], "categoria": "limpieza",    "orden": 13, "schemaKey": "MATERIAS_CARBONOSAS" },
+    { "codigo": "IRAM1525_DURABILIDAD_SULFATO",       "nombre": "Durabilidad por ataque con sulfato de sodio",                       "normaRef": "IRAM 1525",   "aplicaA": ["FINO", "GRUESO"], "categoria": "durabilidad", "orden": 14, "schemaKey": "DURABILIDAD_SULFATO" },
+    { "codigo": "IRAM1548_PESO_UNITARIO",             "nombre": "Peso unitario suelto y compactado",                                 "normaRef": "IRAM 1548",   "aplicaA": ["FINO", "GRUESO"], "categoria": "fisica",      "orden": 15, "schemaKey": "PESO_UNITARIO" },
+    { "codigo": "IRAM1682_EQUIVALENTE_ARENA",         "nombre": "Equivalente de arena",                                              "normaRef": "IRAM 1682",   "aplicaA": ["FINO"],           "categoria": "limpieza",    "orden": 16, "schemaKey": "EQ_ARENA" },
+    { "codigo": "IRAM1883_POLVO_ADHERIDO",            "nombre": "Polvo adherido",                                                    "normaRef": "IRAM 1883",   "aplicaA": ["GRUESO"],         "categoria": "limpieza",    "orden": 17, "schemaKey": "POLVO_ADHERIDO" },
+    { "codigo": "IRAM1644_PARTICULAS_BLANDAS",        "nombre": "Partículas blandas",                                                "normaRef": "IRAM 1644",   "aplicaA": ["GRUESO"],         "categoria": "limpieza",    "orden": 18, "schemaKey": "PARTICULAS_BLANDAS" }
+  ]
+}

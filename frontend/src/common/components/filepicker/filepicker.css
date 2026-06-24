@@ -1,0 +1,191 @@
+.file-picker {
+    gap: 1rem;
+}
+
+.categoria-card {
+    border: 1px solid var(--surface-border);
+    border-radius: 4px;
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-item {
+    background: var(--surface-50);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    cursor: grab;
+}
+
+.file-item:hover {
+    background: var(--surface-100);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.file-item:active {
+    cursor: grabbing;
+}
+
+.filepicker-newcat {
+    background-color: var(--filepicker-bg);
+    border-radius: 7px;
+    padding: 0.5rem 1rem;
+}
+
+/* --- Category accordion headers --- */
+.filepicker-accordion .p-accordion .p-accordion-tab .p-accordion-header .p-accordion-header-link {
+    background-color: var(--filepicker-bg);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--filepicker-border);
+    transition: all 0.2s ease;
+}
+
+.filepicker-accordion .p-accordion .p-accordion-tab .p-accordion-header .p-accordion-header-link:hover {
+    background-color: var(--surface-100);
+    border-color: var(--filepicker-highlight-border);
+}
+
+.filepicker-accordion .p-accordion .p-accordion-tab .p-highlight .p-accordion-header-link {
+    background: var(--primary-gradient) !important;
+    border-color: transparent !important;
+}
+
+.filepicker-accordion .p-accordion-header-text {
+    line-height: normal;
+    width: 100%;
+    font-weight: 500;
+}
+
+.filepicker-accordion .p-accordion-content {
+    background-color: transparent;
+    border: none;
+    padding: 0.25rem 0.5rem 0.5rem;
+}
+
+.filepicker-accordion .file-item {
+    background-color: var(--filepicker-bg);
+}
+
+.nocat.file-item {
+    background-color: var(--filepicker-bg);
+    cursor: grab;
+}
+
+.nocat.file-item:active {
+    cursor: grabbing;
+}
+
+.filepicker-nocat {
+    padding: 1rem;
+    border: 1px solid var(--filepicker-border-alt);
+    margin-top: 1rem;
+    border-radius: 7px;
+}
+
+/* --- File upload rows --- */
+.filepicker-upload .p-fileupload-row {
+    background-color: var(--filepicker-border-alt);
+    border-radius: 5px;
+    padding: 0 2rem;
+    width: 100%;
+    margin-bottom: 0.3rem;
+    height: 3rem;
+}
+
+.filepicker-upload .p-fileupload-row>div:first-of-type {
+    width: 100%;
+    display: flex;
+    font-size: 0.9rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filepicker-upload .p-fileupload-row>div:last-of-type {
+    width: auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filepicker-upload .p-fileupload-file-thumbnail {
+    width: 2rem;
+}
+
+.filepicker-upload .p-fileupload-row>div:first-of-type>span:first-of-type {
+    display: none;
+}
+
+/* --- Drag & Drop --- */
+.drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.9;
+    background: var(--filepicker-bg);
+    border: 2px solid var(--filepicker-highlight-border);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Category hover state when dragging over */
+.cat-hover {
+    outline: 2.5px dashed var(--filepicker-highlight-border) !important;
+    outline-offset: -2px;
+    background-color: var(--surface-100) !important;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+}
+
+.cat-hover .p-accordion-header-link {
+    background-color: var(--surface-100) !important;
+}
+
+/* Dragging file item visual */
+.file-item[draggable="true"] {
+    position: relative;
+}
+
+.file-item[draggable="true"]::before {
+    content: '\f58e';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    opacity: 0.4;
+    margin-right: 0.5rem;
+    transition: opacity 0.2s ease;
+}
+
+.file-item[draggable="true"]:hover::before {
+    opacity: 0.8;
+}
+
+/* Empty category state */
+.filepicker-empty-cat {
+    padding: 1rem;
+    text-align: center;
+    opacity: 0.6;
+    font-size: 0.875rem;
+}
+
+/* Category file count badge */
+.filepicker-file-count {
+    background: var(--surface-100);
+    border-radius: 12px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}

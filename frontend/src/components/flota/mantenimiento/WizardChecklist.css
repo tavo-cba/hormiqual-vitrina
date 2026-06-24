@@ -1,0 +1,510 @@
+/* ============================================================
+   Wizard Checklist · piezas adicionales
+   ============================================================
+   Reutiliza WizardMantenimiento.css para layout y estilos comunes.
+   Acá solo van las clases específicas del wizard de Checklists:
+     - .wizard-cl-sidebar-icon  (color del header lateral)
+     - .wizard-cl-hero-icon     (gradient distinto al de mantenimiento)
+     - .wizard-cl-flow          (diagrama vertical con flechas)
+     - .wizard-cl-mockup        (captura de pantalla del Mantenimiento) */
+
+/* ─── Sidebar / hero accent ──────────────────────────────────── */
+.wizard-cl-sidebar-icon {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+}
+
+.wizard-cl-hero-icon {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3) !important;
+}
+
+/* Pill "opcional" al lado del título de un paso */
+.wizard-cl-opt {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(110, 121, 235, 0.12);
+    color: #6e79eb;
+    border: 1px solid rgba(110, 121, 235, 0.3);
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+
+[data-theme="dark"] .wizard-cl-opt {
+    background: rgba(110, 121, 235, 0.22);
+    color: #a5b4fc;
+}
+
+/* Tip "positivo" (azul) — para info que no es advertencia */
+.wizard-cl-tip-positive {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    background: rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    border-left: 3px solid #0ea5e9;
+    border-radius: 8px;
+    align-items: flex-start;
+}
+
+[data-theme="dark"] .wizard-cl-tip-positive {
+    background: rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.35);
+}
+
+.wizard-cl-tip-positive > i {
+    color: #0ea5e9;
+    font-size: 1.1rem;
+    margin-top: 2px;
+}
+
+.wizard-cl-tip-positive strong {
+    color: var(--text-color);
+    display: inline;
+}
+
+.wizard-cl-tip-positive div {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Subtítulo para secciones dentro de un paso */
+.wizard-cl-subtitle {
+    margin: 0.5rem 0 0;
+    color: var(--text-color);
+    font-size: 1.15rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wizard-cl-subtitle i {
+    color: #0ea5e9;
+    font-size: 0.95rem;
+}
+
+/* ─── Diagrama de flujo ──────────────────────────────────────── */
+.wizard-cl-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+}
+
+.wizard-cl-flow-step {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    align-items: flex-start;
+}
+
+.wizard-cl-flow-icon {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+}
+
+.wizard-cl-flow-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.wizard-cl-flow-body strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.wizard-cl-flow-body p {
+    color: var(--text-color);
+    font-size: 0.86rem;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.wizard-cl-flow-arrow {
+    text-align: center;
+    color: var(--text-color-secondary);
+    margin: 0.25rem 0;
+    opacity: 0.6;
+    font-size: 0.95rem;
+}
+
+/* Tags inline (Correcto / Incorrecto) usados dentro del paso 4 */
+.wizard-cl-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid;
+    margin: 0 0.15rem;
+}
+
+.wizard-cl-tag.ok {
+    background: rgba(22, 163, 74, 0.12);
+    color: #15803d;
+    border-color: rgba(22, 163, 74, 0.3);
+}
+
+.wizard-cl-tag.bad {
+    background: rgba(220, 38, 38, 0.12);
+    color: #b91c1c;
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+[data-theme="dark"] .wizard-cl-tag.ok {
+    background: rgba(22, 163, 74, 0.22);
+    color: #86efac;
+}
+
+[data-theme="dark"] .wizard-cl-tag.bad {
+    background: rgba(220, 38, 38, 0.22);
+    color: #fca5a5;
+}
+
+/* ─── Mockup del módulo Mantenimiento ────────────────────────── */
+.wizard-cl-mockup {
+    margin: 0;
+}
+
+.wizard-cl-mockup-window {
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .wizard-cl-mockup-window {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.wizard-cl-mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--cover-input-bg);
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.wizard-cl-mockup-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.wizard-cl-mockup-url {
+    flex: 1;
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    margin-left: 0.5rem;
+    text-align: center;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wizard-cl-mockup-url i {
+    color: #16a34a;
+    margin-right: 0.3rem;
+    font-size: 0.7rem;
+}
+
+.wizard-cl-mockup-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+/* Page header simulado */
+.wizard-cl-mockup-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--surface-border);
+}
+
+.wizard-cl-mockup-page-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6e79eb, #4f46e5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.wizard-cl-mockup-title {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.wizard-cl-mockup-subtitle {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+}
+
+/* Tabs de grupos */
+.wizard-cl-mockup-groups {
+    display: flex;
+    gap: 0.4rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--surface-border);
+    flex-wrap: wrap;
+}
+
+.wizard-cl-mockup-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--text-color);
+    background: transparent;
+    position: relative;
+}
+
+.wizard-cl-mockup-group.dim {
+    opacity: 0.45;
+}
+
+.wizard-cl-mockup-group i {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.wizard-cl-mockup-group.active {
+    background: rgba(14, 165, 233, 0.12);
+    color: #0369a1;
+    font-weight: 700;
+    border: 1.5px solid #0ea5e9;
+    animation: wizard-cl-pulse 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .wizard-cl-mockup-group.active {
+    background: rgba(14, 165, 233, 0.22);
+    color: #7dd3fc;
+}
+
+@keyframes wizard-cl-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+    50%      { box-shadow: 0 0 0 6px rgba(14, 165, 233, 0); }
+}
+
+.wizard-cl-mockup-badge {
+    background: #ef4444;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    min-width: 16px;
+    text-align: center;
+}
+
+.wizard-cl-mockup-arrow {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #0ea5e9;
+    font-size: 0.95rem;
+    animation: wizard-cl-bounce 1.4s ease-in-out infinite;
+}
+
+@keyframes wizard-cl-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(4px); }
+}
+
+/* Sub-tabs */
+.wizard-cl-mockup-subtabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    flex-wrap: wrap;
+}
+
+.wizard-cl-mockup-subtab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.wizard-cl-mockup-subtab i {
+    font-size: 0.78rem;
+}
+
+.wizard-cl-mockup-subtab.active {
+    background: var(--cover-input-bg);
+    color: var(--text-color);
+    border-color: var(--surface-border);
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 #0ea5e9;
+}
+
+.wizard-cl-mockup-mini-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.05rem 0.35rem;
+    border-radius: 999px;
+}
+
+[data-theme="dark"] .wizard-cl-mockup-mini-badge {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+/* Tabla simulada */
+.wizard-cl-mockup-table {
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.wizard-cl-mockup-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1.4fr 1.2fr 0.9fr;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--surface-border);
+    align-items: center;
+}
+
+.wizard-cl-mockup-row:last-child {
+    border-bottom: none;
+}
+
+.wizard-cl-mockup-row.head {
+    background: var(--cover-input-bg);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-color-secondary);
+    font-weight: 700;
+}
+
+.wizard-cl-mockup-row strong {
+    color: var(--text-color);
+}
+
+.wizard-cl-mockup-row span:last-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #b91c1c;
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    width: fit-content;
+}
+
+[data-theme="dark"] .wizard-cl-mockup-row span:last-child {
+    background: rgba(220, 38, 38, 0.22);
+    color: #fca5a5;
+    border-color: rgba(220, 38, 38, 0.4);
+}
+
+.wizard-cl-mockup-row.head span:last-child {
+    background: transparent;
+    color: var(--text-color-secondary);
+    border: none;
+    padding: 0;
+    font-weight: 700;
+    font-size: 0.7rem;
+}
+
+[data-theme="dark"] .wizard-cl-mockup-row.head span:last-child {
+    background: transparent;
+    color: var(--text-color-secondary);
+}
+
+/* Callout debajo de la tabla */
+.wizard-cl-mockup-callout {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 0.65rem 0.85rem;
+    background: rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.22);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .wizard-cl-mockup-callout {
+    background: rgba(14, 165, 233, 0.15);
+}
+
+.wizard-cl-mockup-callout > i {
+    color: #0ea5e9;
+    margin-top: 2px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .wizard-cl-mockup-row {
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.75rem;
+    }
+    .wizard-cl-mockup-row.head span:nth-child(3),
+    .wizard-cl-mockup-row.head span:nth-child(4) {
+        display: none;
+    }
+    .wizard-cl-mockup-row span:nth-child(3),
+    .wizard-cl-mockup-row span:nth-child(4) {
+        display: none;
+    }
+    .wizard-cl-mockup-url {
+        font-size: 0.7rem;
+    }
+    .wizard-cl-flow-step {
+        padding: 0.7rem 0.85rem;
+    }
+    .wizard-cl-flow-body strong { font-size: 0.88rem; }
+    .wizard-cl-flow-body p { font-size: 0.8rem; }
+}

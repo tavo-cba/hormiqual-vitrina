@@ -1,0 +1,12 @@
+/* HER-09 fix (sesión 2026-05-10) — antes el textarea de la
+   Calculadora de desvío usaba `style={{ fontFamily: 'monospace',
+   resize: 'vertical' }}` inline, con color de texto del PrimeReact
+   default que no respetaba dark mode bien. Acá vive en CSS, hereda
+   CSS variables del tema. */
+.herramientas-textarea {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    resize: vertical;
+    min-height: 5rem;
+    color: var(--text-color);
+    background: var(--surface-card);
+}

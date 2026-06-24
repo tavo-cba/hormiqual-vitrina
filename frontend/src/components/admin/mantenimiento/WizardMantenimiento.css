@@ -1,0 +1,1065 @@
+/* ============================================================
+   Wizard de configuración inicial · Mantenimiento
+   ============================================================
+   Layout: sidebar de pasos a la izquierda + contenido a la derecha
+   Renderizado vía portal a body, full-screen position fixed. */
+
+body.wizard-mant-active {
+    overflow: hidden;
+}
+
+/* Overlays de PrimeReact (Calendar, Dropdown, Tooltip, etc.) deben aparecer por
+   encima del wizard fullscreen (z-index 9999). PrimeReact los pone en ~1100. */
+body.wizard-mant-active .p-datepicker,
+body.wizard-mant-active .p-dropdown-panel,
+body.wizard-mant-active .p-multiselect-panel,
+body.wizard-mant-active .p-overlaypanel,
+body.wizard-mant-active .p-tooltip,
+body.wizard-mant-active .p-confirm-popup,
+body.wizard-mant-active .p-confirm-dialog,
+body.wizard-mant-active .p-dialog-mask {
+    z-index: 10500 !important;
+}
+
+/* Toast de PrimeReact por encima del wizard fullscreen */
+body.wizard-mant-active .p-toast {
+    z-index: 11000 !important;
+}
+
+/* Card de confirmación visual al crear un ciclo */
+.wizard-mant-success-card {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(34, 197, 94, 0.05));
+    border: 1px solid rgba(22, 163, 74, 0.35);
+    border-radius: 10px;
+    align-items: flex-start;
+}
+
+[data-theme="dark"] .wizard-mant-success-card {
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.18), rgba(34, 197, 94, 0.1));
+    border-color: rgba(22, 163, 74, 0.45);
+}
+
+.wizard-mant-success-icon {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.wizard-mant-success-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.wizard-mant-success-body strong {
+    color: #15803d;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+[data-theme="dark"] .wizard-mant-success-body strong {
+    color: #86efac;
+}
+
+.wizard-mant-success-body ul {
+    list-style: none;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wizard-mant-success-body ul li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.86rem;
+}
+
+.wizard-mant-success-body ul li i {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    width: 14px;
+}
+
+.wizard-mant-success-body small {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+/* MultiSelect dentro del wizard — para que la lista de ítems no se salga */
+.wizard-mant-form .p-multiselect {
+    width: 100% !important;
+}
+
+.wizard-mant-form .p-multiselect-token {
+    background: rgba(110, 121, 235, 0.15);
+    color: #6e79eb;
+    font-size: 0.8rem;
+}
+
+[data-theme="dark"] .wizard-mant-form .p-multiselect-token {
+    background: rgba(110, 121, 235, 0.25);
+    color: #a5b4fc;
+}
+
+.wizard-mant {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--surface-ground, var(--chart-background, #1a1a1f));
+    display: grid;
+    grid-template-columns: 320px 1fr;
+}
+
+@media (max-width: 900px) {
+    .wizard-mant {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── Sidebar ─── */
+.wizard-mant-sidebar {
+    background: var(--chart-background);
+    border-right: 1px solid var(--surface-border);
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+    .wizard-mant-sidebar {
+        display: none;
+    }
+}
+
+.wizard-mant-sidebar-head {
+    padding: 0 1.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.wizard-mant-sidebar-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6e79eb, #4f46e5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.wizard-mant-sidebar-head small {
+    font-size: 0.7rem;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+    display: block;
+}
+
+.wizard-mant-sidebar-head h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.wizard-mant-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0.85rem 0.75rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.wizard-mant-steps li {
+    margin: 0;
+}
+
+.wizard-mant-step {
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all 0.15s ease;
+    font-family: inherit;
+    text-align: left;
+}
+
+.wizard-mant-step:hover {
+    background: var(--cover-input-bg);
+}
+
+.wizard-mant-step.active {
+    background: rgba(110, 121, 235, 0.12);
+    border-color: rgba(110, 121, 235, 0.35);
+    color: #6e79eb;
+}
+
+[data-theme="dark"] .wizard-mant-step.active {
+    background: rgba(110, 121, 235, 0.2);
+    color: #a5b4fc;
+}
+
+.wizard-mant-step.done .wizard-mant-step-marker {
+    background: #16a34a;
+    color: white;
+    border-color: #16a34a;
+}
+
+.wizard-mant-step-marker {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.wizard-mant-step.active .wizard-mant-step-marker {
+    background: #6e79eb;
+    color: white;
+    border-color: #6e79eb;
+}
+
+.wizard-mant-step-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.wizard-mant-step-label i {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    width: 16px;
+}
+
+.wizard-mant-sidebar-footer {
+    padding: 1rem 1.5rem 0;
+    border-top: 1px solid var(--surface-border);
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.wizard-mant-sidebar-footer small {
+    color: var(--text-color-secondary);
+    font-size: 0.75rem;
+}
+
+.wizard-mant-progress {
+    height: 6px;
+    background: var(--cover-input-bg);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.wizard-mant-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6e79eb, #16a34a);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+/* ─── Main ─── */
+.wizard-mant-main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface-ground, var(--chart-background));
+}
+
+.wizard-mant-header {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--surface-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wizard-mant-header-step {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+}
+
+.wizard-mant-header-step i {
+    color: #6e79eb;
+    font-size: 1rem;
+}
+
+.wizard-mant-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.wizard-mant-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--surface-border);
+    background: var(--chart-background);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wizard-mant-footer-spacer { flex: 1; }
+
+/* ─── Contenido común de pasos ─── */
+.wizard-mant-step-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wizard-mant-step-content h2 {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.wizard-mant-step-content h2 i {
+    color: #6e79eb;
+}
+
+.wizard-mant-step-content > p {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.wizard-mant-step-content > p strong { color: var(--text-color); }
+
+/* ─── Hero (bienvenida y final) ─── */
+.wizard-mant-hero {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.wizard-mant-hero-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6e79eb, #4f46e5);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 24px rgba(110, 121, 235, 0.3);
+}
+
+.wizard-mant-hero h2 {
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem;
+    justify-content: center;
+}
+
+.wizard-mant-hero p {
+    color: var(--text-color-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+
+/* ─── Cards info ─── */
+.wizard-mant-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.85rem;
+}
+
+.wizard-mant-card {
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.wizard-mant-card > i {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-mant-card strong {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.wizard-mant-card small {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+/* ─── Tip / callout ─── */
+.wizard-mant-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: rgba(110, 121, 235, 0.08);
+    border: 1px solid rgba(110, 121, 235, 0.2);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .wizard-mant-tip {
+    background: rgba(110, 121, 235, 0.15);
+    border-color: rgba(110, 121, 235, 0.3);
+}
+
+.wizard-mant-tip i {
+    color: #6e79eb;
+    font-size: 1rem;
+    margin-top: 2px;
+}
+
+.wizard-mant-callout {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-left: 3px solid #6e79eb;
+    border-radius: 8px;
+}
+
+.wizard-mant-callout > i {
+    color: #6e79eb;
+    font-size: 1.1rem;
+    margin-top: 2px;
+}
+
+.wizard-mant-callout strong {
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.wizard-mant-callout p {
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ─── Status (verificación de pasos) ─── */
+.wizard-mant-status {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+}
+
+.wizard-mant-status-loading {
+    color: var(--text-color-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wizard-mant-status-ok {
+    color: #15803d;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(22, 163, 74, 0.1);
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+[data-theme="dark"] .wizard-mant-status-ok {
+    color: #86efac;
+    background: rgba(22, 163, 74, 0.15);
+}
+
+.wizard-mant-status-warn {
+    color: #b45309;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(217, 119, 6, 0.1);
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+[data-theme="dark"] .wizard-mant-status-warn {
+    color: #fdba74;
+    background: rgba(217, 119, 6, 0.15);
+}
+
+/* ─── Lista resumen ─── */
+.wizard-mant-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.wizard-mant-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
+}
+
+.wizard-mant-list li > i { color: var(--text-color-secondary); }
+
+.wizard-mant-list li strong {
+    color: var(--text-color);
+    flex: 1;
+}
+
+.wizard-mant-list li small {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+}
+
+.wizard-mant-list-more {
+    color: var(--text-color-secondary);
+    font-style: italic;
+    font-size: 0.85rem;
+    text-align: center;
+    background: transparent !important;
+    border: none !important;
+}
+
+.wizard-mant-pill {
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border: 1px solid;
+}
+
+.wizard-mant-pill.interno {
+    background: rgba(59, 130, 246, 0.12);
+    color: #1d4ed8;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.wizard-mant-pill.externo {
+    background: rgba(217, 119, 6, 0.12);
+    color: #b45309;
+    border-color: rgba(217, 119, 6, 0.3);
+}
+
+[data-theme="dark"] .wizard-mant-pill.interno { color: #93c5fd; background: rgba(59, 130, 246, 0.2); }
+[data-theme="dark"] .wizard-mant-pill.externo { color: #fdba74; background: rgba(217, 119, 6, 0.2); }
+
+/* ─── Form embebido ─── */
+.wizard-mant-form {
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.wizard-mant-form h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.wizard-mant-form-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.wizard-mant-form-row > .wizard-mant-form-field {
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+.wizard-mant-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.wizard-mant-form-field label {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.wizard-mant-form-field .p-dropdown,
+.wizard-mant-form-field .p-inputnumber,
+.wizard-mant-form-field .p-calendar,
+.wizard-mant-form-field input,
+.wizard-mant-form-field textarea {
+    width: 100% !important;
+}
+
+.wizard-mant-form-helper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--text-color-secondary);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    padding: 0.5rem 0.75rem;
+    background: var(--cover-input-bg);
+    border-radius: 6px;
+}
+
+.wizard-mant-form-helper i {
+    margin-top: 2px;
+    color: #6e79eb;
+}
+
+.wizard-mant-form-warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #d97706;
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+/* ─── Acciones ─── */
+.wizard-mant-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.wizard-mant-actions p {
+    color: var(--text-color-secondary);
+    font-size: 0.88rem;
+    margin: 0 0.5rem 0 0;
+}
+
+/* ─── Tour de pestañas ─── */
+.wizard-mant-tour {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: tour;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.wizard-mant-tour li {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    align-items: flex-start;
+}
+
+.wizard-mant-tour-icon {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.wizard-mant-tour-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.wizard-mant-tour-body strong {
+    color: var(--text-color);
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.wizard-mant-tour-body p {
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.wizard-mant-tour-body em {
+    color: var(--text-color-secondary);
+    font-style: italic;
+}
+
+/* ─── Resumen final ─── */
+.wizard-mant-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wizard-mant-summary-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+}
+
+.wizard-mant-summary-row > i {
+    color: #6e79eb;
+    width: 24px;
+    font-size: 1rem;
+}
+
+.wizard-mant-summary-row span {
+    color: var(--text-color);
+    flex: 1;
+}
+
+.wizard-mant-summary-row strong {
+    background: rgba(110, 121, 235, 0.15);
+    color: #6e79eb;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    min-width: 36px;
+    text-align: center;
+}
+
+[data-theme="dark"] .wizard-mant-summary-row strong {
+    background: rgba(110, 121, 235, 0.25);
+    color: #a5b4fc;
+}
+
+/* ─── Subtítulo (sección dentro de un paso) ─────────────────── */
+.wizard-mant-subtitle {
+    margin: 0.5rem 0 0;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wizard-mant-subtitle i {
+    color: #6e79eb;
+    font-size: 0.95rem;
+}
+
+/* ─── Mockup del módulo Mantenimiento ──────────────────────── */
+.wizard-mant-mockup-window {
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .wizard-mant-mockup-window {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.wizard-mant-mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--cover-input-bg);
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.wizard-mant-mockup-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.wizard-mant-mockup-url {
+    flex: 1;
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    background: var(--chart-background);
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    margin-left: 0.5rem;
+    text-align: center;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wizard-mant-mockup-url i {
+    color: #16a34a;
+    margin-right: 0.3rem;
+    font-size: 0.7rem;
+}
+
+.wizard-mant-mockup-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.wizard-mant-mockup-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--surface-border);
+}
+
+.wizard-mant-mockup-page-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6e79eb, #4f46e5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.wizard-mant-mockup-title {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.wizard-mant-mockup-subtitle {
+    color: var(--text-color-secondary);
+    font-size: 0.78rem;
+}
+
+/* Grupos de tabs (Mantenimiento / Checklists / Vencimientos / ...) */
+.wizard-mant-mockup-groups {
+    display: flex;
+    gap: 0.4rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--surface-border);
+    flex-wrap: wrap;
+}
+
+.wizard-mant-mockup-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--text-color);
+    background: transparent;
+}
+
+.wizard-mant-mockup-group.dim {
+    opacity: 0.45;
+}
+
+.wizard-mant-mockup-group i {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.wizard-mant-mockup-group.active {
+    background: rgba(110, 121, 235, 0.15);
+    color: #4f46e5;
+    font-weight: 700;
+    border: 1.5px solid #6e79eb;
+}
+
+[data-theme="dark"] .wizard-mant-mockup-group.active {
+    background: rgba(110, 121, 235, 0.25);
+    color: #a5b4fc;
+}
+
+/* Sub-tabs con número */
+.wizard-mant-mockup-subtabs {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.55rem 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.wizard-mant-mockup-subtab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem 0.4rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--text-color);
+    background: var(--cover-input-bg);
+    border: 1px solid var(--surface-border);
+    position: relative;
+}
+
+.wizard-mant-mockup-subtab i {
+    font-size: 0.78rem;
+    opacity: 0.85;
+}
+
+.wizard-mant-mockup-subtab::before {
+    content: attr(data-step);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #6e79eb;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 0.15rem;
+    flex-shrink: 0;
+}
+
+.wizard-mant-mockup-subtab-sep {
+    width: 1px;
+    height: 18px;
+    background: var(--surface-border);
+    margin: 0 0.2rem;
+}
+
+.wizard-mant-mockup-note {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 0.55rem 0.85rem;
+    background: rgba(110, 121, 235, 0.08);
+    border: 1px solid rgba(110, 121, 235, 0.22);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-top: 0.25rem;
+}
+
+[data-theme="dark"] .wizard-mant-mockup-note {
+    background: rgba(110, 121, 235, 0.16);
+}
+
+.wizard-mant-mockup-note > i {
+    color: #6e79eb;
+    margin-top: 2px;
+    font-size: 0.85rem;
+}
+
+/* Numerar los items del tour para que matchee con los números del mockup.
+   Solo aplica con la clase modificadora .wizard-mant-tour--numbered, así
+   no afecta a otros tours que no tengan mockup numerado encima. */
+.wizard-mant-tour--numbered {
+    counter-reset: tour-step;
+}
+
+.wizard-mant-tour--numbered > li {
+    counter-increment: tour-step;
+    position: relative;
+}
+
+.wizard-mant-tour--numbered > li::before {
+    content: counter(tour-step);
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #6e79eb;
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(110, 121, 235, 0.4);
+    z-index: 1;
+}
+
+@media (max-width: 700px) {
+    .wizard-mant-mockup-url {
+        font-size: 0.7rem;
+    }
+    .wizard-mant-mockup-subtab {
+        font-size: 0.72rem;
+    }
+}

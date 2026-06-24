@@ -1,0 +1,55 @@
+/* HelpIcon — estilo consolidado.
+   Copiado verbatim de los antiguos `.tc-help` (tableroComercial.css) y
+   `.trh-help` (tableroRRHH.css), que eran idénticos byte a byte. Renombrado a
+   `.app-help-icon` / `.app-help-tooltip` para uso compartido. */
+
+.app-help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    font-size: 0.72rem !important;
+    color: var(--text-color-secondary);
+    background: var(--cover-input-bg);
+    cursor: help;
+    transition: color 0.15s ease, background 0.15s ease;
+    margin-left: 0.15rem;
+    flex-shrink: 0;
+}
+
+.app-help-icon:hover {
+    color: #6e79eb;
+    background: rgba(110, 121, 235, 0.18);
+}
+
+[data-theme="dark"] .app-help-icon:hover {
+    color: #a5b4fc;
+}
+
+/* Tooltip — z-index alto y multilínea */
+.app-help-tooltip.p-tooltip,
+.p-tooltip.app-help-tooltip {
+    z-index: 99999 !important;
+    max-width: 360px;
+}
+
+.app-help-tooltip.p-tooltip .p-tooltip-text {
+    max-width: 360px;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    padding: 0.65rem 0.85rem;
+    white-space: normal;
+    background: #2c2c2c;
+    color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.app-help-tooltip.p-tooltip .p-tooltip-arrow {
+    border-top-color: #2c2c2c !important;
+    border-bottom-color: #2c2c2c !important;
+    border-left-color: #2c2c2c !important;
+    border-right-color: #2c2c2c !important;
+}

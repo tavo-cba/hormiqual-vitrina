@@ -1,0 +1,81 @@
+.cover-container {
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    background: var(--background-dark);
+}
+
+.border {
+    border: 1px solid var(--red);
+}
+
+.phone-show {
+    display: none !important;
+}
+
+.rounded {
+    border-radius: 8px;
+    border: 1px solid var(--cover-border);
+}
+
+.p-progress-spinner-svg {
+    filter: brightness(0%) invert();
+}
+
+.cover-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+    /* Fix global: flex children have min-width:auto by default, which prevents
+       shrinking below content width (e.g. wide DataTables). min-width:0 +
+       box-sizing:border-box ensures the page content never overflows. */
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.tab-panels {
+    position: relative;
+}
+
+.tab-panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden; /* evita que el contenido de pestañas inactivas se cuele en el scroll del documento */
+}
+
+.tab-panel.active {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.input-form-card {
+    background-color: var(--cover-input-bg);
+    border-radius: 7px;
+    padding: 1rem;
+}
+
+.pedido-despacho {
+    background-color: var(--cover-pedido-bg);
+    margin-bottom: 0.5rem;
+    border-radius: 7px;
+}
+
+@media (max-width: 720px) {
+    .phone-hide {
+        display: none !important;
+    }
+
+    .phone-show {
+        display: block !important;
+    }
+
+    .cover-page {
+        margin: 0;
+    }
+}

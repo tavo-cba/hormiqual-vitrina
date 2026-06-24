@@ -1,0 +1,102 @@
+/* Estilos para renderizar markdown operativo (procedimiento N-01).
+ * Jerarquía simple, legible en mobile y desktop. Respeta dark theme via
+ * CSS variables existentes (--text-color, --surface-border). */
+
+.markdown-doc {
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.markdown-doc h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem 0;
+  border-bottom: 2px solid var(--surface-border);
+  padding-bottom: 0.4rem;
+}
+
+.markdown-doc h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.6rem 0 0.6rem 0;
+  border-bottom: 1px solid var(--surface-border);
+  padding-bottom: 0.3rem;
+}
+
+.markdown-doc h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.2rem 0 0.4rem 0;
+}
+
+.markdown-doc p {
+  margin: 0.6rem 0;
+}
+
+.markdown-doc ul,
+.markdown-doc ol {
+  margin: 0.6rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdown-doc li {
+  margin: 0.25rem 0;
+}
+
+.markdown-doc strong {
+  font-weight: 600;
+}
+
+.markdown-doc code {
+  background: var(--surface-100, #f1f5f9);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.9em;
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+[data-theme="dark"] .markdown-doc code {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.markdown-doc a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.markdown-doc table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+  font-size: 0.92em;
+}
+
+.markdown-doc th,
+.markdown-doc td {
+  border: 1px solid var(--surface-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown-doc th {
+  background: var(--surface-100, #f1f5f9);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .markdown-doc th {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.markdown-doc blockquote {
+  border-left: 3px solid var(--primary-color);
+  padding: 0.4rem 1rem;
+  margin: 0.8rem 0;
+  background: var(--surface-50, #f8fafc);
+  font-style: italic;
+}
+
+[data-theme="dark"] .markdown-doc blockquote {
+  background: rgba(255, 255, 255, 0.03);
+}

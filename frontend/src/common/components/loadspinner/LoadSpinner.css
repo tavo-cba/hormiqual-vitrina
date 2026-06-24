@@ -1,0 +1,16 @@
+@keyframes load-spinner-rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.load-spinner {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--surface-border, rgba(128, 128, 128, 0.2));
+  border-top-color: var(--text-color, #333);
+  animation: load-spinner-rotate 0.8s linear infinite;
+  align-self: center;
+  justify-self: center;
+}

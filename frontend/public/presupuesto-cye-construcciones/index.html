@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presupuesto — CYE Construcciones S.A. | HormiQual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ============================================
+       CSS RESET & BASE
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* HormiQual Blues */
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+      --blue-400: #60a5fa;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a8a;
+      --blue-950: #172554;
+
+      --cyan-500: #0ea5e9;
+      --cyan-50: #ecfeff;
+      --cyan-100: #cffafe;
+
+      /* Slates */
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+
+      /* Geolocker Oranges */
+      --orange-50: #fff7ed;
+      --orange-100: #ffedd5;
+      --orange-200: #fed7aa;
+      --orange-400: #fb923c;
+      --orange-500: #f97316;
+      --orange-600: #ea580c;
+      --orange-700: #c2410c;
+
+      /* Greens */
+      --green-50: #f0fdf4;
+      --green-100: #dcfce7;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+
+      /* WhatsApp */
+      --whatsapp: #25D366;
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+      --shadow-xl: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--slate-700);
+      line-height: 1.6;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.2;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 639px) {
+      .container {
+        padding: 0 0.25rem;
+      }
+
+      .section-modules,
+      .section-other,
+      .section-detail,
+      .section-geolocker,
+      .section-footer {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .section-condition {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .hero {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue-500);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: var(--slate-500);
+      max-width: 600px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header .section-subtitle {
+      margin: 0.5rem auto 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-blue {
+      background: var(--blue-50);
+      color: var(--blue-700);
+    }
+
+    .badge-cyan {
+      background: var(--cyan-50);
+      color: #0284c7;
+    }
+
+    .badge-green {
+      background: var(--green-50);
+      color: var(--green-700);
+    }
+
+    .badge-orange {
+      background: var(--orange-50);
+      color: var(--orange-700);
+    }
+
+    /* ============================================
+       SCROLL ANIMATIONS
+       ============================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       SECTION 1 — HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-800) 40%, var(--blue-600) 100%);
+      overflow: hidden;
+      padding: 2rem 1.5rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -15%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: var(--blue-200);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      text-align: left;
+    }
+
+    .glass-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.95rem;
+    }
+
+    .glass-card-row:last-child { border-bottom: none; }
+
+    .glass-card-label {
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .glass-card-value {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+
+    .hero-scroll i { color: rgba(255,255,255,0.45); }
+
+    @keyframes bounce-down {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Decorative shapes */
+    .hero-shape {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      opacity: 0.06;
+      background: #fff;
+      pointer-events: none;
+    }
+    .hero-shape-1 { width: 120px; height: 120px; top: 10%; left: 5%; transform: rotate(15deg); }
+    .hero-shape-2 { width: 80px; height: 80px; bottom: 20%; right: 8%; transform: rotate(-20deg); }
+    .hero-shape-3 { width: 60px; height: 60px; top: 35%; right: 15%; transform: rotate(45deg); border-radius: 50%; }
+
+    /* ============================================
+       SECTION 2 — CONDICIÓN ESPECIAL
+       ============================================ */
+    .section-condition {
+      padding: 4rem 1.5rem;
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-condition::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .condition-banner {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .condition-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-top: 0.15rem;
+    }
+
+    .condition-text {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+
+    .condition-text strong {
+      color: #fff;
+      font-size: 1.05rem;
+    }
+
+    /* ============================================
+       SECTION 3 — MÓDULOS SOLICITADOS
+       ============================================ */
+    .section-modules {
+      padding: 5rem 1.5rem;
+      background: var(--slate-50);
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .module-card {
+      background: #fff;
+      border: 1px solid var(--blue-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .module-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-2px);
+    }
+
+    .module-card-accent {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-500));
+    }
+
+    .module-card-body {
+      padding: 1.75rem 1.5rem;
+    }
+
+    .module-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .module-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--blue-50);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue-600);
+    }
+
+    .module-card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .module-card-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin: 0.75rem 0 0.25rem;
+    }
+
+    .module-card-price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--slate-400);
+    }
+
+    .module-card-desc {
+      font-size: 0.9rem;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .module-card-feature {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--slate-700);
+    }
+
+    .module-card-feature strong {
+      color: var(--blue-800);
+    }
+
+    .module-card-feature-green {
+      background: var(--green-50);
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--green-700);
+      font-weight: 500;
+    }
+
+    /* Summary Table */
+    .summary-table-wrapper {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .summary-table thead th {
+      background: var(--slate-50);
+      color: var(--slate-500);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .summary-table tbody td {
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-700);
+    }
+
+    .summary-table tbody tr:last-child td {
+      border-bottom: none;
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 1rem;
+      background: var(--blue-50);
+    }
+
+    .summary-table .price-col {
+      text-align: right;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ============================================
+       SECTION 4 — OTROS MÓDULOS
+       ============================================ */
+    .section-other {
+      padding: 5rem 1.5rem;
+      background: #fff;
+    }
+
+    .other-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .other-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .other-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .other-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .other-card-icon.rrhh { background: #fae8ff; color: #a855f7; }
+    .other-card-icon.calidad { background: #fef3c7; color: #d97706; }
+    .other-card-icon.comercial { background: #dbeafe; color: var(--blue-600); }
+
+    .other-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .other-card-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .other-card-price span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--slate-400);
+    }
+
+    .other-card-desc {
+      font-size: 0.85rem;
+      color: var(--slate-500);
+      line-height: 1.6;
+    }
+
+    /* Discount banner */
+    .discount-banner {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--green-50), #ecfdf5);
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .discount-banner-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--green-500);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .discount-banner-text {
+      font-size: 0.92rem;
+      color: var(--slate-700);
+      line-height: 1.55;
+    }
+
+    .discount-banner-text strong {
+      color: var(--green-700);
+      font-size: 1rem;
+    }
+
+    .note-footer {
+      font-size: 0.8rem;
+      color: var(--slate-400);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 1rem;
+    }
+
+    /* ============================================
+       DETAIL SECTIONS (5-9) — SHARED STYLES
+       ============================================ */
+    .section-detail {
+      padding: 5rem 1.5rem;
+    }
+
+    .section-detail.bg-slate { background: var(--slate-50); }
+    .section-detail.bg-white { background: #fff; }
+
+    .detail-header {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-500));
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #fff;
+    }
+
+    .detail-header-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-header h2 {
+      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+      font-weight: 700;
+    }
+
+    .detail-header p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-top: 0.15rem;
+    }
+
+    /* Feature list */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--blue-50);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-top: 0.1rem;
+    }
+
+    .feature-text h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-text p {
+      font-size: 0.88rem;
+      color: var(--slate-500);
+      line-height: 1.55;
+    }
+
+    /* Sub-section card */
+    .subsection-card {
+      border: 1.5px solid var(--cyan-500);
+      background: var(--blue-50);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .subsection-card .badge { margin-bottom: 1rem; }
+
+    .subsection-note {
+      font-style: italic;
+      color: var(--slate-500);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    .validation-list {
+      list-style: none;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .validation-list li {
+      position: relative;
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .validation-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan-500);
+      font-weight: 600;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+
+    .timeline-step:last-child { padding-bottom: 0; }
+
+    .timeline-dot-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .timeline-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .timeline-line {
+      width: 2px;
+      flex: 1;
+      min-height: 20px;
+      background: var(--blue-200);
+    }
+
+    .timeline-step:last-child .timeline-line { display: none; }
+
+    .timeline-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      padding-top: 0.45rem;
+    }
+
+    /* Quote callout */
+    .quote-callout {
+      background: linear-gradient(135deg, var(--blue-50), #f0f9ff);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      margin-top: 0;
+    }
+
+    .quote-callout::before {
+      content: '"';
+      font-family: 'Outfit', serif;
+      font-size: 4rem;
+      color: var(--blue-200);
+      position: absolute;
+      top: 0.25rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+
+    .quote-callout p {
+      font-size: 0.95rem;
+      color: var(--slate-600);
+      line-height: 1.65;
+      font-style: italic;
+      padding-left: 2rem;
+    }
+
+    /* Highlighted card (maintenance GPS, etc) */
+    .highlight-card {
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .highlight-card.green {
+      background: var(--green-50);
+      border: 1.5px solid #86efac;
+      color: var(--green-700);
+    }
+
+    .highlight-card.blue {
+      background: var(--blue-50);
+      border: 1.5px solid var(--blue-200);
+      color: var(--blue-800);
+    }
+
+    .highlight-card strong {
+      font-weight: 700;
+    }
+
+    /* ============================================
+       PORTAL CARDS (RRHH)
+       ============================================ */
+    .portal-card {
+      border: 2px solid var(--cyan-500);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .portal-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .portal-card > p {
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .portal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .portal-list li {
+      font-size: 0.88rem;
+      color: var(--slate-700);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .portal-list li .emoji {
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    /* ============================================
+       SECTION 10 — GEOLOCKER
+       ============================================ */
+    .section-geolocker {
+      padding: 5rem 1.5rem;
+      background: linear-gradient(135deg, var(--slate-900) 0%, #1a1a2e 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-geolocker::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .geo-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      object-fit: contain;
+    }
+
+    .geo-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--orange-500);
+      margin-bottom: 1rem;
+    }
+
+    .geo-header h2 {
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .geo-header h2 span { color: var(--orange-400); }
+
+    .geo-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    .geo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      transition: background 0.2s ease;
+    }
+
+    .geo-card:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .geo-card-emoji {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .geo-card h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--orange-400);
+      margin-bottom: 0.2rem;
+    }
+
+    .geo-card p {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+
+    /* Geolocker pricing cards (mobile-friendly) */
+    .geo-pricing {
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-pricing-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .geo-pricing-card.highlight {
+      background: rgba(249,115,22,0.12);
+      border-color: rgba(249,115,22,0.3);
+    }
+
+    .geo-pricing-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .geo-pricing-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .geo-pricing-card.highlight .geo-pricing-value {
+      color: var(--orange-400);
+    }
+
+    .geo-pricing-card.highlight .geo-pricing-label {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .geo-pricing-note {
+      font-size: 0.78rem;
+      color: var(--orange-400);
+      margin-top: -0.25rem;
+    }
+
+    /* Geolocker highlight cards */
+    .geo-notice {
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-notice strong { color: var(--orange-400); }
+
+    .geo-banner {
+      background: linear-gradient(135deg, var(--orange-600), var(--orange-500));
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-banner p {
+      font-size: 0.92rem;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    .geo-banner strong { font-weight: 700; }
+
+    .geo-quote {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-quote::before {
+      content: '"';
+      font-family: 'Outfit', serif;
+      font-size: 4rem;
+      color: rgba(249,115,22,0.3);
+      position: absolute;
+      top: 0.25rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+
+    .geo-quote p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+      font-style: italic;
+      padding-left: 2rem;
+    }
+
+    /* ============================================
+       SECTION 11 — FOOTER / CTA
+       ============================================ */
+    .section-footer {
+      padding: 5rem 1.5rem 3rem;
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-800) 40%, var(--blue-600) 100%);
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-footer::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-logo-fallback {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-content h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-content .subtitle {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: var(--blue-200);
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .contact-item i {
+      color: var(--blue-300);
+      width: 20px;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 1rem 2.25rem;
+      background: var(--whatsapp);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+    }
+
+    .cta-button:hover {
+      background: #20bd5a;
+      transform: translateY(-1px);
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-bottom {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+
+    /* ============================================
+       WHATSAPP FAB
+       ============================================ */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 1000;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+
+    .whatsapp-fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+    }
+
+    .whatsapp-fab svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* ============================================
+       COMMERCIAL SUB-SECTIONS
+       ============================================ */
+    .commercial-subsection {
+      margin-bottom: 2rem;
+    }
+
+    .commercial-subsection h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-800);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--blue-100);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .inline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-left: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .inline-list li {
+      font-size: 0.87rem;
+      color: var(--slate-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .inline-list li .emoji {
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       DESKTOP MEDIA QUERIES
+       ============================================ */
+    @media (min-width: 640px) {
+      .modules-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .other-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .geo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .section-condition { padding: 5rem 2rem; }
+      .section-modules { padding: 6rem 2rem; }
+      .section-other { padding: 6rem 2rem; }
+      .section-detail { padding: 6rem 2rem; }
+      .section-geolocker { padding: 6rem 2rem; }
+      .section-footer { padding: 6rem 2rem 3rem; }
+
+      .hero-logo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .glass-card {
+        padding: 2rem;
+      }
+
+      .timeline {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0;
+      }
+
+      .timeline-step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+        padding-bottom: 0;
+      }
+
+      .timeline-dot-wrapper {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .timeline-dot {
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-line {
+        height: 2px;
+        width: 100%;
+        min-height: auto;
+        flex: 1;
+        position: relative;
+        top: 17px;
+      }
+
+      .timeline-step:first-child .timeline-dot-wrapper::before { display: none; }
+      .timeline-step:first-child .timeline-dot-wrapper { justify-content: center; }
+
+      .contact-items {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container { padding: 0 2rem; }
+
+      .hero-logo {
+        width: 110px;
+        height: 110px;
+      }
+
+      .hero-content {
+        max-width: 640px;
+      }
+
+      .module-card-body {
+        padding: 2rem;
+      }
+
+      .portal-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .portal-card { margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       SECTION 1 — HERO
+       ============================================ -->
+  <section class="hero">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+
+    <div class="hero-content">
+      <img src="./LogoHormiqual.png" alt="HormiQual" class="hero-logo" id="heroLogo">
+      <div class="hero-logo-fallback" id="heroLogoFallback">HORMIQUAL</div>
+
+      <h1>PRESUPUESTO</h1>
+      <p class="hero-subtitle">Control de calidad, ensayos de agregados y diseño de dosificaciones de hormigón</p>
+      <div class="hero-divider"></div>
+
+      <div class="glass-card">
+        <div class="glass-card-row">
+          <span class="glass-card-label">Cliente</span>
+          <span class="glass-card-value">CYE Construcciones S.A.</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Atención</span>
+          <span class="glass-card-value">Jonathan Casafus</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Fecha</span>
+          <span class="glass-card-value">15 de junio de 2026</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Validez</span>
+          <span class="glass-card-value">30 días</span>
+        </div>
+        <div class="glass-card-row">
+          <span class="glass-card-label">Moneda</span>
+          <span class="glass-card-value">USD (dólares estadounidenses)</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#condicion" class="hero-scroll" aria-label="Scroll hacia abajo">
+      <i data-lucide="chevron-down" style="width:32px;height:32px;"></i>
+    </a>
+  </section>
+
+  <!-- ============================================
+       SECTION 2 — CONDICIÓN ESPECIAL
+       ============================================ -->
+  <section class="section-condition" id="condicion">
+    <div class="container fade-up">
+      <div class="condition-banner">
+        <div class="condition-icon">
+          <i data-lucide="gift" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="condition-text">
+          <strong>2 meses de prueba sin compromiso de compra.</strong> Podés usar el sistema completo durante 60 días para evaluar la plataforma con tu equipo, sin ninguna obligación.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 3 — MÓDULOS SOLICITADOS
+       ============================================ -->
+  <section class="section-modules" id="modulos">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label"><i data-lucide="layers" style="width:16px;height:16px;"></i> Tu solicitud</span>
+        <h2 class="section-title">Módulo solicitado</h2>
+        <p class="section-subtitle">Control de calidad, laboratorio y diseño de mezclas en una sola plataforma</p>
+      </div>
+
+      <div class="modules-grid" style="grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto;">
+        <!-- Card: Calidad / Laboratorio -->
+        <div class="module-card fade-up">
+          <div class="module-card-accent"></div>
+          <div class="module-card-body">
+            <div class="module-card-header">
+              <div class="module-card-icon">
+                <i data-lucide="flask-conical" style="width:24px;height:24px;"></i>
+              </div>
+              <span class="badge badge-blue">Solicitado</span>
+            </div>
+            <h3 class="module-card-title">Calidad — Laboratorio y Diseño de Mezclas</h3>
+            <div class="module-card-price">USD 350 <span>/mes + IVA</span></div>
+            <p class="module-card-desc">Plataforma integral: muestras y probetas con trazabilidad total, programación y control de roturas, ensayos de resistencia, certificados e informes, control estadístico CUSUM, <strong>gestión de ensayos de agregados</strong> y <strong>diseñador de dosificaciones según normativa argentina (CIRSOC 200 / IRAM)</strong>.</p>
+            <div class="module-card-feature-green">✔ Incluye soporte uno a uno, capacitación, actualizaciones, infraestructura cloud y backup diario, sin cargo adicional.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Table -->
+      <div class="summary-table-wrapper fade-up" style="max-width: 640px; margin: 0 auto;">
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th class="price-col">Precio mensual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Calidad (Laboratorio)</td>
+              <td class="price-col">USD 350 + IVA</td>
+            </tr>
+            <tr>
+              <td><strong>Total mensual</strong></td>
+              <td class="price-col"><strong>USD 350 + IVA</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note-footer fade-up" style="margin-top: 1.5rem;">Usuarios ilimitados · Multi-planta y multi-obra · Sin costo de instalación · 2 meses de prueba sin compromiso</p>
+
+      <!-- Requirement mapping -->
+      <div class="subsection-card fade-up" style="margin-top: 2.5rem;">
+        <span class="badge badge-green">✔ Lo que solicitaste, cubierto</span>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">🧪</div>
+            <div class="feature-text">
+              <h4>Registro y seguimiento de probetas</h4>
+              <p>Cada probeta queda registrada con su muestra, dosificación, obra, fecha de moldeo y edades de ensayo. Seguimiento del estado en curado en todo momento.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">📅</div>
+            <div class="feature-text">
+              <h4>Programación y control de roturas</h4>
+              <p>El sistema calcula y muestra las probetas próximas a romper por edad (7, 28 días o las que configures), con avisos para que no se pase ninguna fecha de ensayo.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">💪</div>
+            <div class="feature-text">
+              <h4>Gestión de resultados de ensayos</h4>
+              <p>Cargá los resultados de rotura y el sistema calcula resistencia, promedios de probetas hermanas y verificación normativa al instante.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">📄</div>
+            <div class="feature-text">
+              <h4>Emisión de informes y certificados</h4>
+              <p>Informes de resistencia, reportes de aceptación y certificado de cumplimiento normativo, exportables a PDF y Excel con un click.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">🔎</div>
+            <div class="feature-text">
+              <h4>Trazabilidad de muestras y control de calidad</h4>
+              <p>Trazabilidad completa desde la muestra fresca hasta el resultado final, con control estadístico (CUSUM, Cp/Cpk) y verificación CIRSOC.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--green-50);">🔗</div>
+            <div class="feature-text">
+              <h4>Integración con otros sistemas y equipos</h4>
+              <p>Exponemos endpoints y APIs propias para tu integración, hardware de laboratorio propio (piletas de curado, bombas, alertas) e integración ya operativa con Betonmatic. Detalle completo más abajo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra para hormigonera -->
+      <div class="subsection-card fade-up" style="margin-top: 1.5rem; border-color: var(--blue-600);">
+        <span class="badge badge-blue">★ Pensado también para tu operación como hormigonera</span>
+        <p style="font-size: 0.92rem; color: var(--slate-600); margin: 0.25rem 0 0.5rem;">Al ser CYE Construcciones una hormigonera de gran escala, este módulo incorpora dos pilares clave para tu producción:</p>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--blue-50);">📐</div>
+            <div class="feature-text">
+              <h4>Diseñador de dosificaciones (motor HormiQual)</h4>
+              <p>Diseñá mezclas con un motor de cálculo propio que aplica la normativa argentina: durabilidad CIRSOC 200:2024, relación a/c, contenido de cemento, aire incorporado, trabajabilidad y verificación de aptitud de agregados. Generá pastones de prueba, comparaciones y recetas de obra con trazabilidad y aprobación.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background: var(--blue-50);">🪨</div>
+            <div class="feature-text">
+              <h4>Gestión de ensayos de agregados</h4>
+              <p>20 tipos de ensayo de agregados con evaluación normativa automática contra IRAM 1512/1531/1627 y Tablas CIRSOC: granulometría y bandas, módulo de finura, material fino que pasa el tamiz 75 µm, equivalente de arena y más. Fichas técnicas por material con su trazabilidad.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 8 — DETALLE: CALIDAD / LABORATORIO
+       ============================================ -->
+  <section class="section-detail bg-white" id="calidad">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="flask-conical" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Módulo Calidad / Laboratorio</h2>
+          <p>Control de calidad inteligente para tu hormigón</p>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🧪</div>
+          <div class="feature-text">
+            <h4>Registro de muestras y probetas</h4>
+            <p>Cargá cada muestra con su dosificación, obra, fecha y ubicación. Trazabilidad total desde la planta.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">💪</div>
+          <div class="feature-text">
+            <h4>Ensayos de resistencia a compresión</h4>
+            <p>Registrá resultados de rotura por edad (7, 28 días o las que configures). Visualizá al instante si cumple.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🌡️</div>
+          <div class="feature-text">
+            <h4>Seguimiento de curado</h4>
+            <p>Controlá temperatura y condiciones de curado. Con hardware propio de HormiQual para automatizar piletas.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <h4>Reportes de resistencia por edad</h4>
+            <p>Gráficos y tablas automáticas que muestran la evolución de resistencia por dosificación, obra o período.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📈</div>
+          <div class="feature-text">
+            <h4>Control estadístico CUSUM</h4>
+            <p>Análisis avanzado para detectar tendencias y desviaciones sistemáticas antes de que se conviertan en problemas.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🏛️</div>
+          <div class="feature-text">
+            <h4>Cumplimiento CIRSOC</h4>
+            <p>Verificá automáticamente si tus hormigones cumplen con la normativa argentina vigente.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🧮</div>
+          <div class="feature-text">
+            <h4>Eficiencia de cemento</h4>
+            <p>Medí cuántos kg de cemento necesitás por MPa de resistencia. Optimizá costos sin perder calidad.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📐</div>
+          <div class="feature-text">
+            <h4>Diseñador de dosificaciones</h4>
+            <p>Motor de cálculo propio que diseña mezclas aplicando la normativa argentina: durabilidad, relación a/c, contenido de cemento, aire, trabajabilidad y aptitud de agregados. Con pastones de prueba, comparaciones, recetas de obra y flujo de aprobación.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">🪨</div>
+          <div class="feature-text">
+            <h4>Gestión de ensayos de agregados</h4>
+            <p>20 tipos de ensayo de agregados con evaluación normativa automática (IRAM 1512/1531/1627 y Tablas CIRSOC): granulometría, módulo de finura, finos, equivalente de arena y más. Fichas técnicas por material con su trazabilidad.</p>
+          </div>
+        </div>
+        <div class="feature-item fade-up">
+          <div class="feature-icon">📤</div>
+          <div class="feature-text">
+            <h4>Exportación a PDF y Excel</h4>
+            <p>Generá informes profesionales para tus clientes o para auditorías con un click.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-card blue fade-up">
+        <strong>Hardware de laboratorio disponible (no incluido):</strong> HormiQual ofrece hardware propio de laboratorio: control de temperatura de piletas, bombas de circulación y alertas automáticas. Se adquiere por separado e integra directamente con el sistema.
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>No esperes a que un hormigón no cumpla para enterarte. HormiQual Calidad te da visibilidad instantánea de cada probeta, cada ensayo y cada tendencia, con verificación normativa automática en cada paso.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION — NORMATIVA ARGENTINA (DIFERENCIADOR)
+       ============================================ -->
+  <section class="section-condition" id="normativa" style="background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-800) 45%, var(--blue-600) 100%);">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="section-header fade-up" style="margin-bottom: 2.5rem;">
+        <span class="section-label" style="color: var(--cyan-100); justify-content: center;"><i data-lucide="shield-check" style="width:16px;height:16px;"></i> Nuestra mayor ventaja</span>
+        <h2 class="section-title" style="color: #fff;">Normativa argentina, de fábrica</h2>
+        <p class="section-subtitle" style="color: var(--blue-200); margin: 0.5rem auto 0; text-align: center;">A diferencia de la competencia, HormiQual no es una planilla genérica: implementa la normativa argentina vigente sobre el diseño de mezclas y todo el control de calidad. El criterio técnico ya viene incorporado.</p>
+      </div>
+
+      <!-- Norma chips -->
+      <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; max-width: 820px; margin: 0 auto 2.5rem;">
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">CIRSOC 200:2024</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1512</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1531</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1627</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1569</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1601</span>
+        <span class="badge" style="background: rgba(255,255,255,0.12); color:#fff; font-size: 0.82rem; padding: 0.45rem 1rem;">IRAM 1666</span>
+      </div>
+
+      <!-- Real outputs gallery -->
+      <p class="fade-up" style="text-align:center; color: var(--blue-200); max-width: 720px; margin: 0 auto 1.75rem; font-size: 0.95rem;">Estas son salidas reales del informe de dosificación que genera el sistema. Cada criterio normativo aparece con su valor, su límite y su referencia exacta a la norma:</p>
+
+      <div class="fade-up" style="max-width: 760px; margin: 0 auto 1.25rem; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); overflow: hidden;">
+        <img src="./norma-criterios-ac.png" alt="Criterios CIRSOC 200:2024 para relación agua/cemento y material cementante" style="width:100%; display:block;">
+        <div style="padding: 0.85rem 1.25rem; background: var(--slate-50); border-top:1px solid var(--slate-200); font-size:0.82rem; color:var(--slate-600);"><strong style="color:var(--slate-800);">Relación a/c y cemento mínimo.</strong> El motor adopta la a/c gobernante comparando resistencia, máximo por exposición (CIRSOC 200:2024 Tabla 2.5) y límite de pliego/cliente.</div>
+      </div>
+
+      <div class="fade-up" style="max-width: 760px; margin: 0 auto 1.25rem; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); overflow: hidden;">
+        <img src="./norma-banda-iram1627.png" alt="Verificación granulométrica contra banda IRAM 1627" style="width:100%; display:block;">
+        <div style="padding: 0.85rem 1.25rem; background: var(--slate-50); border-top:1px solid var(--slate-200); font-size:0.82rem; color:var(--slate-600);"><strong style="color:var(--slate-800);">Granulometría contra banda IRAM 1627.</strong> Cada tamiz se compara automáticamente contra los límites inferior y superior de la norma, según el TMN de la mezcla.</div>
+      </div>
+
+      <div class="fade-up" style="max-width: 760px; margin: 0 auto 1.5rem; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); overflow: hidden;">
+        <img src="./norma-curva-granulometrica.png" alt="Curva granulométrica de la mezcla contra bandas normativas" style="width:100%; display:block;">
+        <div style="padding: 0.85rem 1.25rem; background: var(--slate-50); border-top:1px solid var(--slate-200); font-size:0.82rem; color:var(--slate-600);"><strong style="color:var(--slate-800);">Curva granulométrica.</strong> La mezcla se grafica sobre las bandas normativas, marcando visualmente los puntos dentro y fuera de banda.</div>
+      </div>
+
+      <div class="fade-up" style="max-width: 760px; margin: 0 auto 1.5rem; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); overflow: hidden;">
+        <img src="./norma-trabajabilidad-shilstone.png" alt="Evaluación de trabajabilidad: factores Shilstone y Factor de Aptitud Ken Day" style="width:100%; display:block;">
+        <div style="padding: 0.85rem 1.25rem; background: var(--slate-50); border-top:1px solid var(--slate-200); font-size:0.82rem; color:var(--slate-600);"><strong style="color:var(--slate-800);">Trabajabilidad (Shilstone y Ken Day).</strong> Indicadores de grosor, trabajabilidad y aptitud, con clasificación de zona y tipo de hormigón esperado, según el método de Shilstone (1990) y el Factor de Aptitud de Ken Day.</div>
+      </div>
+
+      <p class="fade-up" style="text-align:center; color: var(--blue-200); opacity:0.7; max-width: 720px; margin: 0 auto 2rem; font-size: 0.75rem;">Capturas de un diseño de muestra a modo ilustrativo. Los límites se resuelven automáticamente desde la matriz normativa del sistema según la clase de exposición y la tipología de la mezcla.</p>
+
+      <div class="condition-banner fade-up" style="max-width: 720px;">
+        <div class="condition-icon">
+          <i data-lucide="award" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="condition-text">
+          <strong>Por qué nos diferencia.</strong> El sistema verifica, entre otros: durabilidad (CIRSOC 200:2024 Tabla 2.5), límites de a/c y contenido de cemento por clase de exposición, aire incorporado (Tabla 4.3), aptitud de agregados contra Tablas 3.4/3.6 e IRAM 1512, bandas granulométricas IRAM 1627, y tolerancias de dosificación por pesada (IRAM 1666 Tabla 7). Toda regla normativa está centralizada y citada, no “hardcodeada”: cuando la norma cambia, el sistema se actualiza sin que reescribas nada.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION — CONDICIONES COMERCIALES
+       ============================================ -->
+  <section class="section-detail bg-slate" id="condiciones">
+    <div class="container">
+      <div class="detail-header fade-up">
+        <div class="detail-header-icon">
+          <i data-lucide="file-text" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <h2>Condiciones comerciales y técnicas</h2>
+          <p>Licenciamiento, implementación, soporte y requisitos</p>
+        </div>
+      </div>
+
+      <!-- Licenciamiento -->
+      <div class="commercial-subsection fade-up">
+        <h3>💳 Licenciamiento y modalidades de contratación</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">🔁</div>
+            <div class="feature-text">
+              <h4>Suscripción mensual (SaaS)</h4>
+              <p>Abono mensual por módulo en USD + IVA. Módulo Calidad (Laboratorio): USD 350/mes + IVA. Sin permanencia obligatoria ni costo de alta.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">👥</div>
+            <div class="feature-text">
+              <h4>Usuarios ilimitados</h4>
+              <p>El abono no se cobra por usuario. Sumá a todo tu equipo de laboratorio sin costo adicional por licencia.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🏗️</div>
+            <div class="feature-text">
+              <h4>Multi-planta y multi-obra</h4>
+              <p>Gestioná varias plantas u obras desde la misma cuenta, con datos separados o consolidados.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎁</div>
+            <div class="feature-text">
+              <h4>2 meses de prueba sin compromiso</h4>
+              <p>Usá el sistema completo durante 60 días para evaluarlo con tu equipo, sin ninguna obligación de compra.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Implementación -->
+      <div class="commercial-subsection fade-up">
+        <h3>🚀 Implementación y capacitación</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">⚙️</div>
+            <div class="feature-text">
+              <h4>Puesta en marcha incluida</h4>
+              <p>Configuramos tu cuenta, plantas, dosificaciones y parámetros normativos junto a tu equipo. Sin cargo adicional.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📥</div>
+            <div class="feature-text">
+              <h4>Migración de datos</h4>
+              <p>Te ayudamos a cargar tu información histórica de muestras, probetas y dosificaciones para arrancar con todo.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎓</div>
+            <div class="feature-text">
+              <h4>Capacitación al equipo</h4>
+              <p>Capacitación personalizada del personal de laboratorio incluida, con acompañamiento durante los primeros pasos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soporte -->
+      <div class="commercial-subsection fade-up">
+        <h3>🛟 Soporte técnico y mantenimiento</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-text">
+              <h4>Soporte uno a uno incluido</h4>
+              <p>Atención directa y personalizada por WhatsApp, correo y teléfono, sin tickets impersonales.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔄</div>
+            <div class="feature-text">
+              <h4>Actualizaciones constantes</h4>
+              <p>Mejoras continuas y actualización ante cambios normativos, sin costo extra y sin necesidad de reinstalar nada.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">☁️</div>
+            <div class="feature-text">
+              <h4>Infraestructura, servidor y backup incluidos</h4>
+              <p>Hosting cloud, servidor y backup diario automático incluidos en el abono. No necesitás infraestructura propia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requisitos técnicos -->
+      <div class="commercial-subsection fade-up">
+        <h3>💻 Requisitos técnicos</h3>
+        <div class="highlight-card blue fade-up" style="margin-bottom: 1.25rem;">
+          <strong>Sistema 100% web (cloud) — sin instalación.</strong> Solo necesitás un navegador moderno (Chrome, Edge, Firefox) y conexión a internet. Se accede desde PC, notebook, tablet o celular, sin instalar programas ni mantener servidores propios.
+        </div>
+        <div class="highlight-card green fade-up">
+          <strong>Hardware de laboratorio (opcional).</strong> Para automatizar el curado —control de temperatura de piletas, bombas de circulación y alertas— HormiQual ofrece hardware propio que se integra con el sistema. Se cotiza por separado según la necesidad.
+        </div>
+      </div>
+
+      <!-- Integraciones -->
+      <div class="commercial-subsection fade-up">
+        <h3>🔌 Integración con otros sistemas</h3>
+        <div class="feature-list" style="margin-bottom: 0;">
+          <div class="feature-item">
+            <div class="feature-icon">🧩</div>
+            <div class="feature-text">
+              <h4>APIs y endpoints propios a tu disposición</h4>
+              <p>Te proveemos los endpoints y APIs que tu operación necesite para conectar HormiQual con tus sistemas. Documentación y soporte de integración incluidos.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🏭</div>
+            <div class="feature-text">
+              <h4>Integración con Betonmatic ya operativa</h4>
+              <p>Contamos con la vinculación completa con Betonmatic (hasta donde la propia plataforma de Betonmatic lo permite): envío de fórmulas, verificación de integridad, seguimiento de despachos y cargas. Lista para usar.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔧</div>
+            <div class="feature-text">
+              <h4>Integraciones adicionales a medida</h4>
+              <p>Evaluamos la integración con cualquier otro sistema o equipo, siempre que existan los endpoints y la documentación necesaria del lado de la contraparte. Estas integraciones se analizan caso por caso, con evaluación de costos y presupuesto aparte.</p>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card blue fade-up" style="margin-top: 1.25rem;">
+          <strong>Cuanto más integrado, mejor.</strong> El verdadero potencial de HormiQual aparece cuando los módulos trabajan juntos: el diseño de mezclas alimenta a Producción, los despachos y remitos cruzan con Comercial, y la flota se controla en Mantenimiento. Cada módulo que sumás potencia a los demás y elimina la doble carga de datos.
+        </div>
+        <div class="highlight-card green fade-up" style="margin-top: 1rem;">
+          <strong>Recomendado: sumar Geolocker (rastreo GPS).</strong> Para una hormigonera de tu escala, conviene incorporar Geolocker —rastreo satelital integrado directo en HormiQual, sin apps externas— para ubicar mixers y camiones en tiempo real, controlar tiempos de entrega del hormigón fresco y detectar desvíos. Se integra de forma nativa con el módulo de flota.
+        </div>
+      </div>
+
+      <div class="quote-callout fade-up">
+        <p>Todo el costo operativo del sistema —servidor, backup, actualizaciones, soporte e implementación— está incluido en el abono mensual. Sin sorpresas ni cargos ocultos: sabés exactamente cuánto pagás cada mes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION — OTROS MÓDULOS DISPONIBLES
+       ============================================ -->
+  <section class="section-other">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label"><i data-lucide="grid-3x3" style="width:16px;height:16px;"></i> Catálogo</span>
+        <h2 class="section-title">Otros módulos disponibles</h2>
+        <p class="section-subtitle">HormiQual crece con vos. Podés incorporarlos en cualquier momento</p>
+      </div>
+
+      <div class="other-grid">
+        <!-- Producción -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon rrhh">
+            <i data-lucide="factory" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">Producción</h3>
+          <div class="other-card-price">USD 200 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Ciclo productivo completo: despachos, pedidos, dosificaciones, estados en tiempo real y gestión multi-planta.</p>
+        </div>
+
+        <!-- Comercial -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon comercial">
+            <i data-lucide="receipt" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">Comercial</h3>
+          <div class="other-card-price">USD 300 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Facturación electrónica ARCA con CAE automático, cuentas corrientes, cobranzas, presupuestos y portal de clientes.</p>
+        </div>
+
+        <!-- RRHH -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon rrhh">
+            <i data-lucide="users" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">RRHH</h3>
+          <div class="other-card-price">USD 300 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Liquidación de sueldos, recibos digitales, libro de sueldos ARCA, portal de empleados y registro horario QR.</p>
+        </div>
+
+        <!-- Mantenimiento -->
+        <div class="other-card fade-up">
+          <div class="other-card-icon calidad">
+            <i data-lucide="wrench" style="width:22px;height:22px;"></i>
+          </div>
+          <h3 class="other-card-title">Mantenimiento de Flota</h3>
+          <div class="other-card-price">USD 150 <span>/mes + IVA</span></div>
+          <p class="other-card-desc">Control preventivo de la flota: alertas de vencimientos, checklists desde el celular, combustible e integración GPS (Geolocker).</p>
+        </div>
+      </div>
+
+      <p class="note-footer fade-up">Todos los precios están expresados en dólares estadounidenses (USD) + IVA. Cada módulo incluye soporte técnico personalizado, actualizaciones, capacitación, infraestructura cloud, servidor y backup diario automático sin cargo adicional.</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 11 — CIERRE / CONTACTO
+       ============================================ -->
+  <section class="section-footer" id="contacto">
+    <div class="container footer-content">
+      <img src="./LogoHormiqual.png" alt="HormiQual" class="footer-logo" id="footerLogo">
+      <div class="footer-logo-fallback" id="footerLogoFallback">HORMIQUAL</div>
+
+      <h2>¿Listo para digitalizar tu laboratorio de hormigón?</h2>
+      <p class="subtitle">2 meses de prueba sin compromiso</p>
+
+      <div class="contact-items">
+        <div class="contact-item">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          <span>+54 9 351 689 3823</span>
+        </div>
+        <a href="mailto:ventas@hormiqual.com" class="contact-item">
+          <i data-lucide="mail" style="width:18px;height:18px;"></i>
+          <span>ventas@hormiqual.com</span>
+        </a>
+        <div class="contact-item">
+          <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+          <span>Córdoba, Argentina</span>
+        </div>
+        <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="contact-item">
+          <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="cta-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contactar por WhatsApp
+      </a>
+
+      <p class="footer-tagline">Soporte uno a uno · Desarrollo a medida · Normativa argentina</p>
+
+      <div class="footer-bottom">
+        © 2026 HormiQual <span style="opacity:0.85;">by Meridia Tech</span> — Un software 100% hecho en Argentina
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHATSAPP FAB
+       ============================================ -->
+  <a href="https://wa.me/5493516893823" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Contactar por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      // Logo fallbacks
+      const heroLogo = document.getElementById('heroLogo');
+      const footerLogo = document.getElementById('footerLogo');
+      const geoLogo = document.getElementById('geoLogo');
+
+      if (heroLogo) {
+        heroLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('heroLogoFallback').style.display = 'block';
+        };
+      }
+      if (footerLogo) {
+        footerLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('footerLogoFallback').style.display = 'block';
+        };
+      }
+      if (geoLogo) {
+        geoLogo.onerror = function() {
+          this.style.display = 'none';
+          document.getElementById('geoLogoFallback').style.display = 'block';
+        };
+      }
+
+      // Scroll animations with IntersectionObserver
+      const fadeElements = document.querySelectorAll('.fade-up');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        fadeElements.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        // Fallback: show all elements
+        fadeElements.forEach(function(el) {
+          el.classList.add('is-visible');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
