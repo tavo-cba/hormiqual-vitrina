@@ -7,6 +7,9 @@ import { Button } from "primereact/button";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { isOnPhone } from "../../../common/functions";
 import defaultLogo from '../../../assets/img/logo.png';
+// [VITRINA] Logos por tema (la tabla Config no trae logoLink/logoLightLink).
+import logoDark from '../../../assets/img/logo-dark.png';
+import logoLight from '../../../assets/img/logo-light.png';
 import { useConfig } from "../../../context/ConfigContext";
 import { menuGroups } from "../data/menuConifg";
 import { useMenuContext } from "../../../context/MenuContext";
@@ -24,9 +27,9 @@ const NavbarTelefono = ({ visible, setVisible }) => {
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useContext(ThemeContext);
 
-  const logoSrc = isDark
+  const logoSrc = (isDark
     ? (cfg?.logoLink)
-    : (cfg?.logoLightLink || cfg?.logoLink);
+    : (cfg?.logoLightLink || cfg?.logoLink)) || (isDark ? logoDark : logoLight);
 
   const handleTabChange = (e) => setActiveIndex(e.index);
 

@@ -9,6 +9,9 @@ import { Tooltip } from "primereact/tooltip";
 import { isOnPhone } from "../../../common/functions";
 import defaultLogo from '../../../assets/img/logo.png';
 import defaultSmallLogo from '../../../assets/img/smallogo.png';
+// [VITRINA] Logos por tema (la tabla Config no trae logoLink/logoLightLink).
+import logoDark from '../../../assets/img/logo-dark.png';
+import logoLight from '../../../assets/img/logo-light.png';
 import { useConfig } from "../../../context/ConfigContext";
 import { menuGroups } from "../data/menuConifg";
 import { ThemeContext } from "../../../context/ThemeContext";
@@ -35,9 +38,9 @@ const NavbarPC = ({ visible, setVisible }) => {
   const cfg = useConfig();
   const { isDark, toggleTheme } = useContext(ThemeContext);
 
-  const logoSrc = isDark
+  const logoSrc = (isDark
     ? (cfg?.logoLink)
-    : (cfg?.logoLightLink || cfg?.logoLink);
+    : (cfg?.logoLightLink || cfg?.logoLink)) || (isDark ? logoDark : logoLight);
   const smallLogoSrc = cfg?.logoLink || defaultSmallLogo;
 
   const menuTooltipRef = useRef(null);
@@ -256,7 +259,7 @@ const NavbarPC = ({ visible, setVisible }) => {
                   )
                   : (
                     <div className="w-full flex justify-content-center pb-4" style={{ maxWidth: '50px' }}>
-                      <img src={cfg?.thumbnail} width="60%" alt="Logo" />
+                      <img src={logoSrc} width="60%" alt="Logo" />
                     </div>
                   )}
               </Link>
