@@ -42,7 +42,7 @@ funcionalidades sin carga previa.
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL-del-repositorio>
+git clone https://github.com/tavo-cba/hormiqual-vitrina.git
 cd hormiqual-vitrina
 ```
 
