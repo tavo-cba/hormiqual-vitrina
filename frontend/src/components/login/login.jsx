@@ -1,9 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import './login.css';
 import axios from 'axios';
 import { config } from '../../config/config';
 import { InputText } from 'primereact/inputtext';
 import { useConfig } from "../../context/ConfigContext";
+import { ThemeContext } from "../../context/ThemeContext";
+// [VITRINA] Logos por defecto (la tabla Config no trae logoLink).
+import logoDark from "../../assets/img/logo-dark.png";
+import logoLight from "../../assets/img/logo-light.png";
 
 
 const SupportCard = ({ className = '', whatsappSoporte }) => {
@@ -41,8 +45,12 @@ const Login = () => {
     const usernameRef = useRef(null);
 
     const cfg = useConfig();
+    const { isDark } = useContext(ThemeContext) || {};
 
-    const logoSrc = cfg?.logoLink;
+    // Panel de marca: fondo siempre oscuro (gradiente) → logo claro (logo-dark).
+    const brandLogo = cfg?.logoLink || logoDark;
+    // Logo mobile en el panel del formulario: se adapta al tema.
+    const mobileLogo = cfg?.logoLink || (isDark ? logoDark : logoLight);
 
     useEffect(() => {
         usernameRef.current?.focus();
@@ -80,7 +88,7 @@ const Login = () => {
                 <div className="login-brand-orb login-brand-orb--4" />
                 {/* Subtle grid overlay */}
                 <div className="login-brand-grid" />
-                <img src={logoSrc} alt="Logo" className="login-brand-logo" />
+                <img src={brandLogo} alt="HormiQual" className="login-brand-logo" />
                 <p className="login-brand-tagline">
                     Gestión integral de hormigón elaborado
                 </p>
@@ -90,7 +98,7 @@ const Login = () => {
             <div className="login-form-panel">
                 <div className="login-form-wrapper">
                     {/* Mobile-only logo */}
-                    <img src={logoSrc} alt="Logo" className="login-mobile-logo" />
+                    <img src={mobileLogo} alt="HormiQual" className="login-mobile-logo" />
 
                     <h1 className="login-form-heading">Iniciar sesión</h1>
                     <p className="login-form-subheading">
@@ -171,7 +179,7 @@ const Login = () => {
                     <SupportCard className="login-support--desktop" whatsappSoporte={cfg?.whatsappSoporte} />
 
                     <p className="login-footer">
-                        &copy; {new Date().getFullYear()} &middot; Hormiqual
+                        &copy; {new Date().getFullYear()} &middot; HormiQual
                     </p>
                 </div>
 

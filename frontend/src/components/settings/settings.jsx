@@ -563,7 +563,7 @@ const Settings = () => {
                             <span className="settings-logo-label">Thumbnail · Favicon / PWA</span>
                             <i
                                 className="settings-help-icon fa-solid fa-circle-question"
-                                data-pr-tooltip="Ícono cuadrado usado como favicon del navegador (la pestañita) y como ícono de Hormiqual cuando los usuarios la instalan como app (PWA). Mínimo 512×512px y que se reconozca incluso en tamaños chicos."
+                                data-pr-tooltip="Ícono cuadrado usado como favicon del navegador (la pestañita) y como ícono de HormiQual cuando los usuarios la instalan como app (PWA). Mínimo 512×512px y que se reconozca incluso en tamaños chicos."
                             />
                         </div>
                         <ImageUpload
@@ -969,7 +969,7 @@ const Settings = () => {
             <div className="settings-toggle-row">
                 <div className="settings-toggle-info">
                     <strong>Lectura IMAP activa</strong>
-                    <small className="settings-hint">Hormiqual revisa la casilla y carga facturas de proveedores automáticamente.</small>
+                    <small className="settings-hint">HormiQual revisa la casilla y carga facturas de proveedores automáticamente.</small>
                 </div>
                 <InputSwitch
                     id="imapEnabled"

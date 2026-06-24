@@ -25,8 +25,8 @@ export const ConfigProvider = ({ children }) => {
   useEffect(() => {
     if (!cfg) return;
     document.title = cfg.nombreEmpresa
-      ? `${cfg.nombreEmpresa} - Hormiqual`
-      : 'Hormiqual';
+      ? `${cfg.nombreEmpresa} - HormiQual`
+      : 'HormiQual';
 
     let favicon = document.querySelector("link[rel='icon']");
     if (!favicon) {

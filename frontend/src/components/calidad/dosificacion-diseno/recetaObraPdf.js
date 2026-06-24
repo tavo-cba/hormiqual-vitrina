@@ -355,7 +355,7 @@ export async function generarRecetaObraPdf(opts) {
   // Page footer
   doc.setFontSize(7);
   doc.text(`Generado: ${new Date().toLocaleString("es-AR")}`, margin, pageH - 8);
-  doc.text("Hormiqual — Receta de Obra", pageW - margin, pageH - 8, { align: "right" });
+  doc.text("HormiQual — Receta de Obra", pageW - margin, pageH - 8, { align: "right" });
 
   // ── Save ──
   const filename = `Receta_${(nombreDosif || "dosif").replace(/[^a-zA-Z0-9]/g, "_")}_${fechaMedicion || "hoy"}.pdf`;

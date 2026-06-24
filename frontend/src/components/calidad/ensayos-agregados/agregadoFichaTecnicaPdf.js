@@ -2222,7 +2222,7 @@ export async function generarFichaTecnicaAgregadoPdf(opts) {
     doc.setFontSize(7);
     doc.setTextColor(...C.muted);
     doc.setFont('Helvetica', 'normal');
-    doc.text('Hormiqual — Ficha técnica del agregado', margin, pageH - 8);
+    doc.text('HormiQual — Ficha técnica del agregado', margin, pageH - 8);
     doc.text(`Página ${i} de ${totalPages}`, pageW - margin, pageH - 8, { align: 'right' });
     doc.text(`Generado: ${fmtDate()}`, pageW / 2, pageH - 8, { align: 'center' });
   }
